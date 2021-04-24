@@ -1,0 +1,1 @@
+-IE:/lyh/opencv/opencv/sources/modules/ts/include -IE:/lyh/opencv/opencv/sources/modules/highgui/include -IE:/lyh/opencv/opencv/sources/modules/imgcodecs/include -IE:/lyh/opencv/opencv/sources/modules/videoio/include -IE:/lyh/opencv/opencv/sources/modules/core/include -IE:/lyh/opencv/opencv/sources/modules/imgproc/include -isystem E:/lyh/opencv/opencv/mingw-build

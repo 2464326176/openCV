@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="opencv"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\opencv\;CMake Files\..\..\opencv\opencv\;CMake Files\..\..\opencv\opencv\mingw-build\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="E:/lyh/code/openCV/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="E:/lyh/code/openCV/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="opencv">
+				<Option output="E:/lyh/code/openCV/cmake-build-debug/opencv.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/lyh/code/openCV/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D__WUR="/>
+					<Add option="-D_REENTRANT"/>
+					<Add option="-D_FILE_OFFSET_BITS=64"/>
+					<Add option="-DTIXML_USE_STL"/>
+					<Add directory="E:/lyh/opencv/opencv/mingw-build"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/core/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/flann/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/imgproc/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/ml/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/photo/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/dnn/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/features2d/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/imgcodecs/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/videoio/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/calib3d/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/highgui/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/objdetect/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/stitching/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/ts/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/video/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/gapi/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 opencv"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="opencv/fast">
+				<Option output="E:/lyh/code/openCV/cmake-build-debug/opencv.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="E:/lyh/code/openCV/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-D__WUR="/>
+					<Add option="-D_REENTRANT"/>
+					<Add option="-D_FILE_OFFSET_BITS=64"/>
+					<Add option="-DTIXML_USE_STL"/>
+					<Add directory="E:/lyh/opencv/opencv/mingw-build"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/core/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/flann/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/imgproc/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/ml/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/photo/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/dnn/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/features2d/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/imgcodecs/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/videoio/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/calib3d/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/highgui/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/objdetect/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/stitching/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/ts/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/video/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/gapi/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include-fixed"/>
+					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/../../../../x86_64-w64-mingw32/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 opencv/fast"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="E:/lyh/code/openCV/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/mingw64/bin/mingw32-make.exe -f &quot;E:/lyh/code/openCV/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="E:/lyh/code/openCV/main.cpp">
+			<Option target="opencv"/>
+		</Unit>
+		<Unit filename="E:/lyh/code/openCV/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="E:/lyh/code/openCV/../../opencv/opencv/mingw-build/OpenCVConfig-version.cmake">
+			<Option virtualFolder="CMake Files\..\..\opencv\opencv\mingw-build\"/>
+		</Unit>
+		<Unit filename="E:/lyh/code/openCV/../../opencv/opencv/mingw-build/OpenCVConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\opencv\opencv\mingw-build\"/>
+		</Unit>
+		<Unit filename="E:/lyh/code/openCV/../../opencv/opencv/mingw-build/OpenCVModules.cmake">
+			<Option virtualFolder="CMake Files\..\..\opencv\opencv\mingw-build\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
