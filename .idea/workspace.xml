@@ -12,506 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69100b37-431a-43ef-a2e4-7251f830b354" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/openCV.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/alpha.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cFunction.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cFunction.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/camShift.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/draw.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/.travis.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/LICENSE" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/cmake/adeConfig.cmake.in" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/doc/Doxyfile.in" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/communication/callback_connector.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/communication/comm_buffer.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/communication/comm_interface.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/edge.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/execution_engine/backend.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/execution_engine/executable.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/execution_engine/execution_engine.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/graph.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/graph_listener.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/handle.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/helpers/search.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/helpers/subgraphs.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/memory/alloc.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/memory/memory_access_listener.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/memory/memory_accessor.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/memory/memory_descriptor.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/memory/memory_descriptor_ref.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/memory/memory_descriptor_view.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/memory/memory_types.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/metatypes/metatypes.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/node.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/passes/check_cycles.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/passes/communications.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/passes/pass_base.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/passes/topological_sort.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/passmanager.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/typed_graph.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/typed_metadata.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/algorithm.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/assert.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/chain_range.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/checked_cast.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/container_helper.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/filter_range.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/func_ref.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/hash.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/intrusive_list.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/iota_range.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/map_range.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/math.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/md_cast.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/md_io.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/md_size.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/md_span.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/md_view.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/memory_range.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/range.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/range_iterator.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/tuple.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/type_traits.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/include/ade/util/zip_range.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/manifest.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/alloc.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/assert.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/check_cycles.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/edge.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/execution_engine.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/graph.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/memory_accessor.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/memory_descriptor.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/memory_descriptor_ref.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/memory_descriptor_view.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/metadata.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/metatypes.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/node.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/passes/communications.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/search.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/subgraphs.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/ade/source/topological_sort.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/ade/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/ade/check_cycles_pass.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/ade/comm_buffer.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/ade/communications.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/ade/communications_pass.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/ade/execution_engine.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/ade/execution_engine_backend.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/ade/graph.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/ade/node.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/ade/passmanager.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/ade/search.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/ade/subgraphs.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/ade/topological_sort_pass.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/ade/typed_graph.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/common/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/common/algo_tests.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/common/chain_range_tests.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/common/checkedcast_test.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/common/filter_range_tests.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/common/func_ref_tests.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/common/intrusive_list_tests.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/common/map_range_tests.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/common/md_view_tests.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/common/range_tests.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/common/tuple_tests.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/sources/tests/common/zip_range_tests.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/tutorial/01_hello.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/tutorial/02_add_link_remove.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/tutorial/03_meta.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/tutorial/04_passes.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/tutorial/05_backend.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/tutorial/06_hierarchy.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/tutorial/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/ade/ade-0.1.1f/tutorial/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/lib/libIlmImf.a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/lib/libade.a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/lib/liblibjpeg-turbo.a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/lib/liblibopenjp2.a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/lib/liblibpng.a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/lib/liblibprotobuf.a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/lib/liblibtiff.a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/lib/liblibwebp.a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/lib/libquirc.a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/lib/libzlib.a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/C.includecache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/cmake_clean_target.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/flags.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/includes_C.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/intel/filter_sse2_intrinsics.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/intel/intel_init.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/link.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/png.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/pngerror.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/pngget.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/pngmem.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/pngpread.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/pngread.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/pngrio.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/pngrtran.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/pngrutil.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/pngset.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/pngtrans.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/pngwio.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/pngwrite.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/pngwtran.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/pngwutil.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/libpng.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CMakeFiles/progress.marks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/CTestTestfile.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libpng/cmake_install.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/C.includecache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/CXX.includecache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/cmake_clean_target.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/flags.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/includes_C.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/includes_CXX.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/link.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_aux.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_close.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_codec.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_color.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_compress.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_dir.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_dirinfo.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_dirread.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_dirwrite.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_dumpmode.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_error.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_extension.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_fax3.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_fax3sm.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_flush.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_getimage.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_jbig.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_jpeg.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_jpeg_12.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_luv.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_lzma.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_lzw.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_next.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_ojpeg.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_open.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_packbits.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_pixarlog.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_predict.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_print.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_read.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_stream.cxx.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_strip.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_swab.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_thunder.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_tile.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_version.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_warning.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_webp.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_win32.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_write.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_zip.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/libtiff.dir/tif_zstd.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CMakeFiles/progress.marks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/CTestTestfile.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/cmake_install.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/tif_config.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libtiff/tiffconf.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/C.includecache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/cmake_clean_target.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/flags.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/includes_C.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/link.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dec/alpha_dec.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dec/buffer_dec.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dec/frame_dec.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dec/idec_dec.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dec/io_dec.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dec/quant_dec.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dec/tree_dec.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dec/vp8_dec.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dec/vp8l_dec.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dec/webp_dec.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/demux/anim_decode.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/demux/demux.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/alpha_processing.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/alpha_processing_mips_dsp_r2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/alpha_processing_neon.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/alpha_processing_sse2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/alpha_processing_sse41.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/cost.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/cost_mips32.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/cost_mips_dsp_r2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/cost_neon.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/cost_sse2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/cpu.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/dec.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/dec_clip_tables.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/dec_mips32.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/dec_mips_dsp_r2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/dec_msa.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/dec_neon.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/dec_sse2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/dec_sse41.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/enc_mips32.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/enc_mips_dsp_r2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/enc_msa.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/enc_neon.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/enc_sse2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/enc_sse41.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/filters.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/filters_mips_dsp_r2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/filters_msa.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/filters_neon.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/filters_sse2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/lossless.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/lossless_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/lossless_enc_mips32.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/lossless_enc_mips_dsp_r2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/lossless_enc_msa.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/lossless_enc_neon.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/lossless_enc_sse2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/lossless_enc_sse41.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/lossless_mips_dsp_r2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/lossless_msa.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/lossless_neon.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/lossless_sse2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/rescaler.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/rescaler_mips32.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/rescaler_mips_dsp_r2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/rescaler_msa.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/rescaler_neon.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/rescaler_sse2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/ssim.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/ssim_sse2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/upsampling.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/upsampling_mips_dsp_r2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/upsampling_msa.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/upsampling_neon.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/upsampling_sse2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/upsampling_sse41.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/yuv.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/yuv_mips32.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/yuv_mips_dsp_r2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/yuv_neon.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/yuv_sse2.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/dsp/yuv_sse41.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/alpha_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/analysis_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/backward_references_cost_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/backward_references_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/config_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/cost_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/filter_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/frame_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/histogram_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/iterator_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/near_lossless_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/picture_csp_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/picture_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/picture_psnr_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/picture_rescale_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/picture_tools_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/predictor_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/quant_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/syntax_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/token_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/tree_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/vp8l_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/enc/webp_enc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/mux/anim_encode.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/mux/muxedit.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/mux/muxinternal.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/mux/muxread.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/utils/bit_reader_utils.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/utils/bit_writer_utils.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/utils/color_cache_utils.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/utils/filters_utils.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/utils/huffman_encode_utils.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/utils/huffman_utils.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/utils/quant_levels_dec_utils.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/utils/quant_levels_utils.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/utils/random_utils.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/utils/rescaler_utils.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/utils/thread_utils.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/libwebp.dir/src/utils/utils.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CMakeFiles/progress.marks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/CTestTestfile.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/libwebp/cmake_install.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/openexr/IlmBaseConfig.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/progress.marks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/quirc.dir/C.includecache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/quirc.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/quirc.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/quirc.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/quirc.dir/cmake_clean_target.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/quirc.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/quirc.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/quirc.dir/flags.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/quirc.dir/includes_C.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/quirc.dir/link.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/quirc.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/quirc.dir/src/decode.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/quirc.dir/src/quirc.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CMakeFiles/quirc.dir/src/version_db.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/CTestTestfile.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/quirc/cmake_install.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/progress.marks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/C.includecache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/adler32.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/cmake_clean_target.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/compress.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/crc32.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/deflate.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/depend.internal" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/flags.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/gzclose.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/gzlib.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/gzread.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/gzwrite.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/includes_C.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/infback.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/inffast.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/inflate.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/inftrees.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/link.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/trees.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/uncompr.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CMakeFiles/zlib.dir/zutil.c.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/CTestTestfile.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/3rdparty/zlib/cmake_install.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_perf_features2d.dir/perf/perf_batchDistance.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_perf_features2d.dir/perf/perf_feature2d.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/CXX.includecache" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/Labels.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/Labels.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/depend.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/flags.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/includes_CXX.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/linklibs.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/objects.a" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/objects1.rsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/ocl/test_brute_force_matcher.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/ocl/test_feature2d.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_affine_feature.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_agast.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_akaze.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_brisk.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_descriptors_invariance.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_descriptors_regression.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_detectors_invariance.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_detectors_regression.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_drawing.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_fast.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_keypoints.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_main.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_matchers_algorithmic.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_mser.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_nearestneighbors.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_orb.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_sift.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/features2d/CMakeFiles/opencv_test_features2d.dir/test/test_utils.cpp.obj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/java_bindings_generator/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/java_bindings_generator/CMakeFiles/gen_opencv_java_source.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/java_bindings_generator/CMakeFiles/gen_opencv_java_source.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/java_bindings_generator/CMakeFiles/gen_opencv_java_source.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/java_bindings_generator/CMakeFiles/gen_opencv_java_source.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/java_bindings_generator/CMakeFiles/progress.marks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/java_bindings_generator/CTestTestfile.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/java_bindings_generator/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/java_bindings_generator/cmake_install.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/java_bindings_generator/gen_java.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/js_bindings_generator/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/js_bindings_generator/CMakeFiles/gen_opencv_js_source.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/js_bindings_generator/CMakeFiles/gen_opencv_js_source.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/js_bindings_generator/CMakeFiles/gen_opencv_js_source.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/js_bindings_generator/CMakeFiles/gen_opencv_js_source.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/js_bindings_generator/CMakeFiles/progress.marks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/js_bindings_generator/CTestTestfile.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/js_bindings_generator/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/js_bindings_generator/cmake_install.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/js_bindings_generator/headers.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/CMakeFiles/gen_opencv_objc_source.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/CMakeFiles/gen_opencv_objc_source.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/CMakeFiles/gen_opencv_objc_source.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/CMakeFiles/gen_opencv_objc_source.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/CMakeFiles/gen_opencv_objc_source_ios.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/CMakeFiles/gen_opencv_objc_source_ios.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/CMakeFiles/gen_opencv_objc_source_ios.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/CMakeFiles/gen_opencv_objc_source_ios.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/CMakeFiles/gen_opencv_objc_source_osx.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/CMakeFiles/gen_opencv_objc_source_osx.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/CMakeFiles/gen_opencv_objc_source_osx.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/CMakeFiles/gen_opencv_objc_source_osx.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/CMakeFiles/progress.marks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/CTestTestfile.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/cmake_install.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/objc_bindings_generator/gen_objc.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_bindings_generator/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_bindings_generator/CMakeFiles/gen_opencv_python_source.dir/DependInfo.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_bindings_generator/CMakeFiles/gen_opencv_python_source.dir/build.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_bindings_generator/CMakeFiles/gen_opencv_python_source.dir/cmake_clean.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_bindings_generator/CMakeFiles/gen_opencv_python_source.dir/progress.make" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_bindings_generator/CMakeFiles/progress.marks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_bindings_generator/CTestTestfile.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_bindings_generator/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_bindings_generator/cmake_install.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_bindings_generator/headers.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_bindings_generator/pyopencv_custom_headers.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_tests/CMakeFiles/CMakeDirectoryInformation.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_tests/CMakeFiles/progress.marks" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_tests/CTestTestfile.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_tests/Makefile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/python_tests/cmake_install.cmake" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/opencv2/cvconfig.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/mingw64-opencv-build/mingw-build/opencv2/opencv_modules.hpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/operate.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -529,8 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="18" column="15" lean-forward="true" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="15" />
+            <state relative-caret-position="17">
+              <caret line="15" column="31" lean-forward="true" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -660,10 +161,10 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="110" />
-    <option name="y" value="533" />
-    <option name="width" value="1520" />
-    <option name="height" value="940" />
+    <option name="x" value="304" />
+    <option name="y" value="321" />
+    <option name="width" value="814" />
+    <option name="height" value="576" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -733,12 +234,20 @@
       <workItem from="1619108565242" duration="2294000" />
       <workItem from="1619110975763" duration="1531000" />
       <workItem from="1619116765069" duration="44000" />
-      <workItem from="1619192760955" duration="17568000" />
+      <workItem from="1619192760955" duration="18726000" />
     </task>
+    <task id="LOCAL-00001" summary="opencv 学习整理">
+      <created>1619268029783</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1619268029783</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21437000" />
+    <option name="totallyTimeSpent" value="22595000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -750,15 +259,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="304" y="321" width="814" height="576" extended-state="1" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.0826226" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2055703" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.3340564" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.6968326" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.1691974" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -801,6 +310,10 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="opencv 学习整理" />
+    <option name="LAST_COMMIT_MESSAGE" value="opencv 学习整理" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log">
@@ -980,8 +493,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="18" column="15" lean-forward="true" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="15" />
+        <state relative-caret-position="17">
+          <caret line="15" column="31" lean-forward="true" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
