@@ -56,44 +56,45 @@ include CMakeFiles/opencv.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/opencv.dir/flags.make
 
-CMakeFiles/opencv.dir/main.cpp.obj: CMakeFiles/opencv.dir/flags.make
-CMakeFiles/opencv.dir/main.cpp.obj: CMakeFiles/opencv.dir/includes_CXX.rsp
-CMakeFiles/opencv.dir/main.cpp.obj: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\lyh\code\openCV\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/opencv.dir/main.cpp.obj"
-	C:\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\opencv.dir\main.cpp.obj -c E:\lyh\code\openCV\main.cpp
+CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj: CMakeFiles/opencv.dir/flags.make
+CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj: CMakeFiles/opencv.dir/includes_CXX.rsp
+CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj: ../histogramsMatch/hsHist.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\lyh\code\openCV\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj"
+	C:\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\opencv.dir\histogramsMatch\hsHist.cpp.obj -c E:\lyh\code\openCV\histogramsMatch\hsHist.cpp
 
-CMakeFiles/opencv.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/opencv.dir/main.cpp.i"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\lyh\code\openCV\main.cpp > CMakeFiles\opencv.dir\main.cpp.i
+CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\lyh\code\openCV\histogramsMatch\hsHist.cpp > CMakeFiles\opencv.dir\histogramsMatch\hsHist.cpp.i
 
-CMakeFiles/opencv.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/opencv.dir/main.cpp.s"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\lyh\code\openCV\main.cpp -o CMakeFiles\opencv.dir\main.cpp.s
+CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\lyh\code\openCV\histogramsMatch\hsHist.cpp -o CMakeFiles\opencv.dir\histogramsMatch\hsHist.cpp.s
 
 # Object files for target opencv
 opencv_OBJECTS = \
-"CMakeFiles/opencv.dir/main.cpp.obj"
+"CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj"
 
 # External object files for target opencv
 opencv_EXTERNAL_OBJECTS =
 
-opencv.exe: CMakeFiles/opencv.dir/main.cpp.obj
+opencv.exe: CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj
 opencv.exe: CMakeFiles/opencv.dir/build.make
-opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_gapi452.dll.a
-opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_highgui452.dll.a
-opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_ml452.dll.a
-opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_objdetect452.dll.a
-opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_photo452.dll.a
-opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_stitching452.dll.a
-opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_video452.dll.a
-opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_videoio452.dll.a
-opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_dnn452.dll.a
-opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_imgcodecs452.dll.a
-opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_calib3d452.dll.a
-opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_features2d452.dll.a
-opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_flann452.dll.a
-opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_imgproc452.dll.a
-opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_core452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
+opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
 opencv.exe: CMakeFiles/opencv.dir/linklibs.rsp
 opencv.exe: CMakeFiles/opencv.dir/objects1.rsp
 opencv.exe: CMakeFiles/opencv.dir/link.txt

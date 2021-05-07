@@ -6,26 +6,10 @@
 
 #IncludeRegexTransform: 
 
-E:/lyh/code/openCV/cFunction.h
-
-E:/lyh/code/openCV/main.cpp
+E:/lyh/code/openCV/histogramsMatch/hsHist.cpp
+opencv2/opencv.hpp
+-
 iostream
--
-opencv2/opencv.hpp
--
-cFunction.h
-E:/lyh/code/openCV/cFunction.h
-operate.cpp
-E:/lyh/code/openCV/operate.cpp
-
-E:/lyh/code/openCV/operate.cpp
-opencv2/opencv.hpp
--
-String
--
-cstdlib
--
-ctime
 -
 
 E:/lyh/opencv/opencv/mingw-build/cv_cpu_config.h

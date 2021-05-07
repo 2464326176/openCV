@@ -16,17 +16,29 @@ ADD_DEFINITIONS(
 #寻找OpenCV库
 find_package(OpenCV REQUIRED)
 
-
 message(STATUS "OpenCV library status:")
 message(STATUS "    config: ${OpenCV_DIR}")
 message(STATUS "    version: ${OpenCV_VERSION}")
 message(STATUS "    libraries: ${OpenCV_LIBS}")
 message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
 
-
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(opencv main.cpp)
+
+#imageTransformation/canny.cpp
+#imageTransformation/sobel.cpp
+#imageTransformation/laplacian.cpp
+#imageTransformation/scharr.cpp
+#imageTransformation/trans.cpp
+#imageTransformation/remap.cpp
+#imageTransformation/equalizehist.cpp
+#imageSegmentation/findOutline.cpp
+#imageSegmentation/Segmentation.cpp
+
+#histogramsMatch/calcHist.cpp
+#histogramsMatch/equalizeHist.cpp
+#histogramsMatch/calcHist.cpp
+add_executable(opencv     histogramsMatch/hsHist.cpp)
 
 #添加动态链接库
 target_link_libraries(opencv PRIVATE ${OpenCV_LIBS})

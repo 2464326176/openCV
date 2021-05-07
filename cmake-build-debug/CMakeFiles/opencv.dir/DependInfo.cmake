@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "E:/lyh/code/openCV/main.cpp" "E:/lyh/code/openCV/cmake-build-debug/CMakeFiles/opencv.dir/main.cpp.obj"
+  "E:/lyh/code/openCV/histogramsMatch/hsHist.cpp" "E:/lyh/code/openCV/cmake-build-debug/CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -33,9 +33,10 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "E:/lyh/opencv/opencv/sources/modules/highgui/include"
   "E:/lyh/opencv/opencv/sources/modules/objdetect/include"
   "E:/lyh/opencv/opencv/sources/modules/stitching/include"
-  "E:/lyh/opencv/opencv/sources/modules/ts/include"
   "E:/lyh/opencv/opencv/sources/modules/video/include"
   "E:/lyh/opencv/opencv/sources/modules/gapi/include"
+  "E:/lyh/opencv/opencv/sources/modules/world/include"
+  "E:/lyh/opencv/opencv/sources/modules/ts/include"
   )
 
 # Targets to which this target links.

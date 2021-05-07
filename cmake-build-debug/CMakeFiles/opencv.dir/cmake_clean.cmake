@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/opencv.dir/main.cpp.obj"
+  "CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj"
   "opencv.pdb"
   "opencv.exe"
   "opencv.exe.manifest"

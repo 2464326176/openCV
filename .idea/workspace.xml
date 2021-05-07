@@ -11,8 +11,433 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="69100b37-431a-43ef-a2e4-7251f830b354" name="Default Changelist" comment="">
+    <list default="true" id="69100b37-431a-43ef-a2e4-7251f830b354" name="Default Changelist" comment="opencv image histtogram transform and segmentation">
+      <change afterPath="$PROJECT_DIR$/basicDrawing.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/cFunction.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/create_mask.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/histogramsMatch/equalizeHist.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/imageSegmentation/findOutline.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/imageTransformation/canny.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/imageTransformation/equalizehist.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/imageTransformation/remap.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/imageTransformation/scharr.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/imageTransformation/sobel.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/imageTransformation/trans.cpp.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/cFunction.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/count_mat.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/3calibration.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/application_trace.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/asift.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/bgfg_segm.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/calibration.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/camshiftdemo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/cloning_demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/cloning_gui.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/connected_components.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/contours2.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/convexhull.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/cout_mat.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/create_mask.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/dbt_face_detection.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/delaunay2.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/demhist.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/detect_blob.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/detect_mser.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/dft.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/digits_lenet.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/digits_svm.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/dis_opticalflow.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/distrans.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/drawing.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/edge.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/ela.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/em.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/epipolar_lines.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/essential_mat_reconstr.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/example_cmake/.example.cpp.swp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/example_cmake/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/example_cmake/Makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/example_cmake/example.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/example_cmake/example.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/example_cmake/opencv_example" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/facedetect.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/facial_features.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/falsecolor.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/fback.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/ffilldemo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/filestorage.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/fitellipse.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/flann_search_dataset.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/grabcut.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/image_alignment.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/imagelist_creator.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/imagelist_reader.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/inpaint.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/intelligent_scissors.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/intersectExample.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/kalman.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/kmeans.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/laplace.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/letter_recog.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/lkdemo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/logistic_regression.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/mask_tmpl.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/matchmethod_orb_akaze_brisk.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/minarea.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/morphology2.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/neural_network.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/npr_demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/opencv_version.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/pca.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/peopledetect.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/phase_corr.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/points_classifier.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/polar_transforms.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/qrcode.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/segment_objects.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/select3dobj.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/simd_basic.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/smiledetect.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/squares.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/stereo_calib.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/stereo_match.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/stitching.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/stitching_detailed.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/text_skewness_correction.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/train_HOG.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/train_svmsgd.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/travelsalesman.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tree_engine.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/HighGUI/AddingImagesTrackbar.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/HighGUI/BasicLinearTransformsTrackbar.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/Histograms_Matching/EqualizeHist_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/Histograms_Matching/MatchTemplate_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/Histograms_Matching/calcBackProject_Demo1.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/Histograms_Matching/calcBackProject_Demo2.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/Histograms_Matching/calcHist_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/Histograms_Matching/compareHist_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/BasicLinearTransforms.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/HitMiss/HitMiss.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/Morphology_1.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/Morphology_2.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/Pyramids/Pyramids.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/Smoothing/Smoothing.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/Threshold.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/Threshold_inRange.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/anisotropic_image_segmentation/anisotropic_image_segmentation.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/basic_drawing/Drawing_1.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/basic_drawing/Drawing_2.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/changing_contrast_brightness_image/changing_contrast_brightness_image.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/morph_lines_detection/Morphology_3.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/motion_deblur_filter/motion_deblur_filter.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/out_of_focus_deblur_filter/out_of_focus_deblur_filter.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgProc/periodic_noise_removing_filter/periodic_noise_removing_filter.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgTrans/CannyDetector_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgTrans/Geometric_Transforms_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgTrans/HoughCircle_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgTrans/HoughLines_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgTrans/Laplace_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgTrans/Remap_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgTrans/Sobel_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgTrans/copyMakeBorder_demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgTrans/filter2D_demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgTrans/houghcircles.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgTrans/houghlines.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ImgTrans/imageSegmentation.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ShapeDescriptors/findContours_demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ShapeDescriptors/generalContours_demo1.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ShapeDescriptors/generalContours_demo2.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ShapeDescriptors/hull_demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ShapeDescriptors/moments_demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ShapeDescriptors/pointPolygonTest_demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/TrackingMotion/cornerDetector_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/TrackingMotion/cornerHarris_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/TrackingMotion/cornerSubPix_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/TrackingMotion/goodFeaturesToTrack_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/camera_calibration/VID5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/camera_calibration/camera_calibration.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/camera_calibration/in_VID5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/camera_calibration/out_camera_data.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/Data/box.mp4" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/Data/box.ply" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/Data/cookies_ORB.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/Data/resized_IMG_3875.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/CsvReader.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/CsvReader.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/CsvWriter.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/CsvWriter.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/Mesh.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/Mesh.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/Model.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/Model.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/ModelRegistration.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/ModelRegistration.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/PnPProblem.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/PnPProblem.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/RobustMatcher.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/RobustMatcher.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/Utils.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/Utils.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/main_detection.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/calib3d/real_time_pose_estimation/src/main_registration.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/compatibility/compatibility_test.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/core/AddingImages/1.c" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/core/AddingImages/AddingImages.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/core/AddingImages/AddingImages.o" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/core/AddingImages/Makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/core/AddingImages/a.out" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/core/AddingImages/opencv_example" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/core/discrete_fourier_transform/discrete_fourier_transform.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/core/file_input_output/file_input_output.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/core/how_to_scan_images/how_to_scan_images.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/core/how_to_use_OpenCV_parallel_for_/how_to_use_OpenCV_parallel_for_.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/core/makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/core/mat_mask_operations/mat_mask_operations.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/core/mat_operations/mat_operations.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/core/mat_the_basic_image_container/mat_the_basic_image_container.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/features2D/AKAZE_match.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/features2D/AKAZE_tracking/planar_tracking.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/features2D/AKAZE_tracking/stats.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/features2D/AKAZE_tracking/utils.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/features2D/Homography/decompose_homography.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/features2D/Homography/homography_from_camera_displacement.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/features2D/Homography/panorama_stitching_rotating_camera.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/features2D/Homography/perspective_correction.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/features2D/Homography/pose_from_homography.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/features2D/feature_description/SURF_matching_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/features2D/feature_detection/SURF_detection_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/features2D/feature_flann_matcher/SURF_FLANN_matching_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/features2D/feature_homography/SURF_FLANN_matching_homography_Demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/gapi/age_gender_emotion_recognition/age_gender_emotion_recognition.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/gapi/face_beautification/face_beautification.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/gapi/porting_anisotropic_image_segmentation/porting_anisotropic_image_segmentation_gapi.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/gapi/porting_anisotropic_image_segmentation/porting_anisotropic_image_segmentation_gapi_fluid.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/gapi/security_barrier_camera/security_barrier_camera.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/gpu/gpu-basics-similarity/gpu-basics-similarity.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/gpu/gpu-thrust-interop/CMakeLists.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/gpu/gpu-thrust-interop/Thrust_interop.hpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/gpu/gpu-thrust-interop/main.cu" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/imgcodecs/GDAL_IO/gdal-image.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/introduction/display_image/display_image.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/introduction/documentation/documentation.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/introduction/windows_visual_studio_opencv/introduction_windows_vs.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ml/introduction_to_pca/introduction_to_pca.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ml/introduction_to_svm/introduction_to_svm.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/ml/non_linear_svms/non_linear_svms.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/objectDetection/objectDetection.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/photo/decolorization/decolor.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/photo/hdr_imaging/hdr_imaging.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/photo/non_photorealistic_rendering/npr_demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/photo/seamless_cloning/cloning_demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/photo/seamless_cloning/cloning_gui.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/snippets/core_mat_checkVector.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/snippets/core_merge.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/snippets/core_reduce.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/snippets/core_split.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/snippets/core_various.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/snippets/imgcodecs_imwrite.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/snippets/imgproc_HoughLinesCircles.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/snippets/imgproc_HoughLinesP.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/snippets/imgproc_HoughLinesPointSet.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/snippets/imgproc_applyColorMap.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/snippets/imgproc_calcHist.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/snippets/imgproc_drawContours.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/snippets/imgproc_segmentation.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/video/bg_sub.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/video/meanshift/camshift.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/video/meanshift/meanshift.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/video/optical_flow/optical_flow.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/video/optical_flow/optical_flow_dense.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/videoio/orbbec_astra/orbbec_astra.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/videoio/video-input-psnr-ssim/video-input-psnr-ssim.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/videoio/video-write/video-write.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/tutorial_code/xfeatures2D/LATCH_match.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/videocapture_basic.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/videocapture_camera.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/videocapture_gphoto2_autofocus.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/videocapture_gstreamer_pipeline.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/videocapture_image_sequence.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/videocapture_intelperc.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/videocapture_openni.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/videocapture_starter.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/videowriter_basic.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/warpPerspective_demo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cpp/watershed.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/create_mask.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/displayImage.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/distrans.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ffillldemo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/histogramsMatch/calcHist.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/histogramsMatch/equalizeHist.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/histogramsMatch/hsHist.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imageSegmentation/Segmentation.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imageSegmentation/findOutline.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imageTransformation/canny.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imageTransformation/equalizehist.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imageTransformation/laplacian.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imageTransformation/remap.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imageTransformation/scharr.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imageTransformation/sobel.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imageTransformation/trans.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/imreadRaw.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/inputVideo.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/makefile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mat.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readImg.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/readPic.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/Blender_Suzanne1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/Blender_Suzanne2.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/H1to3p.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/HappyFish.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/LinuxLogo.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/Megamind.avi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/Megamind_bugy.avi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/WindowsLogo.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/aero1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/aero3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/aloeGT.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/aloeL.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/aloeR.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/alphabet_36.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/alphabet_94.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/apple.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/baboon.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/basketball1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/basketball2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/blox.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/board.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/box.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/box_in_scene.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/building.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/butterfly.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/calibration.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/cards.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/chessboard.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/chicky_512.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/data01.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/detect_blob.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/digits.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/dnn/action_recongnition_kinetics.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/dnn/classification_classes_ILSVRC2012.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/dnn/enet-classes.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/dnn/object_detection_classes_coco.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/dnn/object_detection_classes_pascal_voc.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/dnn/object_detection_classes_yolov3.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/ela_modified.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/ela_original.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/ellipses.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/essential_mat_data.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/fruits.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/gradient.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/graf1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/graf3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/home.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/imageTextN.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/imageTextR.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/intrinsics.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/left.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/left01.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/left02.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/left03.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/left04.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/left05.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/left06.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/left07.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/left08.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/left09.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/left11.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/left12.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/left13.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/left14.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/left_intrinsics.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/lena.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/lena_tmpl.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/letter-recognition.data" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/leuvenA.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/leuvenB.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/licenseplate_motion.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/mask.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/messi5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/ml.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/notes.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/opencv-logo-white.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/opencv-logo.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/orange.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/pca_test1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/pic1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/pic2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/pic3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/pic4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/pic5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/pic6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/right.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/right01.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/right02.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/right03.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/right04.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/right05.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/right06.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/right07.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/right08.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/right09.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/right11.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/right12.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/right13.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/right14.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/rubberwhale1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/rubberwhale2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/smarties.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/squirrel_cls.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/starry_night.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/stereo_calib.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/stuff.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/sudoku.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/templ.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/text_defocus.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/text_motion.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/tmpl.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/tree.avi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/data/vtest.avi" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/woman.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/raw/1.ARW" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/raw/2.ARW" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/raw/3.ARW" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/raw/4.ARW" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/raw/5.ARW" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/raw/6.ARW" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/raw/7.ARW" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/raw/8.ARW" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/raw/9.ARW" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/test.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/text_detection.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cFunction.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cFunction.h" beforeDir="false" afterPath="$PROJECT_DIR$/common/cFunction.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/includes_CXX.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/includes_CXX.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/linklibs.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/linklibs.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/main.cpp.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/main.cpp.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/objects.a" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/objects.a" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/objects1.rsp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/opencv.dir/objects1.rsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/opencv.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/opencv.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/opencv.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/opencv.exe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/draw.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,23 +452,76 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/main.cpp">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="15" column="31" lean-forward="true" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
+            <state relative-caret-position="179">
+              <caret line="28" column="30" lean-forward="true" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imageSegmentation/findOutline.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="132">
+              <caret line="6" selection-start-line="6" selection-end-line="11" selection-end-column="20" />
               <folding>
-                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#91#110#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stringfwd.h">
+        <entry file="file://$PROJECT_DIR$/imageSegmentation/Segmentation.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
-              <caret line="73" column="32" selection-start-line="73" selection-start-column="32" selection-end-line="73" selection-end-column="32" />
+            <state relative-caret-position="66">
+              <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/histogramsMatch/calcHist.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="308">
+              <caret line="26" column="9" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
+              <folding>
+                <element signature="e#91#110#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/distrans.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2456">
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/histogramsMatch/hsHist.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="344">
+              <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
+              <folding>
+                <element signature="e#91#120#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/histogramsMatch/equalizeHist.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="132">
+              <caret line="6" selection-start-line="6" selection-end-line="9" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -51,77 +529,29 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/imgproc/include/opencv2/imgproc.hpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="145">
-              <caret line="4692" column="7" selection-start-line="4692" selection-start-column="7" selection-end-line="4692" selection-end-column="7" />
+            <state relative-caret-position="183">
+              <caret line="812" column="4" selection-start-line="812" selection-start-column="4" selection-end-line="812" selection-end-column="4" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/operate.cpp">
+        <entry file="file://C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_vector.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-36">
-              <caret line="37" column="52" lean-forward="true" selection-start-line="37" selection-start-column="52" selection-end-line="37" selection-end-column="52" />
+            <state relative-caret-position="8206">
+              <caret line="373" column="20" selection-start-line="373" selection-start-column="14" selection-end-line="373" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imageTransformation/scharr.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="19" selection-start-line="19" selection-end-line="20" selection-end-column="38" />
               <folding>
-                <element signature="e#93#122#0" expanded="true" />
+                <element signature="e#91#110#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/drawing.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1980">
-              <caret line="129" column="25" selection-start-line="129" selection-start-column="25" selection-end-line="129" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/draw.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="97" column="13" lean-forward="true" selection-start-line="97" selection-start-column="13" selection-end-line="97" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
-              <caret line="26" column="26" lean-forward="true" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cFunction.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="14" selection-start-line="14" selection-end-line="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/camShift.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2222">
-              <caret line="43" selection-start-line="43" selection-end-line="47" selection-end-column="18" />
-              <folding>
-                <element signature="e#92#127#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/highgui/include/opencv2/highgui.hpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="134">
-              <caret line="186" column="20" selection-start-line="186" selection-start-column="7" selection-end-line="186" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -133,8 +563,13 @@
       <find>\</find>
       <find>EVENT_LBUTTONDOWN</find>
       <find>onMouse</find>
-      <find>srcImg</find>
       <find>onMouseHandle</find>
+      <find>srcImg</find>
+      <find>div</find>
+      <find>trackbar_type</find>
+      <find>MorphTypes</find>
+      <find>main</find>
+      <find>ADD_DEFINITIONS</find>
     </findStrings>
     <replaceStrings>
       <replace>/</replace>
@@ -148,23 +583,37 @@
       <list>
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/drawing.cpp" />
-        <option value="$PROJECT_DIR$/cFunction.cpp" />
-        <option value="$PROJECT_DIR$/cFunction.h" />
         <option value="$PROJECT_DIR$/alpha.cpp" />
         <option value="$PROJECT_DIR$/camShift.cpp" />
         <option value="$PROJECT_DIR$/draw.cpp" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/operate.cpp" />
+        <option value="$PROJECT_DIR$/cFunction.h" />
+        <option value="$PROJECT_DIR$/cFunction.cpp" />
+        <option value="$PROJECT_DIR$/create_mask.cpp" />
+        <option value="$PROJECT_DIR$/makefile" />
+        <option value="$PROJECT_DIR$/imageTransformation/canny.cpp" />
+        <option value="$PROJECT_DIR$/imageTransformation/sobel.cpp" />
         <option value="$PROJECT_DIR$/main.cpp" />
+        <option value="$PROJECT_DIR$/imageTransformation/laplacian.cpp" />
+        <option value="$PROJECT_DIR$/imageTransformation/scharr.cpp" />
+        <option value="$PROJECT_DIR$/imageTransformation/trans.cpp" />
+        <option value="$PROJECT_DIR$/imageTransformation/remap.cpp" />
+        <option value="$PROJECT_DIR$/imageTransformation/equalizehist.cpp" />
+        <option value="$PROJECT_DIR$/imageSegmentation/findOutline.cpp" />
+        <option value="$PROJECT_DIR$/imageSegmentation/Segmentation.cpp" />
+        <option value="$PROJECT_DIR$/histogramsMatch/equalizeHist.cpp" />
+        <option value="$PROJECT_DIR$/histogramsMatch/calcHist.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/histogramsMatch/hsHist.cpp" />
       </list>
     </option>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="304" />
-    <option name="y" value="321" />
-    <option name="width" value="814" />
-    <option name="height" value="576" />
+    <option name="x" value="294" />
+    <option name="y" value="84" />
+    <option name="width" value="1289" />
+    <option name="height" value="895" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -182,6 +631,10 @@
               <item name="opencv" type="b2602c69:ProjectViewProjectNode" />
               <item name="openCV" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="opencv" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -191,15 +644,20 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/create_mask.cpp" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="E:\lyh\code\openCV\static\img" />
       <recent name="E:\lyh\code\openCV" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\lyh\code\openCV\static" />
+      <recent name="E:\lyh\code\openCV\static\img" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -215,7 +673,7 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration name="opencv" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="opencv" TARGET_NAME="opencv" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="opencv" RUN_TARGET_NAME="opencv">
+    <configuration name="opencv" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="opencv" RUN_TARGET_NAME="opencv" EXPLICIT_BUILD_TARGET_NAME="all">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -234,7 +692,28 @@
       <workItem from="1619108565242" duration="2294000" />
       <workItem from="1619110975763" duration="1531000" />
       <workItem from="1619116765069" duration="44000" />
-      <workItem from="1619192760955" duration="18726000" />
+      <workItem from="1619192760955" duration="24742000" />
+      <workItem from="1619358929760" duration="3979000" />
+      <workItem from="1619369862144" duration="219000" />
+      <workItem from="1619445364060" duration="107000" />
+      <workItem from="1619447772151" duration="3874000" />
+      <workItem from="1619534997651" duration="4729000" />
+      <workItem from="1619621618158" duration="2848000" />
+      <workItem from="1619711373773" duration="908000" />
+      <workItem from="1619944110696" duration="53000" />
+      <workItem from="1619945482033" duration="968000" />
+      <workItem from="1619970495038" duration="10210000" />
+      <workItem from="1620112882694" duration="5191000" />
+      <workItem from="1620305739678" duration="13000" />
+      <workItem from="1620305850353" duration="53000" />
+      <workItem from="1620305999451" duration="727000" />
+      <workItem from="1620307125891" duration="403000" />
+      <workItem from="1620307543873" duration="46000" />
+      <workItem from="1620307601641" duration="34000" />
+      <workItem from="1620308053622" duration="314000" />
+      <workItem from="1620308388798" duration="33000" />
+      <workItem from="1620308602297" duration="2133000" />
+      <workItem from="1620396709264" duration="4773000" />
     </task>
     <task id="LOCAL-00001" summary="opencv 学习整理">
       <created>1619268029783</created>
@@ -243,11 +722,18 @@
       <option name="project" value="LOCAL" />
       <updated>1619268029783</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="opencv 学习整理">
+      <created>1619268863083</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1619268863083</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22595000" />
+    <option name="totallyTimeSpent" value="70226000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -259,25 +745,26 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="304" y="321" width="814" height="576" extended-state="1" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2055703" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11727079" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.6968326" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.1691974" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49915826" weight="0.14316703" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.33809" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.32947233" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32932165" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Messages" order="8" weight="0.36225596" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info active="true" anchor="bottom" id="Messages" order="8" sideWeight="0.49915826" visible="true" weight="0.30802602" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3227223" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50084174" side_tool="true" weight="0.36194563" />
       <window_info anchor="bottom" id="Version Control" order="11" />
-      <window_info anchor="bottom" id="CMake" order="12" />
+      <window_info anchor="bottom" id="CMake" order="12" weight="0.34796926" />
+      <window_info anchor="bottom" id="Thumbnails" order="13" weight="0.037199125" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -285,20 +772,20 @@
       <window_info anchor="right" id="Database" order="4" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1359275" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.0804904" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.329718" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49915826" weight="0.15184382" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.22234273" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32947233" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Messages" order="8" weight="0.37635574" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info active="true" anchor="bottom" id="Messages" order="8" sideWeight="0.49915826" visible="true" weight="0.35900217" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.329718" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50084174" side_tool="true" weight="0.36194563" />
       <window_info anchor="bottom" id="Version Control" order="11" />
       <window_info anchor="bottom" id="CMake" order="12" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -313,98 +800,140 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="opencv 学习整理" />
-    <option name="LAST_COMMIT_MESSAGE" value="opencv 学习整理" />
+    <MESSAGE value="opencv image histtogram transform and segmentation" />
+    <option name="LAST_COMMIT_MESSAGE" value="opencv image histtogram transform and segmentation" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/img/gril.jpg">
+    <entry file="file://$PROJECT_DIR$/static/data/aero1.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/mingw64-opencv-build/mingw-build/modules/video/Makefile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="124" lean-forward="true" selection-start-line="124" selection-end-line="124" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../opencv/opencv/build/include/opencv2/highgui.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="48">
-          <caret line="317" column="18" selection-start-line="317" selection-start-column="18" selection-end-line="317" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../opencv/opencv/build/include/opencv2/imgcodecs.hpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="205" column="17" selection-start-line="205" selection-start-column="17" selection-end-line="205" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/img/yuhang.jpg">
+    <entry file="file://$PROJECT_DIR$/static/data/WindowsLogo.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/core/include/opencv2/core/version.hpp">
+    <entry file="file://$PROJECT_DIR$/static/data/LinuxLogo.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/data/aloeR.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/data/apple.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/operate.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="18" column="8" selection-start-line="18" selection-start-column="8" selection-end-line="18" selection-end-column="8" />
+        <state relative-caret-position="814">
+          <caret line="37" column="52" selection-start-line="37" selection-start-column="52" selection-end-line="37" selection-end-column="52" />
+          <folding>
+            <element signature="e#93#122#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/core/include/opencv2/core/matx.hpp">
+    <entry file="file://$PROJECT_DIR$/draw.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="410" column="22" selection-start-line="410" selection-start-column="22" selection-end-line="410" selection-end-column="22" />
+        <state relative-caret-position="2134">
+          <caret line="97" column="13" selection-start-line="97" selection-start-column="13" selection-end-line="97" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/imgcodecs/include/opencv2/imgcodecs.hpp">
+    <entry file="file://$PROJECT_DIR$/drawing.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="70" column="23" selection-start-line="70" selection-start-column="7" selection-end-line="70" selection-end-column="23" />
+        <state relative-caret-position="424">
+          <caret line="186" selection-start-line="186" selection-end-line="187" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/core/include/opencv2/core/cvdef.h">
+    <entry file="file://$PROJECT_DIR$/static/data/stuff.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/core/include/opencv2/core/utility.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="784" selection-start-line="784" selection-end-line="784" />
+        <state relative-caret-position="24970">
+          <caret line="1135" column="62" selection-start-line="1135" selection-start-column="62" selection-end-line="1135" selection-end-column="62" />
+          <folding>
+            <element signature="e#38438#38487#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
+    <entry file="file://C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/basic_string.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="12" selection-start-line="4" selection-start-column="12" selection-end-line="4" selection-end-column="12" />
+        <state relative-caret-position="9218">
+          <caret line="419" column="6" selection-start-line="419" selection-start-column="6" selection-end-line="419" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/mingw64/x86_64-w64-mingw32/include/stdlib.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="946">
+          <caret line="43" column="8" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/core/include/opencv2/core/hal/interface.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1100">
+          <caret line="50" column="25" selection-start-line="50" selection-start-column="25" selection-end-line="50" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/create_mask.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1760">
+          <caret line="80" column="1" selection-start-line="80" selection-start-column="1" selection-end-line="80" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/core/include/opencv2/core.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2279">
-          <caret line="2781" column="17" selection-start-line="2781" selection-start-column="17" selection-end-line="2781" selection-end-column="17" />
+        <state relative-caret-position="50864">
+          <caret line="2312" column="18" selection-start-line="2312" selection-start-column="18" selection-end-line="2312" selection-end-column="18" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cFunction.cpp">
+    <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/core/include/opencv2/core/mat.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32208">
+          <caret line="1464" column="17" selection-start-line="1464" selection-start-column="17" selection-end-line="1464" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/alpha.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/cmake_install.cmake">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cpp/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
-          <caret line="8" column="31" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+          <caret line="44" column="17" selection-start-line="44" selection-start-column="17" selection-end-line="44" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/mingw64/x86_64-w64-mingw32/include/time.h">
+    <entry file="file://$PROJECT_DIR$/test.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="224" column="33" selection-start-line="224" selection-start-column="28" selection-end-line="224" selection-end-column="33" />
+        <state relative-caret-position="242">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/alpha.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-249">
+        <state relative-caret-position="417">
           <caret line="67" selection-start-line="67" selection-end-line="70" />
           <folding>
             <element signature="e#93#112#0" expanded="true" />
@@ -412,91 +941,219 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/core/include/opencv2/core/types.hpp">
+    <entry file="file://$PROJECT_DIR$/cFunction.cpp" />
+    <entry file="file://$PROJECT_DIR$/cFunction.h" />
+    <entry file="file://$PROJECT_DIR$/makefile">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4407">
-          <caret line="461" column="15" selection-start-line="461" selection-start-column="15" selection-end-line="461" selection-end-column="15" />
+        <state relative-caret-position="176">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/img/woman.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/img/gril.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/img/yuhang.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/Makefile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="431">
+          <caret line="125" selection-end-line="177" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/opencv.cbp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1985">
+          <caret line="124" selection-start-line="124" selection-end-line="124" />
           <folding>
-            <element signature="e#5324#5338#0" expanded="true" />
+            <element signature="e#135#165#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/highgui/include/opencv2/highgui.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="134">
-          <caret line="186" column="20" selection-start-line="186" selection-start-column="7" selection-end-line="186" selection-end-column="20" />
+        <state relative-caret-position="368">
+          <caret line="363" selection-start-line="363" selection-end-line="363" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cFunction.h">
+    <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/core/include/opencv2/core/types.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="37048">
+          <caret line="1684" selection-start-line="1684" selection-end-line="1684" />
+          <folding>
+            <element signature="e#5324#5338#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/core/include/opencv2/core/mat.inl.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24882">
+          <caret line="1131" selection-start-line="1131" selection-end-line="1131" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imageTransformation/laplacian.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" selection-start-line="6" selection-end-line="35" selection-end-column="1" />
+          <folding>
+            <element signature="e#92#111#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imageTransformation/remap.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="32" column="5" selection-start-line="32" selection-start-column="5" selection-end-line="32" selection-end-column="5" />
+          <folding>
+            <element signature="e#91#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imageTransformation/canny.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="9" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imageTransformation/sobel.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+          <folding>
+            <element signature="e#91#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/imgcodecs/include/opencv2/imgcodecs.hpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1562">
+          <caret line="71" column="7" selection-start-line="71" selection-start-column="7" selection-end-line="71" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imageTransformation/trans.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" selection-start-line="6" selection-end-line="11" selection-end-column="20" />
+          <folding>
+            <element signature="e#91#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imageTransformation/equalizehist.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="264">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+          <folding>
+            <element signature="e#91#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imageSegmentation/findOutline.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" selection-start-line="6" selection-end-line="11" selection-end-column="20" />
+          <folding>
+            <element signature="e#91#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imageSegmentation/Segmentation.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="2" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stl_vector.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8206">
+          <caret line="373" column="20" selection-start-line="373" selection-start-column="14" selection-end-line="373" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imageTransformation/scharr.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="19" selection-start-line="19" selection-end-line="20" selection-end-column="38" />
+          <folding>
+            <element signature="e#91#110#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/distrans.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2456">
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/histogramsMatch/calcHist.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/camShift.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2222">
-          <caret line="43" selection-start-line="43" selection-end-line="47" selection-end-column="18" />
+          <caret line="26" column="9" selection-start-line="26" selection-start-column="9" selection-end-line="26" selection-end-column="9" />
           <folding>
-            <element signature="e#92#127#0" expanded="true" />
+            <element signature="e#91#110#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../opencv/opencv/sources/modules/imgproc/include/opencv2/imgproc.hpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="4692" column="7" selection-start-line="4692" selection-start-column="7" selection-end-line="4692" selection-end-column="7" />
+        <state relative-caret-position="183">
+          <caret line="812" column="4" selection-start-line="812" selection-start-column="4" selection-end-line="812" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/bits/stringfwd.h">
+    <entry file="file://$PROJECT_DIR$/histogramsMatch/equalizeHist.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
-          <caret line="73" column="32" selection-start-line="73" selection-start-column="32" selection-end-line="73" selection-end-column="32" />
+        <state relative-caret-position="132">
+          <caret line="6" selection-start-line="6" selection-end-line="9" selection-end-column="19" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="26" column="26" lean-forward="true" selection-start-line="26" selection-start-column="26" selection-end-line="26" selection-end-column="26" />
+        <state relative-caret-position="179">
+          <caret line="28" column="30" lean-forward="true" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/draw.cpp">
+    <entry file="file://$PROJECT_DIR$/histogramsMatch/hsHist.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="97" column="13" lean-forward="true" selection-start-line="97" selection-start-column="13" selection-end-line="97" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/drawing.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1980">
-          <caret line="129" column="25" selection-start-line="129" selection-start-column="25" selection-end-line="129" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/operate.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-36">
-          <caret line="37" column="52" lean-forward="true" selection-start-line="37" selection-start-column="52" selection-end-line="37" selection-end-column="52" />
+        <state relative-caret-position="344">
+          <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
           <folding>
-            <element signature="e#93#122#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="15" column="31" lean-forward="true" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#91#120#0" expanded="true" />
           </folding>
         </state>
       </provider>

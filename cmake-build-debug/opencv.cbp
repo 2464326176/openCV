@@ -53,9 +53,10 @@
 					<Add directory="E:/lyh/opencv/opencv/sources/modules/highgui/include"/>
 					<Add directory="E:/lyh/opencv/opencv/sources/modules/objdetect/include"/>
 					<Add directory="E:/lyh/opencv/opencv/sources/modules/stitching/include"/>
-					<Add directory="E:/lyh/opencv/opencv/sources/modules/ts/include"/>
 					<Add directory="E:/lyh/opencv/opencv/sources/modules/video/include"/>
 					<Add directory="E:/lyh/opencv/opencv/sources/modules/gapi/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/world/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/ts/include"/>
 					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
 					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
 					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
@@ -96,9 +97,10 @@
 					<Add directory="E:/lyh/opencv/opencv/sources/modules/highgui/include"/>
 					<Add directory="E:/lyh/opencv/opencv/sources/modules/objdetect/include"/>
 					<Add directory="E:/lyh/opencv/opencv/sources/modules/stitching/include"/>
-					<Add directory="E:/lyh/opencv/opencv/sources/modules/ts/include"/>
 					<Add directory="E:/lyh/opencv/opencv/sources/modules/video/include"/>
 					<Add directory="E:/lyh/opencv/opencv/sources/modules/gapi/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/world/include"/>
+					<Add directory="E:/lyh/opencv/opencv/sources/modules/ts/include"/>
 					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++"/>
 					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/x86_64-w64-mingw32"/>
 					<Add directory="C:/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/8.1.0/include/c++/backward"/>
@@ -124,7 +126,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="E:/lyh/code/openCV/main.cpp">
+		<Unit filename="E:/lyh/code/openCV/histogramsMatch/hsHist.cpp">
 			<Option target="opencv"/>
 		</Unit>
 		<Unit filename="E:/lyh/code/openCV/CMakeLists.txt">

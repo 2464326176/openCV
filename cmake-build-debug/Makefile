@@ -122,32 +122,32 @@ opencv/fast:
 	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/build
 .PHONY : opencv/fast
 
-main.obj: main.cpp.obj
+histogramsMatch/hsHist.obj: histogramsMatch/hsHist.cpp.obj
 
-.PHONY : main.obj
+.PHONY : histogramsMatch/hsHist.obj
 
 # target to build an object file
-main.cpp.obj:
-	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/main.cpp.obj
-.PHONY : main.cpp.obj
+histogramsMatch/hsHist.cpp.obj:
+	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj
+.PHONY : histogramsMatch/hsHist.cpp.obj
 
-main.i: main.cpp.i
+histogramsMatch/hsHist.i: histogramsMatch/hsHist.cpp.i
 
-.PHONY : main.i
+.PHONY : histogramsMatch/hsHist.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/main.cpp.i
-.PHONY : main.cpp.i
+histogramsMatch/hsHist.cpp.i:
+	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.i
+.PHONY : histogramsMatch/hsHist.cpp.i
 
-main.s: main.cpp.s
+histogramsMatch/hsHist.s: histogramsMatch/hsHist.cpp.s
 
-.PHONY : main.s
+.PHONY : histogramsMatch/hsHist.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/main.cpp.s
-.PHONY : main.cpp.s
+histogramsMatch/hsHist.cpp.s:
+	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.s
+.PHONY : histogramsMatch/hsHist.cpp.s
 
 # Help Target
 help:
@@ -158,9 +158,9 @@ help:
 	@echo ... edit_cache
 	@echo ... opencv
 	@echo ... rebuild_cache
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
+	@echo ... histogramsMatch/hsHist.obj
+	@echo ... histogramsMatch/hsHist.i
+	@echo ... histogramsMatch/hsHist.s
 .PHONY : help
 
 
