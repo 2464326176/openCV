@@ -56,28 +56,28 @@ include CMakeFiles/opencv.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/opencv.dir/flags.make
 
-CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj: CMakeFiles/opencv.dir/flags.make
-CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj: CMakeFiles/opencv.dir/includes_CXX.rsp
-CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj: ../histogramsMatch/hsHist.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\lyh\code\openCV\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj"
-	C:\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\opencv.dir\histogramsMatch\hsHist.cpp.obj -c E:\lyh\code\openCV\histogramsMatch\hsHist.cpp
+CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.obj: CMakeFiles/opencv.dir/flags.make
+CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.obj: CMakeFiles/opencv.dir/includes_CXX.rsp
+CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.obj: ../highGui/basicLinerTransformsTrackbar.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=E:\lyh\code\openCV\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.obj"
+	C:\mingw64\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\opencv.dir\highGui\basicLinerTransformsTrackbar.cpp.obj -c E:\lyh\code\openCV\highGui\basicLinerTransformsTrackbar.cpp
 
-CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.i"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\lyh\code\openCV\histogramsMatch\hsHist.cpp > CMakeFiles\opencv.dir\histogramsMatch\hsHist.cpp.i
+CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.i"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E E:\lyh\code\openCV\highGui\basicLinerTransformsTrackbar.cpp > CMakeFiles\opencv.dir\highGui\basicLinerTransformsTrackbar.cpp.i
 
-CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.s"
-	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\lyh\code\openCV\histogramsMatch\hsHist.cpp -o CMakeFiles\opencv.dir\histogramsMatch\hsHist.cpp.s
+CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.s"
+	C:\mingw64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S E:\lyh\code\openCV\highGui\basicLinerTransformsTrackbar.cpp -o CMakeFiles\opencv.dir\highGui\basicLinerTransformsTrackbar.cpp.s
 
 # Object files for target opencv
 opencv_OBJECTS = \
-"CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj"
+"CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.obj"
 
 # External object files for target opencv
 opencv_EXTERNAL_OBJECTS =
 
-opencv.exe: CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj
+opencv.exe: CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.obj
 opencv.exe: CMakeFiles/opencv.dir/build.make
 opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a
 opencv.exe: E:/lyh/opencv/opencv/mingw-build/lib/libopencv_world452.dll.a

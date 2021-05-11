@@ -126,7 +126,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="E:/lyh/code/openCV/histogramsMatch/hsHist.cpp">
+		<Unit filename="E:/lyh/code/openCV/highGui/basicLinerTransformsTrackbar.cpp">
 			<Option target="opencv"/>
 		</Unit>
 		<Unit filename="E:/lyh/code/openCV/CMakeLists.txt">

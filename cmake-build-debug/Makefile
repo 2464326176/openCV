@@ -122,32 +122,32 @@ opencv/fast:
 	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/build
 .PHONY : opencv/fast
 
-histogramsMatch/hsHist.obj: histogramsMatch/hsHist.cpp.obj
+highGui/basicLinerTransformsTrackbar.obj: highGui/basicLinerTransformsTrackbar.cpp.obj
 
-.PHONY : histogramsMatch/hsHist.obj
+.PHONY : highGui/basicLinerTransformsTrackbar.obj
 
 # target to build an object file
-histogramsMatch/hsHist.cpp.obj:
-	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj
-.PHONY : histogramsMatch/hsHist.cpp.obj
+highGui/basicLinerTransformsTrackbar.cpp.obj:
+	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.obj
+.PHONY : highGui/basicLinerTransformsTrackbar.cpp.obj
 
-histogramsMatch/hsHist.i: histogramsMatch/hsHist.cpp.i
+highGui/basicLinerTransformsTrackbar.i: highGui/basicLinerTransformsTrackbar.cpp.i
 
-.PHONY : histogramsMatch/hsHist.i
+.PHONY : highGui/basicLinerTransformsTrackbar.i
 
 # target to preprocess a source file
-histogramsMatch/hsHist.cpp.i:
-	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.i
-.PHONY : histogramsMatch/hsHist.cpp.i
+highGui/basicLinerTransformsTrackbar.cpp.i:
+	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.i
+.PHONY : highGui/basicLinerTransformsTrackbar.cpp.i
 
-histogramsMatch/hsHist.s: histogramsMatch/hsHist.cpp.s
+highGui/basicLinerTransformsTrackbar.s: highGui/basicLinerTransformsTrackbar.cpp.s
 
-.PHONY : histogramsMatch/hsHist.s
+.PHONY : highGui/basicLinerTransformsTrackbar.s
 
 # target to generate assembly for a file
-histogramsMatch/hsHist.cpp.s:
-	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.s
-.PHONY : histogramsMatch/hsHist.cpp.s
+highGui/basicLinerTransformsTrackbar.cpp.s:
+	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.s
+.PHONY : highGui/basicLinerTransformsTrackbar.cpp.s
 
 # Help Target
 help:
@@ -158,9 +158,9 @@ help:
 	@echo ... edit_cache
 	@echo ... opencv
 	@echo ... rebuild_cache
-	@echo ... histogramsMatch/hsHist.obj
-	@echo ... histogramsMatch/hsHist.i
-	@echo ... histogramsMatch/hsHist.s
+	@echo ... highGui/basicLinerTransformsTrackbar.obj
+	@echo ... highGui/basicLinerTransformsTrackbar.i
+	@echo ... highGui/basicLinerTransformsTrackbar.s
 .PHONY : help
 
 

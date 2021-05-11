@@ -6,10 +6,8 @@
 
 #IncludeRegexTransform: 
 
-E:/lyh/code/openCV/histogramsMatch/hsHist.cpp
+E:/lyh/code/openCV/highGui/basicLinerTransformsTrackbar.cpp
 opencv2/opencv.hpp
--
-iostream
 -
 
 E:/lyh/opencv/opencv/mingw-build/cv_cpu_config.h

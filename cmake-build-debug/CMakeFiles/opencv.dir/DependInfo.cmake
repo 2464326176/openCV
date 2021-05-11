@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "E:/lyh/code/openCV/histogramsMatch/hsHist.cpp" "E:/lyh/code/openCV/cmake-build-debug/CMakeFiles/opencv.dir/histogramsMatch/hsHist.cpp.obj"
+  "E:/lyh/code/openCV/highGui/basicLinerTransformsTrackbar.cpp" "E:/lyh/code/openCV/cmake-build-debug/CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

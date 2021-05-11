@@ -38,7 +38,10 @@ set(CMAKE_CXX_STANDARD 11)
 #histogramsMatch/calcHist.cpp
 #histogramsMatch/equalizeHist.cpp
 #histogramsMatch/calcHist.cpp
-add_executable(opencv     histogramsMatch/hsHist.cpp)
+#histogramsMatch/hsHist.cpp
+#histogramsMatch/matchTemplate.cpp
+#histogramsMatch/compareHist.cpp
+add_executable(opencv        highGui/basicLinerTransformsTrackbar.cpp)
 
 #添加动态链接库
 target_link_libraries(opencv PRIVATE ${OpenCV_LIBS})
