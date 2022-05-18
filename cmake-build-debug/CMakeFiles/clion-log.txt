@@ -1,9 +1,32 @@
-"C:\Program Files\JetBrains\CLion 2019.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" E:\lyh\code\openCV
--- OpenCV library status:
---     config: E:/lyh/opencv/opencv/mingw-build
---     version: 4.5.2
---     libraries: opencv_calib3d;opencv_core;opencv_dnn;opencv_features2d;opencv_flann;opencv_gapi;opencv_highgui;opencv_imgcodecs;opencv_imgproc;opencv_ml;opencv_objdetect;opencv_photo;opencv_stitching;opencv_video;opencv_videoio;opencv_world
---     include path: E:/lyh/opencv/opencv/mingw-build;E:/lyh/opencv/opencv/sources/include;E:/lyh/opencv/opencv/sources/modules/core/include;E:/lyh/opencv/opencv/sources/modules/flann/include;E:/lyh/opencv/opencv/sources/modules/imgproc/include;E:/lyh/opencv/opencv/sources/modules/ml/include;E:/lyh/opencv/opencv/sources/modules/photo/include;E:/lyh/opencv/opencv/sources/modules/dnn/include;E:/lyh/opencv/opencv/sources/modules/features2d/include;E:/lyh/opencv/opencv/sources/modules/imgcodecs/include;E:/lyh/opencv/opencv/sources/modules/videoio/include;E:/lyh/opencv/opencv/sources/modules/calib3d/include;E:/lyh/opencv/opencv/sources/modules/highgui/include;E:/lyh/opencv/opencv/sources/modules/objdetect/include;E:/lyh/opencv/opencv/sources/modules/stitching/include;E:/lyh/opencv/opencv/sources/modules/video/include;E:/lyh/opencv/opencv/sources/modules/gapi/include;E:/lyh/opencv/opencv/sources/modules/world/include;E:/lyh/opencv/opencv/sources/modules/ts/include
--- Configuring done
--- Generating done
--- Build files have been written to: E:/lyh/code/openCV/cmake-build-debug
+"D:\lyh\CLion 2021.2.1\bin\cmake\win\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - MinGW Makefiles" D:\lyh\code\openCV
+-- The C compiler identification is GNU 8.1.0
+-- The CXX compiler identification is GNU 8.1.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: D:/lyh/mingw-64/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/gcc.exe - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: D:/lyh/mingw-64/x86_64-8.1.0-release-posix-sjlj-rt_v6-rev0/mingw64/bin/g++.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+CMake Error at CMakeLists.txt:17 (find_package):
+  By not providing "FindOpenCV.cmake" in CMAKE_MODULE_PATH this project has
+  asked CMake to find a package configuration file provided by "OpenCV", but
+  CMake did not find one.
+
+  Could not find a package configuration file provided by "OpenCV" with any
+  of the following names:
+
+    OpenCVConfig.cmake
+    opencv-config.cmake
+
+  Add the installation prefix of "OpenCV" to CMAKE_PREFIX_PATH or set
+  "OpenCV_DIR" to a directory containing one of the above files.  If "OpenCV"
+  provides a separate development package or SDK, be sure it has been
+  installed.
+
+
+-- Configuring incomplete, errors occurred!
+See also "D:/lyh/code/openCV/cmake-build-debug/CMakeFiles/CMakeOutput.log".

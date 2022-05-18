@@ -31,7 +31,6 @@ int main()
     imshow("y", abs_grad_y);
     imshow("x,y", dst);
 
-
     waitKey(0);
     return 0;
 }

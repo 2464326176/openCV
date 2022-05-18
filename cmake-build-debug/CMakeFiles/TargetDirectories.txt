@@ -1,3 +1,0 @@
-E:/lyh/code/openCV/cmake-build-debug/CMakeFiles/edit_cache.dir
-E:/lyh/code/openCV/cmake-build-debug/CMakeFiles/opencv.dir
-E:/lyh/code/openCV/cmake-build-debug/CMakeFiles/rebuild_cache.dir

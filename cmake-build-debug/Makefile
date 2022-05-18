@@ -122,32 +122,32 @@ opencv/fast:
 	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/build
 .PHONY : opencv/fast
 
-highGui/basicLinerTransformsTrackbar.obj: highGui/basicLinerTransformsTrackbar.cpp.obj
+features2D/feature_detection/SURF_detection.obj: features2D/feature_detection/SURF_detection.cpp.obj
 
-.PHONY : highGui/basicLinerTransformsTrackbar.obj
+.PHONY : features2D/feature_detection/SURF_detection.obj
 
 # target to build an object file
-highGui/basicLinerTransformsTrackbar.cpp.obj:
-	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.obj
-.PHONY : highGui/basicLinerTransformsTrackbar.cpp.obj
+features2D/feature_detection/SURF_detection.cpp.obj:
+	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/features2D/feature_detection/SURF_detection.cpp.obj
+.PHONY : features2D/feature_detection/SURF_detection.cpp.obj
 
-highGui/basicLinerTransformsTrackbar.i: highGui/basicLinerTransformsTrackbar.cpp.i
+features2D/feature_detection/SURF_detection.i: features2D/feature_detection/SURF_detection.cpp.i
 
-.PHONY : highGui/basicLinerTransformsTrackbar.i
+.PHONY : features2D/feature_detection/SURF_detection.i
 
 # target to preprocess a source file
-highGui/basicLinerTransformsTrackbar.cpp.i:
-	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.i
-.PHONY : highGui/basicLinerTransformsTrackbar.cpp.i
+features2D/feature_detection/SURF_detection.cpp.i:
+	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/features2D/feature_detection/SURF_detection.cpp.i
+.PHONY : features2D/feature_detection/SURF_detection.cpp.i
 
-highGui/basicLinerTransformsTrackbar.s: highGui/basicLinerTransformsTrackbar.cpp.s
+features2D/feature_detection/SURF_detection.s: features2D/feature_detection/SURF_detection.cpp.s
 
-.PHONY : highGui/basicLinerTransformsTrackbar.s
+.PHONY : features2D/feature_detection/SURF_detection.s
 
 # target to generate assembly for a file
-highGui/basicLinerTransformsTrackbar.cpp.s:
-	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/highGui/basicLinerTransformsTrackbar.cpp.s
-.PHONY : highGui/basicLinerTransformsTrackbar.cpp.s
+features2D/feature_detection/SURF_detection.cpp.s:
+	$(MAKE) -f CMakeFiles\opencv.dir\build.make CMakeFiles/opencv.dir/features2D/feature_detection/SURF_detection.cpp.s
+.PHONY : features2D/feature_detection/SURF_detection.cpp.s
 
 # Help Target
 help:
@@ -158,9 +158,9 @@ help:
 	@echo ... edit_cache
 	@echo ... opencv
 	@echo ... rebuild_cache
-	@echo ... highGui/basicLinerTransformsTrackbar.obj
-	@echo ... highGui/basicLinerTransformsTrackbar.i
-	@echo ... highGui/basicLinerTransformsTrackbar.s
+	@echo ... features2D/feature_detection/SURF_detection.obj
+	@echo ... features2D/feature_detection/SURF_detection.i
+	@echo ... features2D/feature_detection/SURF_detection.s
 .PHONY : help
 
 

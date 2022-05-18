@@ -41,7 +41,11 @@ set(CMAKE_CXX_STANDARD 11)
 #histogramsMatch/hsHist.cpp
 #histogramsMatch/matchTemplate.cpp
 #histogramsMatch/compareHist.cpp
-add_executable(opencv        highGui/basicLinerTransformsTrackbar.cpp)
+#highGui/basicLinerTransformsTrackbar.cpp
+#detectHarris/cornerHarris.cpp
+#detectHarris/harris.cpp
+#waterShed.cpp
+add_executable(opencv     features2D/feature_detection/SURF_detection.cpp)
 
 #添加动态链接库
 target_link_libraries(opencv PRIVATE ${OpenCV_LIBS})

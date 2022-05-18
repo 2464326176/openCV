@@ -126,7 +126,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="E:/lyh/code/openCV/highGui/basicLinerTransformsTrackbar.cpp">
+		<Unit filename="E:/lyh/code/openCV/features2D/feature_detection/SURF_detection.cpp">
 			<Option target="opencv"/>
 		</Unit>
 		<Unit filename="E:/lyh/code/openCV/CMakeLists.txt">
