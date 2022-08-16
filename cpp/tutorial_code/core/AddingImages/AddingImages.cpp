@@ -36,8 +36,8 @@ int main( void )
 
    //![load]
    /// Read images ( both have to be of the same size and type )
-   src1 = imread( samples::findFile("/home/yh/alex/static/opencv_data/LinuxLogo.jpg") );
-   src2 = imread( samples::findFile("/home/yh/alex/static/opencv_data/WindowsLogo.jpg") );
+   src1 = imread( samples::findFile("LinuxLogo.jpg") );
+   src2 = imread( samples::findFile("WindowsLogo.jpg") );
    //![load]
 
    if( src1.empty() ) { cout << "Error loading src1" << endl; return EXIT_FAILURE; }

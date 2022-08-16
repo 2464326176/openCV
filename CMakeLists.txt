@@ -1,19 +1,9 @@
-cmake_minimum_required(VERSION 3.13)
-project(opencv) # Define project name
+cmake_minimum_required(VERSION 3.24)
+project(image)
 
-INCLUDE_DIRECTORIES("E:/lyh/opencv/opencv/mingw-build")
+set(CMAKE_CXX_STANDARD 11)
 
-link_directories("E:/lyh/opencv/opencv/mingw-build/lib")
-
-
-ADD_DEFINITIONS(
-        -O3 -g -W -Wall
-        -Wunused-variable -Wunused-parameter -Wunused-function -Wunused
-        -Wno-deprecated -Woverloaded-virtual -Wwrite-strings
-        -D__WUR= -D_REENTRANT -D_FILE_OFFSET_BITS=64 -DTIXML_USE_STL
-)
-
-#寻找OpenCV库
+set(OpenCV_DIR mingw-build/install)
 find_package(OpenCV REQUIRED)
 
 message(STATUS "OpenCV library status:")
@@ -22,32 +12,10 @@ message(STATUS "    version: ${OpenCV_VERSION}")
 message(STATUS "    libraries: ${OpenCV_LIBS}")
 message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
 
-set(CMAKE_CXX_STANDARD 11)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/units)
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/units SRC_LIST)
+add_subdirectory(imageProcess)
+add_executable(opencv ${SRC_LIST}
+        imageProcess/image/image.cpp)
 
-
-#imageTransformation/canny.cpp
-#imageTransformation/sobel.cpp
-#imageTransformation/laplacian.cpp
-#imageTransformation/scharr.cpp
-#imageTransformation/trans.cpp
-#imageTransformation/remap.cpp
-#imageTransformation/equalizehist.cpp
-#imageSegmentation/findOutline.cpp
-#imageSegmentation/Segmentation.cpp
-
-#histogramsMatch/calcHist.cpp
-#histogramsMatch/equalizeHist.cpp
-#histogramsMatch/calcHist.cpp
-#histogramsMatch/hsHist.cpp
-#histogramsMatch/matchTemplate.cpp
-#histogramsMatch/compareHist.cpp
-#highGui/basicLinerTransformsTrackbar.cpp
-#detectHarris/cornerHarris.cpp
-#detectHarris/harris.cpp
-#waterShed.cpp
-add_executable(opencv     features2D/feature_detection/SURF_detection.cpp)
-
-#添加动态链接库
 target_link_libraries(opencv PRIVATE ${OpenCV_LIBS})
-
-

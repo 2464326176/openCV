@@ -7,7 +7,9 @@
 环境：openCV mingw64 cmake
 
 在ubuntu上学习一段时间感觉挺不方便的，还是windows比较方便操作点，整理了下windows的步骤，给大家分享下
-1.mingw64 下载
+
+## 1.1 mingw64 下载
+
 地址：https://sourceforge.net/projects/mingw-w64/files/
 MinGW-W64 GCC-8.1.0
     x86_64-posix-sjlj
@@ -21,18 +23,35 @@ MinGW-W64 GCC-8.1.0
 可以看到有很多版本，这里要选择 x86_64-posix-sjlj
 POSIX表示可移植操作系统接口(Portable Operating System Interface of UNIX，缩写为 POSIX )
 seh 是新发明的，而 sjlj 则是古老的。seh 性能比较好，但不支持32位。sjlj 稳定性好，支持32位，兼容前面的平台。
-2.camake 自己安装下
 
-3.opencv源码：https://www.bzblog.online/wordpress/index.php/2020/03/09/opencvdownload/
-我选择是4.5.0的，详细的安装步骤：https://blog.huihut.com/2018/07/31/CompiledOpenCVWithMinGW64/
+## 1.2 camake 
+
+https://cmake.org/
+
+## 1.3 opencv源码：
+
+https://github.com/opencv/opencv
+详细的安装步骤：https://blog.huihut.com/2018/07/31/CompiledOpenCVWithMinGW64/
+
+# 二、图像处理（imgproc. Image Processing）
+
+## 图像滤波
+
+抽出对象的特征作为图像识别的特征模式，消除图像数字化所混入的噪音；
+
+方框滤波
+
+均值滤波
+
+高斯滤波
+
+中值滤波
+
+双边滤波
 
 
 
 
-
-## 图像处理
-
-线性滤波：方框滤波、均值滤波、高斯滤波
 
 平滑处理
 

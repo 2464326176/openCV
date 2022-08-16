@@ -4,6 +4,17 @@
 
 #include <list>
 #include <iostream>
+
+
+#if !defined(HAVE_THREADS)
+int main()
+{
+    std::cout << "This sample is built without threading support. Sample code is disabled." << std::endl;
+    return 0;
+}
+#else
+
+
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -25,10 +36,10 @@ struct Frame
 int main()
 {
     //! [Open streams]
-    // Open color stream
-    VideoCapture colorStream(CAP_V4L2);
     // Open depth stream
     VideoCapture depthStream(CAP_OPENNI2_ASTRA);
+    // Open color stream
+    VideoCapture colorStream(0, CAP_V4L2);
     //! [Open streams]
 
     // Check that stream has opened
@@ -200,3 +211,5 @@ int main()
 
     return 0;
 }
+
+#endif

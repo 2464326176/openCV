@@ -33,6 +33,7 @@ if(NOT HAVE_opencv_cudaarithm OR NOT HAVE_opencv_cudafilters)
   ocv_list_filterout(cpp_samples "/gpu/")
 endif()
 ocv_list_filterout(cpp_samples "real_time_pose_estimation/")
+ocv_list_filterout(cpp_samples "parallel_backend/")
 foreach(sample_filename ${cpp_samples})
   set(package "cpp")
   if(sample_filename MATCHES "tutorial_code/snippet")
@@ -55,6 +56,7 @@ foreach(sample_filename ${cpp_samples})
   endif()
   if(HAVE_OPENGL AND sample_filename MATCHES "detect_mser")
     target_compile_definitions(${tgt} PRIVATE HAVE_OPENGL)
+    ocv_target_link_libraries(${tgt} PRIVATE "${OPENGL_LIBRARIES}")
   endif()
   if(sample_filename MATCHES "simd_")
     # disabled intentionally - demonstration purposes only
@@ -66,3 +68,13 @@ foreach(sample_filename ${cpp_samples})
 endforeach()
 
 include("tutorial_code/calib3d/real_time_pose_estimation/CMakeLists.txt" OPTIONAL)
+
+# Standalone samples only
+if(OpenCV_FOUND AND NOT CMAKE_VERSION VERSION_LESS "3.1")
+  add_subdirectory("example_cmake")
+endif()
+if(OpenCV_FOUND AND NOT CMAKE_VERSION VERSION_LESS "3.9"
+    AND NOT OPENCV_EXAMPLES_SKIP_PARALLEL_BACKEND
+)
+  add_subdirectory("tutorial_code/core/parallel_backend")
+endif()

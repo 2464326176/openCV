@@ -225,7 +225,7 @@ static void saveCameraParams( const string& filename,
 
     if( flags != 0 )
     {
-        sprintf( buf, "flags: %s%s%s%s",
+        snprintf( buf, sizeof(buf), "flags: %s%s%s%s",
             flags & CALIB_USE_INTRINSIC_GUESS ? "+use_intrinsic_guess" : "",
             flags & CALIB_FIX_ASPECT_RATIO ? "+fix_aspectRatio" : "",
             flags & CALIB_FIX_PRINCIPAL_POINT ? "+fix_principal_point" : "",
@@ -538,9 +538,9 @@ int main( int argc, char** argv )
         if( mode == CAPTURING )
         {
             if(undistortImage)
-                msg = format( "%d/%d Undist", (int)imagePoints.size(), nframes );
+                msg = cv::format( "%d/%d Undist", (int)imagePoints.size(), nframes );
             else
-                msg = format( "%d/%d", (int)imagePoints.size(), nframes );
+                msg = cv::format( "%d/%d", (int)imagePoints.size(), nframes );
         }
 
         putText( view, msg, textOrigin, 1, 1,

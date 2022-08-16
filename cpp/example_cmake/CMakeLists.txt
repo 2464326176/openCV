@@ -7,6 +7,8 @@ project(opencv_example_project)
 # Find OpenCV, you may need to set OpenCV_DIR variable
 # to the absolute path to the directory containing OpenCVConfig.cmake file
 # via the command line or GUI
+set(OpenCV_DIR D:/lyh/opencv/opencv-4.x/mingw-build)
+
 find_package(OpenCV REQUIRED)
 
 # If the package has been found, several variables will

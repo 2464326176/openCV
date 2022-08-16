@@ -1,1 +1,0 @@
--IE:/lyh/opencv/opencv/sources/modules/calib3d/include -IE:/lyh/opencv/opencv/mingw-build/modules/calib3d -IE:/lyh/opencv/opencv/sources/modules/core/include -IE:/lyh/opencv/opencv/sources/modules/flann/include -IE:/lyh/opencv/opencv/sources/modules/imgproc/include -IE:/lyh/opencv/opencv/sources/modules/features2d/include -isystem E:/lyh/opencv/opencv/mingw-build
