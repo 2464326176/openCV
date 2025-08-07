@@ -33,6 +33,7 @@ cpp
 *.app
 
 ### CMake template
+build
 cmake-build-debug
 CMakeLists.txt.user
 CMakeCache.txt
