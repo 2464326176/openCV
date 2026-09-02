@@ -1,6 +1,21 @@
 cmake_minimum_required(VERSION 3.24)
 project(openCv VERSION 0.1.0 LANGUAGES C CXX)
 
+# ===========================================================================
+#  Quick build guide (this project has 100+ executable targets):
+#
+#    build.bat              # Build ALL targets in parallel (recommended)
+#    build.bat --target xxx # Build a single target
+#    build.bat --configure  # Reconfigure cmake
+#
+#  Or manually:
+#    cmake --build build -j                # Parallel build (use all cores)
+#    cmake --build build -j --target xxx   # Single target
+#
+#  To build only specific layers:
+#    cmake -S . -B build -DLEARN_LAYER=L2 -DALGO_MODULE="hdr;denoise_single"
+# ===========================================================================
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
