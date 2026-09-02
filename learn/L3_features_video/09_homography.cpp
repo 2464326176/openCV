@@ -1,6 +1,6 @@
 // LEARN: L3 Homography Matrix RANSAC Alignment
 // OFFICIAL: samples/cpp/tutorial_code/features2d/feature_homography/SURF_FLANN_matching_homography_Demo.cpp、perspective_correction.cpp
-// THEORY: docs/ch03_features.md §单应
+// THEORY: docs/ch03_features.md §homography
 // TASK: ORB matching, findHomography(RANSAC) compute homography; warpPerspective align img2 to img1
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

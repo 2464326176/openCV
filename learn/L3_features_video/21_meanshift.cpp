@@ -1,6 +1,6 @@
 // LEARN: L3 MeanShift Tracking
 // OFFICIAL: samples/cpp/tutorial_code/video/meanshift/meanshift.cpp
-// THEORY: docs/ch04_video.md §跟踪
+// THEORY: docs/ch04_video.md §tracking
 // TASK: VCG1 ROI, hue histogram, VCG2 backproject, meanShift iterative convergence
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

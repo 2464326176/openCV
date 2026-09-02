@@ -1,3 +1,9 @@
+#include <iostream>
+#include <vector>
+#include "opencv2/opencv.hpp"
+
+using namespace cv;
+
 void readImage() {
     const Mat srcImage = imread("../data/images/3.jpg");
 

@@ -1,6 +1,6 @@
 // LEARN: L3 Corner Detection Comprehensive Comparison
 // OFFICIAL: samples/cpp/tutorial_code/TrackingMotion/cornerDetector_Demo.cpp
-// THEORY: docs/ch03_features.md §角点
+// THEORY: docs/ch03_features.md §corners
 // TASK: cornerHarris compute response map; cornerMinEigenVal two response maps side-by-side, normalized display
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

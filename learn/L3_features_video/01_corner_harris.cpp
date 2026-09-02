@@ -1,6 +1,6 @@
 // LEARN: L3 Harris Corner
 // OFFICIAL: samples/cpp/tutorial_code/TrackingMotion/cornerHarris_Demo.cpp
-// THEORY: docs/ch03_features.md §角点
+// THEORY: docs/ch03_features.md §corners
 // TASK: cornerHarris compute response map, normalize display; trackbar to change blockSize/kappa
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

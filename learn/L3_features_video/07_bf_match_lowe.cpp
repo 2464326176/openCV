@@ -1,6 +1,6 @@
-// LEARN: L3 BFMatcher + Lowe 比值筛选
+// LEARN: L3 BFMatcher + Lowe Ratio Test
 // OFFICIAL: samples/cpp/tutorial_code/features2d/feature_description/SURF_matching_Demo.cpp
-// THEORY: docs/ch03_features.md §匹配
+// THEORY: docs/ch03_features.md §matching
 // TASK: ORB descriptors, knnMatch k=2, ratio test; trackbar to control filtering, good matches
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

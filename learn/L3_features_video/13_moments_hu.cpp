@@ -1,6 +1,6 @@
 // LEARN: L3 Moments and Hu Invariants
 // OFFICIAL: samples/cpp/tutorial_code/ShapeDescriptors/moments_demo.cpp
-// THEORY: docs/ch03_features.md §轮廓
+// THEORY: docs/ch03_features.md §contours
 // TASK: moments compute centroid, HuMoments output 7 invariants (log normalized)
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

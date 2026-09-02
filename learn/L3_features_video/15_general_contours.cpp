@@ -1,6 +1,6 @@
 // LEARN: L3 Comprehensive Contour Metrics
 // OFFICIAL: samples/cpp/tutorial_code/ShapeDescriptors/generalContours_demo1.cpp、generalContours_demo2.cpp
-// THEORY: docs/ch03_features.md §轮廓
+// THEORY: docs/ch03_features.md §contours
 // TASK: for each contour output area/perimeter/boundingRect/circularity, and annotate on image
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

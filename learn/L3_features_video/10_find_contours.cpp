@@ -1,6 +1,6 @@
 // LEARN: L3 Contour Detection findContours
 // OFFICIAL: samples/cpp/tutorial_code/ShapeDescriptors/findContours_demo.cpp、contours2.cpp
-// THEORY: docs/ch03_features.md §轮廓
+// THEORY: docs/ch03_features.md §contours
 // TASK: Canny edge detection; findContours(RETR_EXTERNAL) get contours; drawContours random coloring
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

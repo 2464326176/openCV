@@ -1,6 +1,6 @@
-// LEARN: L3 ORB 检测与匹配
+// LEARN: L3 ORB Detection and Matching
 // OFFICIAL: samples/cpp/tutorial_code/features2d/AKAZE_match.cpp、matchmethod_orb_akaze_brisk.cpp
-// THEORY: docs/ch03_features.md §描述子
+// THEORY: docs/ch03_features.md §descriptors
 // TASK: ORB detectAndCompute two images, BFMatcher(NORM_HAMMING)+Lowe ratio test matching
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

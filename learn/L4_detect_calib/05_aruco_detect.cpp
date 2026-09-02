@@ -20,7 +20,7 @@ int main() {
     cvtColor(canvas, canvas, COLOR_GRAY2BGR);
     dbgMatInfo("canvas", canvas);
 
-    // 2) 检测
+    // 2) detect markers
     ArucoDetector detector(dict);
     std::vector<std::vector<Point2f>> corners, rejected;
     std::vector<int> ids;

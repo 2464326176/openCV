@@ -1,6 +1,6 @@
 // LEARN: L3 Subpixel Corner
 // OFFICIAL: samples/cpp/tutorial_code/TrackingMotion/cornerSubPix_Demo.cpp
-// THEORY: docs/ch03_features.md §角点
+// THEORY: docs/ch03_features.md §corners
 // TASK: goodFeaturesToTrack get corners, cornerSubPix refine, compare positions before/after
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

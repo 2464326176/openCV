@@ -1,6 +1,6 @@
-// LEARN: L3 Farneback 稠密光流
+// LEARN: L3 Farneback Dense Optical Flow
 // OFFICIAL: samples/cpp/tutorial_code/video/optical_flow/optical_flow_dense.cpp、fback.cpp
-// THEORY: docs/ch04_video.md §光流
+// THEORY: docs/ch04_video.md §optical flow
 // TASK: calcOpticalFlowFarneback compute VCG1→VCG2 displacement field, HSV encoded display
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

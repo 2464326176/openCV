@@ -2,10 +2,8 @@
 #include "opencv2/core.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/features2d.hpp"
-#include "opencv2/xfeatures2d.hpp"
 
 using namespace cv;
-using namespace cv::xfeatures2d;
 using std::cout;
 using std::endl;
 
@@ -23,9 +21,9 @@ int main( int argc, char** argv )
         return -1;
     }
 
-    //-- Step 1: Detect the keypoints using SURF Detector
-    int minHessian = 400;
-    Ptr<SURF> detector = SURF::create( minHessian );
+    //-- Step 1: Detect the keypoints using SIFT Detector
+    int nfeatures = 0;
+    Ptr<SIFT> detector = SIFT::create( nfeatures );
     std::vector<KeyPoint> keypoints;
     detector->detect( src, keypoints );
 
@@ -34,7 +32,7 @@ int main( int argc, char** argv )
     drawKeypoints( src, keypoints, img_keypoints );
 
     //-- Show detected (drawn) keypoints
-    imshow("SURF Keypoints", img_keypoints );
+    imshow("SIFT Keypoints", img_keypoints );
 
     waitKey();
     return 0;

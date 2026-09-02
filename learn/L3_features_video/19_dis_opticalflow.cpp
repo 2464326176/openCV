@@ -1,6 +1,6 @@
-// LEARN: L3 DIS 稠密光流
-// OFFICIAL: samples/cpp/dis_opticalflow.cpp（参考官方示例）
-// THEORY: docs/ch04_video.md §光流
+// LEARN: L3 DIS Dense Optical Flow
+// OFFICIAL: samples/cpp/dis_opticalflow.cpp (reference official sample)
+// THEORY: docs/ch04_video.md §optical flow
 // TASK: DISOpticalFlow compute VCG1→VCG2 optical flow, HSV encoded display
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
             calcBackProject(&hue, 1, 0, hist, backproj, &ranges);
             // Median filter the backproj to denoise before handing it to CamShift
             medianBlur(backproj, backproj, 5);
-            trackBox = CamShift(backproj, trackBox,
+            trackBox = CamShift(backproj, trackWindow,
                                 TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 10, 1));
             // Draw the rotated rectangle
             ellipse(frame, trackBox, Scalar(0, 0, 255), 2);

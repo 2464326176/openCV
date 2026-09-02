@@ -69,14 +69,15 @@ void displayMat(std::string winName, Mat m) {
 }
 
 
-// 将 NV21 原始 YUV420SP 文件转换为 BGR8UC3 Mat.
+// Convert a raw NV21 YUV420SP file to a BGR8UC3 Mat.
 //
-// NV21 布局:
-//   Y  plane = width * height 字节
-//   VU plane = width * (height / 2) 字节 (V/U 交错)
-//   总字节 = width * height * 3 / 2
+// NV21 layout:
+//   Y  plane = width * height bytes
+//   VU plane = width * (height / 2) bytes (V/U interleaved)
+//   Total    = width * height * 3 / 2 bytes
 //
-// 若文件 >= 预期字节数（末尾可能带 padding/metadata），取前 width*height*3/2 字节。
+// If the file is >= the expected size (may have trailing padding/metadata),
+// take the first width*height*3/2 bytes.
 void nv21_to_bgr(int width, int height, std::string filepath) {
     if (width <= 0 || height <= 0 || (width % 2) != 0 || (height % 2) != 0) {
         DBG_LOG("nv21_to_bgr: invalid size %dx%d (must be positive even)", width, height);
@@ -88,7 +89,7 @@ void nv21_to_bgr(int width, int height, std::string filepath) {
         DBG_LOG("nv21_to_bgr: cannot open %s", filepath.c_str());
         return;
     }
-    // 拿到实际可用字节数
+    // Obtain the actual available byte count
     fs.seekg(0, std::ios::end);
     std::streamsize fileSize = fs.tellg();
     fs.seekg(0, std::ios::beg);
@@ -97,7 +98,7 @@ void nv21_to_bgr(int width, int height, std::string filepath) {
                 filepath.c_str(), (long long)fileSize, expected);
         return;
     }
-    // 按紧凑布局读入一张 (h + h/2, w) CV_8U Mat, 一步 cvtColor 转 BGR.
+    // Read into a compact (h + h/2, w) CV_8U Mat and convert to BGR in one cvtColor call.
     cv::Mat buf(height + height / 2, width, CV_8U);
     fs.read(reinterpret_cast<char*>(buf.data), expected);
     std::streamsize got = fs.gcount();
@@ -108,7 +109,7 @@ void nv21_to_bgr(int width, int height, std::string filepath) {
     cv::Mat bgr;
     cv::cvtColor(buf, bgr, cv::COLOR_YUV2BGR_NV21);
 
-    // 直接展示结果 (便于在 quick demo 中调用). 尺寸过大时先缩到最大边 1600.
+    // Show the result directly (convenient for quick demo calls). Downscale to max edge 1600 if too large.
     const int maxEdge = 1600;
     cv::Mat show;
     int maxSide = std::max(bgr.cols, bgr.rows);

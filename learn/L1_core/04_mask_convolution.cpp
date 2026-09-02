@@ -8,7 +8,7 @@
 using namespace cv;
 
 static Mat src;
-static int strength = 5; // 核中心值，邻域 -1
+static int strength = 5; // kernel center value, neighbors set to -1
 
 static void onTrack(int, void*) {
     if (strength < 1) strength = 1;

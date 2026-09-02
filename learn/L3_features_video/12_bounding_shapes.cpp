@@ -1,6 +1,6 @@
 // LEARN: L3 Minimum Enclosing Shapes
 // OFFICIAL: samples/cpp/minarea.cpp、fitellipse.cpp
-// THEORY: docs/ch03_features.md §轮廓
+// THEORY: docs/ch03_features.md §contours
 // TASK: for each contour draw boundingRect/minAreaRect/fitEllipse three enclosing shapes
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

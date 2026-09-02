@@ -1,4 +1,4 @@
-// LEARN: L3 LK 光流分步演示
+// LEARN: L3 LK Optical Flow Step-by-Step
 // OFFICIAL: tutorial_code/video/optical_flow/optical_flow.cpp
 // THEORY: docs/ch04_video.md §4.2
 // TASK: goodFeaturesToTrack + calcOpticalFlowPyrLK stepwise tracking; winSize/maxLevel affect convergence

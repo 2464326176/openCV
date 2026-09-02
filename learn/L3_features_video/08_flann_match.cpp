@@ -1,6 +1,6 @@
-// LEARN: L3 FlannBasedMatcher 匹配
+// LEARN: L3 FlannBasedMatcher Matching
 // OFFICIAL: samples/cpp/tutorial_code/features2d/feature_flann_matcher/SURF_FLNN_matching_Demo.cpp
-// THEORY: docs/ch03_features.md §匹配
+// THEORY: docs/ch03_features.md §matching
 // TASK: ORB binary descriptors, LshIndexParams build FLANN; FlannBasedMatcher, knnMatch + Lowe
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

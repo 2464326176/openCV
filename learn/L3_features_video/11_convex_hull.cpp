@@ -1,6 +1,6 @@
 // LEARN: L3 Convex Hull and Concavity
 // OFFICIAL: samples/cpp/tutorial_code/ShapeDescriptors/hull_demo.cpp、convexhull.cpp
-// THEORY: docs/ch03_features.md §轮廓
+// THEORY: docs/ch03_features.md §contours
 // TASK: findContours get largest contour, convexHull draw convex hull, convexityDefects mark concavity points
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

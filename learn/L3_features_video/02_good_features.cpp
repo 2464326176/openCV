@@ -1,6 +1,6 @@
 // LEARN: L3 Shi-Tomasi goodFeaturesToTrack
 // OFFICIAL: samples/cpp/tutorial_code/TrackingMotion/goodFeaturesToTrack_Demo.cpp
-// THEORY: docs/ch03_features.md §角点
+// THEORY: docs/ch03_features.md §corners
 // TASK: goodFeaturesToTrack get N strongest corners, circle annotation, trackbar to change params
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

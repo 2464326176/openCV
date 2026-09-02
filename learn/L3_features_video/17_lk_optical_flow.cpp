@@ -1,6 +1,6 @@
-// LEARN: L3 LK 稀疏光流
+// LEARN: L3 LK Sparse Optical Flow
 // OFFICIAL: samples/cpp/lkdemo.cpp
-// THEORY: docs/ch04_video.md §光流
+// THEORY: docs/ch04_video.md §optical flow
 // TASK: VCG1 to VCG2, goodFeatures get points, calcOpticalFlowPyrLK track, draw arrows
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

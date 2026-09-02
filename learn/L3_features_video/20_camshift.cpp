@@ -1,6 +1,6 @@
 // LEARN: L3 CamShift Tracking
 // OFFICIAL: samples/cpp/camshiftdemo.cpp、tutorial_code/video/meanshift/camshift.cpp
-// THEORY: docs/ch04_video.md §跟踪
+// THEORY: docs/ch04_video.md §tracking
 // TASK: VCG1 get ROI, hue histogram, VCG2 backproject, CamShift converge to target
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
