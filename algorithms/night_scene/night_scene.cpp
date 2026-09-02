@@ -1,13 +1,14 @@
 // algorithms/night_scene/main.cpp
-// 夜景增强算法对比演示: Gamma / CLAHE / SSR / MSRCP / DCP Dehaze
+// Night scene enhancement algorithm comparison demo: Gamma / CLAHE / SSR / MSRCP / DCP Dehaze
 //                       + LIME (Low-light Image Enhancement via Illumination Map
 //                              Estimation, Guo et al. BMVC 2016)
-//                       + RetinexSR (Dong et al., 基于 TV-regularized
-//                         illumination + gamma 校正)
-//                       + 无参考质量评估 (NIQE 框架近似 / LOE / 亮度直方图熵 /
-//                         Perceptual Quality Score: 边缘保留 + 色彩自然度).
+//                       + RetinexSR (Dong et al., based on TV-regularized
+//                         illumination + gamma correction)
+//                       + no-reference quality assessment (NIQE framework approximation / LOE /
+//                         brightness histogram entropy / Perceptual Quality Score:
+//                         edge preservation + color naturalness).
 //
-// 用法: night_scene.exe [input_img]
+// Usage: night_scene.exe [input_img]
 #include "../common/nv21_io.hpp"
 #include "../common/algo_utils.hpp"
 #include "../common/single_denoise.hpp"
@@ -22,7 +23,7 @@
 
 using namespace algo;
 
-// ---------------- 基础增强函数 (与 common 保持类似, 保证独立可用) ----------
+// ---------------- basic enhancement functions (similar to common, standalone usable) ----------
 
 static cv::Mat gammaAdjust(const cv::Mat& in, double g) {
     cv::Mat lut(1, 256, CV_8U);
@@ -57,7 +58,7 @@ static cv::Mat ssr(const cv::Mat& in, double sigma) {
     return r;
 }
 
-// MSRCP (带颜色恢复)
+// MSRCP (with color restoration)
 static cv::Mat msrcp(const cv::Mat& in, const std::vector<double>& sigmas,
                       double alpha = 128.0, double gain = 1.0, double offset = 128.0/255.0) {
     cv::Mat f; in.convertTo(f, CV_32FC3, 1.0 / 255.0);
@@ -82,7 +83,7 @@ static cv::Mat msrcp(const cv::Mat& in, const std::vector<double>& sigmas,
     double rng = mx - mn + 1e-6;
     for (auto& r : ret) r = (r - mn) / rng;
     // color restoration: C_k = alpha * log(I_k + eps) - (alpha/C) Σ log(I_i + eps)
-    // out_k = C_k * ret_k + offset (这里简化, 取简单加权颜色修正)
+    // out_k = C_k * ret_k + offset (simplified here, simple weighted color correction)
     std::vector<cv::Mat> logChs(C);
     cv::Mat sumLog = cv::Mat::zeros(chs[0].size(), CV_32F);
     for (int k = 0; k < C; ++k) {
@@ -92,8 +93,8 @@ static cv::Mat msrcp(const cv::Mat& in, const std::vector<double>& sigmas,
     std::vector<cv::Mat> outChs(C);
     for (int k = 0; k < C; ++k) {
         cv::Mat cr = (float)alpha * (logChs[k] - sumLog / (float)C);
-        // 颜色比例: 用 tanh(·) 压到 [-1, 1], 作为 gain 修正
-        cv::Mat crG; cv::exp(-cr * 0.5, crG); // 1/crG ~ 1+cr 的近似
+        // color ratio: squash with tanh(·) to [-1, 1] as gain correction
+        cv::Mat crG; cv::exp(-cr * 0.5, crG); // 1/crG ~ 1+cr approximation
         outChs[k] = gain * ret[k].mul(1.0f / crG) + offset;
         cv::threshold(outChs[k], outChs[k], 1.0, 1.0, cv::THRESH_TRUNC);
         cv::threshold(outChs[k], outChs[k], 0.0, 0.0, cv::THRESH_TOZERO);
@@ -132,28 +133,28 @@ static cv::Mat dehazeDCP(const cv::Mat& bgr, int patch = 7, double omega = 0.95)
 }
 
 // ---------------- LIME --------------------------------------------------------
-// Guo et al. LIME: Illumination map T 估计 = max_c(R_c), 然后 TV-L2 正则
-// min_T Σ (T − T̃)^2 + μ·TV(T)  → 迭代 WLS 近似: 用引导滤波 (He 2013 WLS 简化版)
-// 这里用 "Structure-Texture Decomposition via WLS" 的交替迭代近似:
-//   1) T̃ = max_c(I_c)   (初始亮度)
-//   2) 用 guided filter 在亮度上做 structure preserving, 得到平滑的 T_smooth
-//   3) γ 校正: R' = (I / T_smooth)^γ   增强亮度
-//   4) Sigmoid 约束 + 颜色恢复
+// Guo et al. LIME: illumination map T estimate = max_c(R_c), then TV-L2 regularization
+// min_T Σ (T − T̃)^2 + μ·TV(T)  -> iterative WLS approximation: guided filter (simplified He 2013 WLS)
+// Here we use an alternating-iteration approximation of "Structure-Texture Decomposition via WLS":
+//   1) T̃ = max_c(I_c)   (initial illumination)
+//   2) structure-preserving guided filter on the illumination to get smooth T_smooth
+//   3) gamma correction: R' = (I / T_smooth)^γ   to brighten
+//   4) sigmoid constraint + color restoration
 static cv::Mat limeEnhance(const cv::Mat& bgr, double gamma = 0.6,
                             double mu = 0.15, int iters = 3,
                             bool deNoise = true) {
     cv::Mat f; bgr.convertTo(f, CV_32FC3, 1.0 / 255.0);
     std::vector<cv::Mat> chs; cv::split(f, chs);
-    // T̃ = per-pixel max RGB (即 illumination 上限, 反推 Retinex 的照明)
+    // T̃ = per-pixel max RGB (i.e. illumination upper bound, inferred Retinex illumination)
     cv::Mat T = chs[0];
     for (int k = 1; k < (int)chs.size(); ++k) T = cv::max(T, chs[k]);
 
-    // WLS / Guide filter 平滑 T (自引导, 使结构保留). 这里用大半径 guided filter
-    // 迭代几次以近似 WLS 效果.
+    // WLS / guided filter to smooth T (self-guided, structure-preserving).
+    // Use a large-radius guided filter iterated a few times to approximate WLS.
     cv::Mat guide = bgr;
     cv::Mat T8u; T.convertTo(T8u, CV_8U, 255.0);
     for (int i = 0; i < iters; ++i) {
-        // 混合: 0.7*guided(T) + 0.3*orig, 保持结构
+        // blend: 0.7*guided(T) + 0.3*orig, preserving structure
         cv::Mat g8 = denoiseGuided(T8u, guide, 16, mu * mu);
         cv::Mat g; g8.convertTo(g, CV_32F, 1.0 / 255.0);
         T8u = g8;
@@ -161,7 +162,7 @@ static cv::Mat limeEnhance(const cv::Mat& bgr, double gamma = 0.6,
     cv::Mat Ts; T8u.convertTo(Ts, CV_32F, 1.0 / 255.0);
     Ts = cv::max(Ts, 1e-3f);
 
-    // R = I / Ts, gamma 增强: out = clamp( R^(1/gamma) )
+    // R = I / Ts, gamma enhancement: out = clamp( R^(1/gamma) )
     std::vector<cv::Mat> t3 = {Ts, Ts, Ts};
     cv::Mat Tc; cv::merge(t3, Tc);
     cv::Mat R = f / Tc;
@@ -171,27 +172,28 @@ static cv::Mat limeEnhance(const cv::Mat& bgr, double gamma = 0.6,
 
     cv::Mat out8u; R.convertTo(out8u, CV_8U, 255.0);
     if (deNoise) {
-        // 轻度 guided 降噪, 抑止放大后的噪点
+        // light guided denoising to suppress amplified noise
         out8u = denoiseGuided(out8u, bgr, 5, 0.02);
     }
     return out8u;
 }
 
-// ---------------- RetinexSR (Dong SRIE + gamma) 的简化版 -------------------
-// I = L ⊙ R; 用总变分 (TV) 正则化 L:
-//   min_L Σ (L · R - I)^2 + λ·TV(L), R 以 I/(L+ε) 近似.
-// 简化版: 用多次 "加权引导滤波 + retinex gain" 近似, 供对比 LIME.
+// ---------------- simplified RetinexSR (Dong SRIE + gamma) -----------------
+// I = L ⊙ R; regularize L with total variation (TV):
+//   min_L Σ (L · R - I)^2 + λ·TV(L), R approximated by I/(L+ε).
+// Simplified: approximate with repeated "weighted guided filtering + retinex gain",
+// for comparison with LIME.
 static cv::Mat retinexTVEnhance(const cv::Mat& bgr, double gamma = 0.55,
                                  int iters = 4) {
     cv::Mat f; bgr.convertTo(f, CV_32FC3, 1.0 / 255.0);
     std::vector<cv::Mat> chs; cv::split(f, chs);
-    cv::Mat L = (chs[0] + chs[1] + chs[2]) / 3.0f; // 初始 L = mean(RGB)
+    cv::Mat L = (chs[0] + chs[1] + chs[2]) / 3.0f; // initial L = mean(RGB)
     for (int i = 0; i < iters; ++i) {
-        // 平滑 L: 用 sigma=1.6~3*iter 的高斯 + bilateral 的组合
+        // smooth L: combine Gaussian (sigma=1.6~3*iter) + bilateral
         cv::Mat l8u; L.convertTo(l8u, CV_8U, 255.0);
         cv::Mat g = denoiseAdaptiveBilateral(
                         cv::Mat(l8u.rows, l8u.cols, CV_8UC3), 9, 70, 70, 7);
-        // (我们只算单通道, 退而求其次: bilateral 灰度)
+        // (we only compute single channel, fall back to bilateral on gray)
         cv::Mat lF; l8u.convertTo(lF, CV_32F, 1.0 / 255.0);
         cv::Mat b;
         cv::bilateralFilter(lF, b, 9, 255 * 0.02, 2);
@@ -200,21 +202,21 @@ static cv::Mat retinexTVEnhance(const cv::Mat& bgr, double gamma = 0.55,
     L = cv::max(L, 1e-3f);
     std::vector<cv::Mat> L3 = {L, L, L}; cv::Mat Lc; cv::merge(L3, Lc);
     cv::Mat R = f / Lc;
-    // retinex gain (在 R 上做 CLAHE-like gamma)
+    // retinex gain (CLAHE-like gamma on R)
     cv::pow(R, 1.0 / gamma, R);
     cv::threshold(R, R, 1.0, 1.0, cv::THRESH_TRUNC);
     cv::Mat out; R.convertTo(out, CV_8U, 255.0);
     return out;
 }
 
-// ---------------- 无参考质量评估 (NR-IQA 简化版) -------------------------
+// ---------------- no-reference quality assessment (simplified NR-IQA) -----------------
 struct NrScore {
-    double brightnessMean; // 平均亮度
-    double brightnessStd;  // 亮度标准差
-    double entropy;        // 亮度直方图熵 (bit)
-    double loeRef;         // 相对原 dark 图的 LOE (越低越好, 保自然)
-    double edgePreserve;   // Sobel 能量比 (增强图/原图)
-    double colorStdMean;   // 每通道 std 均值 (越高色彩越丰富, 但可能偏饱和)
+    double brightnessMean; // mean brightness
+    double brightnessStd;  // brightness std
+    double entropy;        // brightness histogram entropy (bit)
+    double loeRef;         // LOE vs the original dark image (lower is better, keeps naturalness)
+    double edgePreserve;   // Sobel energy ratio (enhanced/source)
+    double colorStdMean;   // mean per-channel std (higher = richer color, but possibly over-saturated)
 };
 
 static double imageEntropyGray(const cv::Mat& gray) {
@@ -317,7 +319,7 @@ int main(int argc, char** argv) {
         {"Retinex-TV",   retinexTv,  scoreNr(base, retinexTv)},
     };
 
-    // 亮度统计
+    // brightness statistics
     std::cout << "\n=== night scene algorithms (full-reference LOE + NR metrics) ===\n";
     std::printf("%-16s %8s %8s %8s %9s %8s %8s\n",
                 "method", "Ymean", "Ystd", "Entropy", "LOE_ref", "EdgeR", "ColorStd");
@@ -335,7 +337,7 @@ int main(int argc, char** argv) {
     cv::imwrite("../out/algorithms/night_scene.png", canvas);
     std::cout << "[night_scene] wrote ../out/algorithms/night_scene.png\n";
 
-    // 额外: 输出 LIME 中间 T (illumination) 预览
+    // extra: output the LIME intermediate T (illumination) preview
     cv::Mat f; base.convertTo(f, CV_32FC3, 1.0 / 255.0);
     std::vector<cv::Mat> chs; cv::split(f, chs);
     cv::Mat T = chs[0];

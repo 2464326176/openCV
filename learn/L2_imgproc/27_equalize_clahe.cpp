@@ -1,7 +1,7 @@
-// LEARN: L2 鐩存柟鍥惧潎琛″寲涓?CLAHE
-// OFFICIAL: samples/cpp/tutorial_code/Histograms_Matching/EqualizeHist_Demo.cpp銆乨emhist.cpp
-// THEORY: docs/ch02_imgproc.md 搂8
-// TASK: equalizeHist 涓?CLAHE clipLimit/size 瀵规瘮
+// LEARN: L2 Histogram equalization and CLAHE
+// OFFICIAL: samples/cpp/tutorial_code/Histograms_Matching/EqualizeHist_Demo.cpp、demhist.cpp
+// THEORY: docs/ch02_imgproc.md §8
+// TASK: equalizeHist vs CLAHE clipLimit/size comparison
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

@@ -1,6 +1,7 @@
-// LEARN: L2 鍒嗘按宀垎鍓?// OFFICIAL: samples/cpp/watershed.cpp銆乼utorial_code/ImgTrans/imageSegmentation.cpp
-// THEORY: docs/ch02_imgproc.md 搂7
-// TASK: 浜屽€?寮€杩愮畻+璺濈鍙樻崲鍒濆鍖?marker锛寃atershed 鍒嗗壊
+// LEARN: L2 Watershed segmentation
+// OFFICIAL: samples/cpp/watershed.cpp、tutorial_code/ImgTrans/imageSegmentation.cpp
+// THEORY: docs/ch02_imgproc.md §7
+// TASK: binary opening + distance transform initialize markers, watershed segmentation
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -8,7 +9,7 @@ using namespace cv;
 
 static Mat src, gray, bin;
 static int th = 100;
-static int distTh = 50;   // 璺濈闃堝€?x0.01
+static int distTh = 50;   // distance transform threshold x0.01
 
 static void onTrack(int, void*) {
     Mat g;

@@ -1,14 +1,15 @@
-// LEARN: L4 浜岀淮鐮佹娴嬩笌瑙ｇ爜
+// LEARN: L4 QR code detection and decoding
 // OFFICIAL: samples/cpp/qrcode.cpp, barcode.cpp
-// THEORY: docs/ch06_objdetect_photo.md 搂6.7
-// TASK: QRCodeDetector::detectAndDecode 浼樺厛鍦?mingw testdata 鐨?link_ocv.jpg 涓婅В鐮侊紱缂哄浘鍒欏洖閫€鍒?VCG1.jpg 骞惰鏄?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch06_objdetect_photo.md §6.7
+// TASK: QRCodeDetector::detectAndDecode priority on link_ocv.jpg in mingw testdata; fallback to VCG1.jpg
+#include <opencv2/opencv.hpp>
 #include <opencv2/objdetect.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
 
 int main() {
-    // 浼樺厛鐢?OpenCV 鑷甫 QR 娴嬭瘯鍥撅紙mingw-build 瀹夎鐩綍涓嬶級
+    // prefer OpenCV's built-in QR test image (under mingw-build install dir)
     Mat img = imread("../mingw-build/testdata/cv/qrcode/link_ocv.jpg");
     if (img.empty()) {
         logInfo("link_ocv.jpg not found, fallback to VCG1.jpg (likely no QR)");

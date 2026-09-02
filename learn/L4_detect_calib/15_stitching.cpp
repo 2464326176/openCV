@@ -1,7 +1,7 @@
-// LEARN: L4 鍥惧儚鎷兼帴 Stitcher
+// LEARN: L4 image stitching Stitcher
 // OFFICIAL: samples/cpp/stitching.cpp, stitching_detailed.cpp
-// THEORY: docs/ch07_calib3d_stitching.md 搂8
-// TASK: 鐢?VCG1 + VCG2 涓ゅ紶鍥捐皟鐢?Stitcher::create 榛樿鍏ㄦ櫙妯″紡鎷兼垚涓€寮犲苟鏄剧ず
+// THEORY: docs/ch07_calib3d_stitching.md §8
+// TASK: stitch VCG1 + VCG2 using Stitcher::create default panorama mode and display
 #include <opencv2/opencv.hpp>
 #include <opencv2/stitching.hpp>
 #include <opencv_utils.h>

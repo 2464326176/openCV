@@ -1,7 +1,7 @@
-// LEARN: L3 Blob 妫€娴嬩笌 LSD 绾挎
+// LEARN: L3 Blob Detection and LSD Line Segments
 // OFFICIAL: samples/cpp/detect_blob.cpp, samples/cpp/lsd_lines.cpp
-// THEORY: docs/ch03_features.md 搂3.4
-// TASK: SimpleBlobDetector 鎵炬枒鐐癸紱LineSegmentDetector 鎻愬彇绾挎
+// THEORY: docs/ch03_features.md §3.4
+// TASK: SimpleBlobDetector find blobs; LineSegmentDetector extract line segments
 #include <opencv2/opencv.hpp>
 #include <opencv2/features2d.hpp>
 #include <opencv_utils.h>
@@ -31,3 +31,4 @@ int main() {
     dbgShowMany({"blob", "lsd"}, {blobVis, lineVis}, 0);
     return 0;
 }
+

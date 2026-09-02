@@ -1,6 +1,8 @@
-// LEARN: L4 HOG 琛屼汉妫€娴?// OFFICIAL: samples/cpp/peopledetect.cpp, train_HOG.cpp
-// THEORY: docs/ch06_objdetect_photo.md 搂6.6
-// TASK: HOGDescriptor + getDefaultPeopleDetector + setSVMDetector + detectMultiScale 妫€娴嬭浜虹敾妗?#include <opencv2/opencv.hpp>
+// LEARN: L4 HOG pedestrian detection
+// OFFICIAL: samples/cpp/peopledetect.cpp, train_HOG.cpp
+// THEORY: docs/ch06_objdetect_photo.md §6.6
+// TASK: HOGDescriptor + getDefaultPeopleDetector + setSVMDetector + detectMultiScale for pedestrian detection
+#include <opencv2/opencv.hpp>
 #include <opencv2/objdetect.hpp>
 #include <opencv_utils.h>
 
@@ -11,7 +13,8 @@ int main() {
     if (img.empty()) { logInfo("imread failed: VCG1.jpg"); return -1; }
     dbgMatInfo("img", img);
 
-    // 琛屼汉鍥鹃€氬父杈冨ぇ锛孒OG 榛樿绐楀彛 64x128锛涘厛缂╁埌鍚堢悊澶у皬鍐嶆娴?    Mat small;
+    // pedestrian images are usually large, HOG default window 64x128; resize to reasonable size first
+    Mat small;
     double scale = 640.0 / std::max(img.cols, img.rows);
     resize(img, small, Size(), scale, scale, INTER_AREA);
     dbgMatInfo("small", small);

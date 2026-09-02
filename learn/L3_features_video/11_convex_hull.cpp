@@ -1,7 +1,7 @@
-// LEARN: L3 鍑稿寘涓庡嚬闄?
-// OFFICIAL: samples/cpp/tutorial_code/ShapeDescriptors/hull_demo.cpp銆乧onvexhull.cpp
-// THEORY: docs/ch03_features.md 搂杞粨
-// TASK: findContours 鍙栨渶澶ц疆寤擄紝convexHull 鐢诲嚫鍖咃紝convexityDefects 鏍囧嚬闄?
+// LEARN: L3 Convex Hull and Concavity
+// OFFICIAL: samples/cpp/tutorial_code/ShapeDescriptors/hull_demo.cpp、convexhull.cpp
+// THEORY: docs/ch03_features.md §轮廓
+// TASK: findContours get largest contour, convexHull draw convex hull, convexityDefects mark concavity points
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -15,7 +15,7 @@ int main() {
     findContours(edge, conts, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
     if (conts.empty()) { logInfo("no contour"); return -1; }
 
-    // 鍙栨渶澶ц疆寤?
+    // get largest contour
     size_t k = 0; double a = 0;
     for (size_t i = 0; i < conts.size(); ++i) {
         double ai = contourArea(conts[i]);
@@ -42,3 +42,4 @@ int main() {
     dbgShow("L3_11 convex hull", show, 0);
     return 0;
 }
+

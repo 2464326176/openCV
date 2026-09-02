@@ -1,7 +1,7 @@
-// LEARN: L3 FlannBasedMatcher 鍖归厤
+// LEARN: L3 FlannBasedMatcher 匹配
 // OFFICIAL: samples/cpp/tutorial_code/features2d/feature_flann_matcher/SURF_FLNN_matching_Demo.cpp
-// THEORY: docs/ch03_features.md 搂鍖归厤
-// TASK: ORB 浜岃繘鍒舵弿杩板瓙閰?LshIndexParams 鐨?FlannBasedMatcher锛宬nnMatch + Lowe
+// THEORY: docs/ch03_features.md §匹配
+// TASK: ORB binary descriptors, LshIndexParams build FLANN; FlannBasedMatcher, knnMatch + Lowe
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -19,7 +19,7 @@ int main() {
     orb->detectAndCompute(img1, noArray(), kp1, d1);
     orb->detectAndCompute(img2, noArray(), kp2, d2);
 
-    // ORB 鎻忚堪瀛愪负浜岃繘鍒讹紝FLANN 蹇呴』鐢?LshIndexParams
+    // ORB descriptors are binary, FLANN must use LshIndexParams
     Ptr<flann::IndexParams> params = makePtr<flann::LshIndexParams>(6, 12, 1);
     FlannBasedMatcher flann(params);
     std::vector<std::vector<DMatch>> knn;
@@ -37,3 +37,4 @@ int main() {
     dbgShow("L3_08 flann match", out, 0);
     return 0;
 }
+

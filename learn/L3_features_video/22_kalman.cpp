@@ -1,7 +1,7 @@
-// LEARN: L3 Kalman 婊ゆ尝锛?D 鍖€閫燂級
+// LEARN: L3 Kalman Filter (2D uniform deceleration)
 // OFFICIAL: samples/cpp/kalman.cpp
-// THEORY: docs/ch04_video.md 搂Kalman
-// TASK: 鐘舵€乕x,y,vx,vy] 瑙傛祴[x,y]锛屾ā鎷熻娴嬪簭鍒楋紝predict/correct锛岀敾杞ㄨ抗
+// THEORY: docs/ch04_video.md §Kalman
+// TASK: state[x,y,vx,vy] observation[x,y], simulate observation sequence, predict/correct, draw trajectory
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -36,8 +36,9 @@ int main() {
         Mat corr = KF.correct(measMat);
         estPos = Point2f(corr.at<float>(0), corr.at<float>(1));
 
-        circle(canvas, truePos, 1, Scalar(255, 255, 255), -1); // 鐧斤細鐪熷€?        circle(canvas, meas,   1, Scalar(0, 0, 255),     -1); // 绾細瑙傛祴
-        circle(canvas, estPos, 1, Scalar(0, 255, 0),     -1); // 缁匡細婊ゆ尝
+        circle(canvas, truePos, 1, Scalar(255, 255, 255), -1); // white: true value
+        circle(canvas, meas,   1, Scalar(0, 0, 255),     -1); // red: observation
+        circle(canvas, estPos, 1, Scalar(0, 255, 0),     -1); // green: filtered
         if (i % 20 == 0) {
             imshow("L3_22 kalman", canvas);
             if (waitKey(10) == 27) break;
@@ -48,3 +49,4 @@ int main() {
     dbgShow("L3_22 kalman", canvas, 0);
     return 0;
 }
+

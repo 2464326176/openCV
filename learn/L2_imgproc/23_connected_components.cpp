@@ -1,7 +1,8 @@
-// LEARN: L2 杩為€氬煙
+// LEARN: L2 Connected components
 // OFFICIAL: samples/cpp/connected_components.cpp
-// THEORY: docs/ch02_imgproc.md 搂7
-// TASK: connectedComponents 涓?connectedComponentsWithStats 鐫€鑹?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch02_imgproc.md §7
+// TASK: connectedComponents vs connectedComponentsWithStats coloring
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;

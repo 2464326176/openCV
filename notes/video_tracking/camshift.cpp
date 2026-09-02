@@ -1,17 +1,18 @@
 //********************
 // Author:  yh
 // Time:    2022/8/5.
-//  CamShift 目标跟踪（自适应均值漂移）
-//  流程：首帧选 ROI → 计算 H-S 直方图作为目标模型 → 逐帧反投影 + CamShift 跟踪
-//  对应官方示例: camshift.cpp / camshiftdemo.cpp
+//  CamShift object tracking (adaptive mean shift)
+//  Workflow: select ROI in first frame -> compute H-S histogram as target model ->
+//            back-project + CamShift track per frame
+//  Official example: camshift.cpp / camshiftdemo.cpp
 //********************
 #include <opencv2/opencv.hpp>
 
 using namespace cv;
 using namespace std;
 
-Rect g_selection;          // 鼠标框选区域
-bool g_selecting = false;  // 正在框选
+Rect g_selection;          // Mouse-selected region
+bool g_selecting = false;  // Currently selecting
 
 static void onMouse(int event, int x, int y, int, void *) {
     if (g_selecting) {
@@ -41,21 +42,21 @@ int main(int argc, char **argv) {
     float hranges[] = {0, 180};
     const float *ranges = {hranges};
     bool init = false;
-    Rect trackWindow;        // CamShift 的窗口状态（Rect&）
-    RotatedRect trackBox;    // CamShift 返回值：带角度的旋转矩形
+    Rect trackWindow;        // CamShift window state (Rect&)
+    RotatedRect trackBox;    // CamShift return value: rotated rectangle with angle
 
     while (true) {
         capture >> frame;
         if (frame.empty()) break;
-        frame.copyTo(hue);   // 占位，避免 hue 未初始化引用
+        frame.copyTo(hue);   // placeholder to avoid uninitialized hue reference
 
         if (!init) {
-            // 首次框选后初始化目标直方图
+            // Initialize target histogram after the first selection
             if (g_selection.width > 0 && g_selection.height > 0) {
                 cvtColor(frame, hsv, COLOR_BGR2HSV);
                 int ch[] = {0, 0};
                 hue.create(hsv.size(), hsv.depth());
-                mixChannels(&hsv, 1, &hue, 1, ch, 1);   // 提取 H 通道
+                mixChannels(&hsv, 1, &hue, 1, ch, 1);   // extract H channel
 
                 Mat roi(hue, g_selection), maskroi;
                 inRange(hsv, Scalar(0, 30, 10), Scalar(180, 256, 255), mask);
@@ -63,20 +64,20 @@ int main(int argc, char **argv) {
                 calcHist(&roi, 1, 0, maskroi, hist, 1, &hsize, &ranges);
                 normalize(hist, hist, 0, 255, NORM_MINMAX);
                 init = true;
-                trackWindow = g_selection;   // 初始窗口即框选矩形
+                trackWindow = g_selection;   // initial window = selected rectangle
             }
         } else {
-            // 每帧：反投影 → CamShift 迭代更新窗口
+            // Per frame: back-project -> CamShift iterate to update window
             cvtColor(frame, hsv, COLOR_BGR2HSV);
             int ch[] = {0, 0};
             hue.create(hsv.size(), hsv.depth());
             mixChannels(&hsv, 1, &hue, 1, ch, 1);
             calcBackProject(&hue, 1, 0, hist, backproj, &ranges);
-            // backproj 中值滤波去噪后交给 CamShift
+            // Median filter the backproj to denoise before handing it to CamShift
             medianBlur(backproj, backproj, 5);
             trackBox = CamShift(backproj, trackBox,
                                 TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 10, 1));
-            // 绘制旋转矩形
+            // Draw the rotated rectangle
             ellipse(frame, trackBox, Scalar(0, 0, 255), 2);
         }
         imshow("camshift", frame);

@@ -1,6 +1,6 @@
-// opencvAlgoDev/common/algo_utils.cpp
+// algorithms/common/algo_utils.cpp
 #include "algo_utils.hpp"
-#include "nv21_io.hpp" // 共享日志风格
+#include "nv21_io.hpp" // shares the logging style
 
 #include <opencv2/highgui.hpp>
 #include <opencv2/video.hpp>
@@ -27,7 +27,7 @@
 namespace algo {
 
 // =========================================================================
-// ---- 数值范围 ------------------------------------------------------------
+// ---- value range --------------------------------------------------------
 // =========================================================================
 
 cv::Mat toFloat(const cv::Mat& src) {
@@ -41,7 +41,7 @@ cv::Mat toFloat(const cv::Mat& src) {
 cv::Mat to8U(const cv::Mat& src, double scale) {
     CV_Assert(!src.empty());
     cv::Mat s;
-    src.convertTo(s, CV_32F, scale); // 先乘 scale
+    src.convertTo(s, CV_32F, scale); // multiply by scale first
     cv::threshold(s, s, 255.0, 255.0, cv::THRESH_TRUNC);
     cv::threshold(s, s, 0.0, 0.0, cv::THRESH_TOZERO);
     cv::Mat out;
@@ -61,7 +61,7 @@ cv::Mat normalizeTo01(const cv::Mat& src) {
 }
 
 // =========================================================================
-// ---- 全参考 IQA ---------------------------------------------------------
+// ---- full-reference IQA ------------------------------------------------
 // =========================================================================
 
 double mse(const cv::Mat& a, const cv::Mat& b) {
@@ -86,12 +86,12 @@ double mae(const cv::Mat& a, const cv::Mat& b) {
 
 double psnr(const cv::Mat& a, const cv::Mat& b) {
     double m = mse(a, b);
-    if (m <= 1e-10) return 1000.0; // 完全相同
+    if (m <= 1e-10) return 1000.0; // identical images
     return 10.0 * std::log10((255.0 * 255.0) / m);
 }
 
 static double ssimChannelInternal(const cv::Mat& a, const cv::Mat& b) {
-    // 简化 SSIM: 用 11x11 高斯窗口 (sigma=1.5) 估算均值/方差/协方差.
+    // Simplified SSIM: estimate mean/variance/covariance with an 11x11 Gaussian window (sigma=1.5).
     const double C1 = 6.5025, C2 = 58.5225;
     cv::Mat a1, b1;
     a.convertTo(a1, CV_32F);
@@ -129,15 +129,15 @@ double ssim(const cv::Mat& a, const cv::Mat& b) {
     return sum / a.channels();
 }
 
-// MS-SSIM: 多层 SSIM 加权, 权重近似 Wang 2003 推荐值.
+// MS-SSIM: multi-level SSIM weighting, weights approximate Wang 2003 recommendations.
 double msssim(const cv::Mat& a, const cv::Mat& b, int levels) {
     CV_Assert(a.size() == b.size() && a.type() == b.type());
-    // 每层权重 (level 0=fine). 典型 3 层: {0.0448, 0.2856, 0.3001}
+    // Per-level weights (level 0 = finest). Typical 3 levels: {0.0448, 0.2856, 0.3001}
     static const double wTbl[5] = {0.0448, 0.2856, 0.3001, 0.2363, 0.1333};
     std::vector<double> weights;
     int L = std::max(1, std::min(5, levels));
     for (int i = 0; i < L; ++i) weights.push_back(wTbl[i]);
-    // 归一化权重
+    // normalize weights
     double wsum = 0; for (auto x : weights) wsum += x;
     for (auto& x : weights) x /= wsum;
 
@@ -149,7 +149,7 @@ double msssim(const cv::Mat& a, const cv::Mat& b, int levels) {
         cv::pyrDown(pb.back(), db);
         pa.push_back(da); pb.push_back(db);
     }
-    // 最粗层用完整 SSIM (包含 luminance), 其余层只用 contrast * structure.
+    // Coarsest level uses full SSIM (incl. luminance); other levels use contrast * structure only.
     double score = 1.0;
     for (int l = L - 1; l >= 0; --l) {
         double sl = ssim(pa[l], pb[l]);
@@ -159,7 +159,8 @@ double msssim(const cv::Mat& a, const cv::Mat& b, int levels) {
     return score;
 }
 
-// LOE: 对 samples 个随机像素, 统计增强前后 "与 N×N 邻域像素亮度顺序被颠倒" 的次数.
+// LOE: for `samples` random pixels, count how often the brightness ordering vs the N×N
+// neighborhood is inverted before vs after enhancement.
 int loe(const cv::Mat& before, const cv::Mat& after, int samples) {
     cv::Mat g1, g2;
     if (before.channels() == 3) cv::cvtColor(before, g1, cv::COLOR_BGR2GRAY);
@@ -168,7 +169,7 @@ int loe(const cv::Mat& before, const cv::Mat& after, int samples) {
     else g2 = after;
     CV_Assert(g1.size() == g2.size());
     int H = g1.rows, W = g1.cols;
-    int R = std::max(3, std::min(H, W) / 32); // 局部邻域半径
+    int R = std::max(3, std::min(H, W) / 32); // local neighborhood radius
     cv::RNG rng(0xC0FFEEu);
     int errors = 0;
     for (int k = 0; k < samples; ++k) {
@@ -192,7 +193,7 @@ int loe(const cv::Mat& before, const cv::Mat& after, int samples) {
 }
 
 // =========================================================================
-// ---- 无参考 IQA ---------------------------------------------------------
+// ---- no-reference IQA ---------------------------------------------------
 // =========================================================================
 
 static double percentile(std::vector<double>& sorted, double p) {
@@ -209,7 +210,7 @@ BrightStats brightnessStats(const cv::Mat& bgr) {
     else g = bgr;
     cv::Scalar mu, sd;
     cv::meanStdDev(g, mu, sd);
-    // 为分位采样 (稀疏 10k 点够了)
+    // sparse sampling for percentiles (10k points is enough)
     int H = g.rows, W = g.cols;
     int N = std::min((int)g.total(), 10000);
     std::vector<double> vals(N);
@@ -235,10 +236,10 @@ double saturationMean(const cv::Mat& bgr) {
     cv::Mat cr, cb;
     chs[1].convertTo(cr, CV_32F, 1.0 / 255.0);
     chs[2].convertTo(cb, CV_32F, 1.0 / 255.0);
-    // 中心化 (YCbCr 中点 = 128/255)
+    // center (YCbCr midpoint = 128/255)
     cr = cr - 0.50196; cb = cb - 0.50196;
     cv::Mat mag; cv::magnitude(cr, cb, mag);
-    // 放大 2×, 使纯白 0 → 纯饱和色 → 1.0 附近
+    // scale by 2x so pure white 0 -> pure saturated color -> around 1.0
     cv::Scalar s = cv::mean(mag);
     return std::min(1.0, s[0] * 2.0);
 }
@@ -280,9 +281,9 @@ double eme(const cv::Mat& gray, int blk) {
 }
 
 double niqeScoreApprox(const cv::Mat& gray) {
-    // NIQE 的简化近似: 用 5×5 局部均值方差 + 局部偏度作为特征,
-    // 与"理想自然图像"的经验特征 (Mu=128,Sigma=30, Skew=0.1) 做 Mahalanobis.
-    // 这不是完整 NIQE (后者需要 36×M 空间域特征 + GGD 拟合), 只作为趋势估计.
+    // Simplified NIQE approximation: use 5x5 local mean variance + local skewness as features,
+    // and compute Mahalanobis distance to empirical "ideal natural image" features (Mu=128, Sigma=30, Skew=0.1).
+    // This is not full NIQE (which needs 36×M spatial features + GGD fitting); it is only a trend estimate.
     CV_Assert(!gray.empty() && gray.depth() == CV_8U);
     cv::Mat f; gray.convertTo(f, CV_32F, 1.0 / 255.0);
     cv::Mat mu, sq = f.mul(f), musq;
@@ -292,12 +293,12 @@ double niqeScoreApprox(const cv::Mat& gray) {
     var = cv::max(var, 0);
     cv::Scalar muVar, sdVar;
     cv::meanStdDev(var, muVar, sdVar);
-    // skew (三阶矩)
+    // skew (third moment)
     cv::Mat d1 = f - mu;
     cv::Mat d3 = d1.mul(d1).mul(d1);
     cv::Scalar sk = cv::mean(d3);
     double mvar = muVar[0], svar = sdVar[0], skew = sk[0];
-    // 经验"自然图像"目标
+    // empirical "natural image" target
     double tMuVar = 0.015, tSVar = 0.01, tSkew = 0.02;
     double d1v = (mvar - tMuVar) / std::max(1e-6, 0.01);
     double d2v = (svar - tSVar) / std::max(1e-6, 0.01);
@@ -318,7 +319,7 @@ NRQuality nrQuality(const cv::Mat& bgr) {
 }
 
 // =========================================================================
-// ---- 图像增强工具 --------------------------------------------------------
+// ---- image enhancement tools --------------------------------------------
 // =========================================================================
 
 cv::Mat gammaLUT(const cv::Mat& src, double gamma) {
@@ -398,27 +399,27 @@ cv::Mat simpleColorBalance(const cv::Mat& bgr, double pct) {
 
 cv::Vec3f estimateWhitePointGrayWorld(const cv::Mat& bgr) {
     CV_Assert(bgr.channels() == 3);
-    // Gray-world: 假设 mean(B)=mean(G)=mean(R)=gray; Max-RGB 归一化混合.
+    // Gray-world: assume mean(B)=mean(G)=mean(R)=gray; blend with Max-RGB normalization.
     cv::Scalar m = cv::mean(bgr); // B,G,R mean
     float b = (float)m[0], g = (float)m[1], r = (float)m[2];
-    // 灰度世界假设下, gray=mean(B,G,R) 对应白点
+    // under gray-world assumption, gray=mean(B,G,R) corresponds to the white point
     float gm = (b + g + r) / 3.0f;
-    // 归一化: 通道均值越暗, white 越小, 放大系数越大
+    // normalize: a darker channel mean => smaller white => larger amplification factor
     float wb = (b > 1) ? gm / b : 1.0f;
     float wg = (g > 1) ? gm / g : 1.0f;
     float wr = (r > 1) ? gm / r : 1.0f;
-    // 抑制极端值 (clip 到 0.5 ~ 2.0)
+    // suppress extremes (clip to 0.5 ~ 2.0)
     wb = std::max(0.5f, std::min(2.0f, wb));
     wg = std::max(0.5f, std::min(2.0f, wg));
     wr = std::max(0.5f, std::min(2.0f, wr));
-    // 以 1/maxChannel 归一化到 [0,1]: 输出"白点在图像中的灰度值"
+    // normalize by 1/maxChannel to [0,1]: output "gray value of the white point in the image"
     float mxc = std::max({wb, wg, wr});
-    return cv::Vec3f(wr / mxc, wg / mxc, wb / mxc); // Vec3f 语义: R,G,B
+    return cv::Vec3f(wr / mxc, wg / mxc, wb / mxc); // Vec3f semantics: R,G,B
 }
 
 cv::Mat whiteBalanceFromPoint(const cv::Mat& bgr, const cv::Vec3f& white, double clip) {
-    // white 是 (R,G,B) ∈ [0,1], 目标: out_B/G/R = in_* * (1/white_*) * scale,
-    // 令 scale = max(white_*) 让最大通道不放大, 避免过曝.
+    // white is (R,G,B) in [0,1], goal: out_B/G/R = in_* * (1/white_*) * scale,
+    // set scale = max(white_*) so the largest channel is not amplified, avoiding overexposure.
     float wr = white[0], wg = white[1], wb = white[2];
     float mx = std::max({wr, wg, wb, 1e-3f});
     float kb = mx / std::max(1e-3f, wb);
@@ -438,7 +439,7 @@ cv::Mat whiteBalanceFromPoint(const cv::Mat& bgr, const cv::Vec3f& white, double
 }
 
 // =========================================================================
-// ---- 可视化 --------------------------------------------------------------
+// ---- visualization ------------------------------------------------------
 // =========================================================================
 
 static cv::Mat ensureBGR(const cv::Mat& m) {
@@ -469,7 +470,7 @@ cv::Mat hstackWithLabels(const std::vector<cv::Mat>& imgs,
         c.copyTo(canvas(roi));
         cv::rectangle(canvas, cv::Rect(x, 0, c.cols, labelHeight),
                       cv::Scalar(50, 50, 50), -1);
-        // 分色条: 每图顶部一条彩色分割线 (增强可读性)
+        // color bar: a colored separator line at the top of each image (improves readability)
         cv::Scalar accent((i * 97) % 200 + 30, (i * 197) % 200 + 30, (i * 311) % 200 + 30);
         cv::rectangle(canvas, cv::Rect(x, labelHeight - 3, c.cols, 3), accent, -1);
         cv::putText(canvas, labels[i], cv::Point(x + 6, labelHeight - 8),
@@ -489,7 +490,7 @@ cv::Mat gridWithLabels(const std::vector<cv::Mat>& imgs,
     int N = (int)convs.size();
     cols = std::max(1, std::min(cols, N));
     int rows = (N + cols - 1) / cols;
-    // 每列统一宽度, 每行统一高度
+    // unified width per column, unified height per row
     std::vector<int> colW(cols, 0), rowH(rows, 0);
     for (int i = 0; i < N; ++i) {
         int r = i / cols, c = i % cols;
@@ -515,7 +516,7 @@ cv::Mat gridWithLabels(const std::vector<cv::Mat>& imgs,
                         cv::Point(x + 6, y + labelHeight - 8),
                         cv::FONT_HERSHEY_SIMPLEX, 0.5, cv::Scalar(255, 255, 255),
                         1, cv::LINE_AA);
-            // 把 img 放到 tile 的左上角 (不足部分留黑)
+            // place the image at the top-left of the tile (pad the rest with black)
             cv::Rect tile(x, y + labelHeight, convs[idx].cols, convs[idx].rows);
             convs[idx].copyTo(canvas(tile));
             x += colW[c];
@@ -606,13 +607,13 @@ std::string formatNRIQATable(
 }
 
 // =========================================================================
-// ---- 配准 ----------------------------------------------------------------
+// ---- alignment ---------------------------------------------------------
 // =========================================================================
 
 static cv::Mat preprocessForECC(const cv::Mat& gray) {
     cv::Mat g;
     gray.convertTo(g, CV_32F, 1.0 / 255.0);
-    // 简单 CLAHE (在 CV_32F 上近似, 用 normalize + 32bit equalize 替代)
+    // simple CLAHE (approximated on CV_32F using normalize + 32bit equalize)
     cv::Mat g8u; g.convertTo(g8u, CV_8U, 255.0);
     cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE(2.0, cv::Size(8, 8));
     cv::Mat equ; clahe->apply(g8u, equ);
@@ -643,7 +644,7 @@ cv::Mat alignECC(const cv::Mat& ref, const cv::Mat& src, int motionType,
     } else if (motionType == cv::MOTION_TRANSLATION) {
         warp = cv::Mat::zeros(2, 1, CV_32F);
     } else {
-        // MOTION_EUCLIDEAN / MOTION_AFFINE 都是 2×3
+        // MOTION_EUCLIDEAN / MOTION_AFFINE are both 2x3
         warp = cv::Mat::eye(2, 3, CV_32F);
     }
     cv::TermCriteria tc(cv::TermCriteria::COUNT + cv::TermCriteria::EPS,
@@ -704,7 +705,7 @@ cv::Mat matchLuminanceStats(const cv::Mat& ref, const cv::Mat& src) {
 }
 
 // =========================================================================
-// ---- 文件工具 ------------------------------------------------------------
+// ---- file tools --------------------------------------------------------
 // =========================================================================
 
 std::string join(const std::string& a, const std::string& b) {
@@ -738,7 +739,7 @@ static bool makeDirHelper(const std::string& dir) {
 
 bool ensureDir(const std::string& dir) {
     if (dir.empty()) return false;
-    // 递归逐级创建
+    // create level by level recursively
     std::string p = dir;
     for (auto& c : p) if (c == '\\') c = '/';
     std::vector<std::string> parts;
@@ -751,7 +752,7 @@ bool ensureDir(const std::string& dir) {
     }
     if (!cur.empty()) parts.push_back(cur);
     std::string build;
-    // Windows 盘符保留
+    // preserve Windows drive letter
     if (!parts.empty() && parts[0].size() == 2 && parts[0][1] == ':') {
         build = parts[0] + "/";
         for (size_t i = 1; i < parts.size(); ++i) {
@@ -761,7 +762,7 @@ bool ensureDir(const std::string& dir) {
         }
         return true;
     }
-    // 绝对路径 Unix / Windows UNC 前缀都当 / 开头
+    // Unix absolute paths and Windows UNC prefixes are both treated as starting with /
     bool isAbs = (p[0] == '/' || p[0] == '\\');
     if (isAbs) build = "/";
     for (size_t i = 0; i < parts.size(); ++i) {
@@ -820,7 +821,7 @@ std::string baseNameNoExt(const std::string& path) {
 }
 
 // =========================================================================
-// ---- 分块迭代 ------------------------------------------------------------
+// ---- tiled iteration ---------------------------------------------------
 // =========================================================================
 
 void processTiled(const cv::Mat& src, cv::Mat& dst, int blk, int overlap,
@@ -840,14 +841,14 @@ void processTiled(const cv::Mat& src, cv::Mat& dst, int blk, int overlap,
             cv::Rect roi(x0, y0, x1 - x0, y1 - y0);
             cv::Mat tile = src(roi).clone();
             cv::Mat processed = fn(tile);
-            // 裁剪回有效范围 (去掉 padding 的 overlap 部分以避免边缘伪影)
+            // crop back to valid range (drop the padded overlap to avoid edge artifacts)
             int ox = x - x0, oy = y - y0;
             int ww = std::min(blk, W - x);
             int hh = std::min(blk, H - y);
             cv::Rect valid(ox, oy, ww, hh);
             cv::Mat p32f;
             processed.convertTo(p32f, CV_MAKE_TYPE(CV_32F, C));
-            // 权重: 线性 feather (中心重, 边缘轻)
+            // weight: linear feather (heavy center, light edges)
             cv::Mat wTile = cv::Mat::zeros(valid.height, valid.width, CV_32F);
             for (int j = 0; j < valid.height; ++j) {
                 float fy = std::min((float)(j + 1) / valid.height,
@@ -861,7 +862,7 @@ void processTiled(const cv::Mat& src, cv::Mat& dst, int blk, int overlap,
             cv::Mat outRoi = dst(cv::Rect(x, y, ww, hh));
             cv::Mat wRoi = wSum(cv::Rect(x, y, ww, hh));
             cv::Mat srcTile = p32f(valid);
-            // 按通道加权叠加
+            // weighted accumulation per channel
             std::vector<cv::Mat> dCh, sCh, wBroadcast;
             cv::split(outRoi, dCh);
             cv::split(srcTile, sCh);
@@ -872,7 +873,7 @@ void processTiled(const cv::Mat& src, cv::Mat& dst, int blk, int overlap,
             cv::merge(dCh, outRoi);
         }
     }
-    // 除以权重
+    // divide by weights
     std::vector<cv::Mat> dCh;
     cv::split(dst, dCh);
     for (int c = 0; c < C; ++c) cv::divide(dCh[c], wSum, dCh[c]);

@@ -1,15 +1,15 @@
 // algorithms/feature_detection/main.cpp
-// 特征点检测与匹配对比演示.
+// Feature detection and matching comparison demo.
 //
-// 覆盖检测器 (不依赖 opencv_contrib, 均为主库 features2d/imgproc):
-//   角点:     Harris (cornerHarris) / Shi-Tomasi (goodFeaturesToTrack)
-//   二进制:   FAST / ORB / BRISK / AKAZE
-// 匹配:   ORB 描述符 → BFMatcher(HAMMING) + knn 比例测试 →
-//         用 findHomography(RANSAC) 剔除离群点、计算单应性内点率.
+// Detectors covered (no opencv_contrib dependency, all in the main features2d/imgproc):
+//   corners:   Harris (cornerHarris) / Shi-Tomasi (goodFeaturesToTrack)
+//   binary:    FAST / ORB / BRISK / AKAZE
+// Matching: ORB descriptors -> BFMatcher(HAMMING) + knn ratio test ->
+//           findHomography(RANSAC) to reject outliers and compute the homography inlier rate.
 //
-// 输入: data/graf1.png 与 data/graf3.png 构成常见"视角变化匹配"样本对.
-// 输出: out/algorithms/feature_detection_compare.png (检测可视化)
-//       out/algorithms/feature_matching.png (匹配 + 单应内点)
+// Input: data/graf1.png and data/graf3.png form the common "viewpoint-change matching" pair.
+// Output: out/algorithms/feature_detection_compare.png (detection visualization)
+//         out/algorithms/feature_matching.png (matching + homography inliers)
 #include "../common/algo_utils.hpp"
 
 #include <opencv2/features2d.hpp>
@@ -21,7 +21,7 @@
 
 using namespace algo;
 
-// 在一张图里画 keypoints, 返回 BGR 可视化.
+// Draw keypoints on an image, returns a BGR visualization.
 static cv::Mat drawPts(const cv::Mat& gray, const std::vector<cv::KeyPoint>& kps,
                        const cv::Scalar& color = cv::Scalar(0, 0, 255)) {
     cv::Mat out;
@@ -42,7 +42,7 @@ int main(int argc, char** argv) {
     cv::Mat g2r = cv::imread(p2, cv::IMREAD_GRAYSCALE);
     if (g1.empty()) { log("feature_detection", "img1 empty: " + p1); g1 = cv::Mat(480,640,CV_8UC1); cv::randu(g1,0,256); }
     if (g2r.empty()) { log("feature_detection", "img2 empty: " + p2); g2r = g1; }
-    // 统一尺寸便于拼接
+    // unify sizes for stitching
     if (g1.size() != g2r.size()) {
         cv::resize(g2r, g2r, g1.size(), 0, 0, cv::INTER_AREA);
     }
@@ -54,7 +54,7 @@ int main(int argc, char** argv) {
 
     std::printf("%-22s %12s\n", "detector", "keypoints");
 
-    // ---- 1. 角点类 ----
+    // ---- 1. corner-based ----
     {
         // Shi-Tomasi (goodFeaturesToTrack)
         std::vector<cv::Point2f> corners;
@@ -79,7 +79,7 @@ int main(int argc, char** argv) {
         std::printf("%-22s %12zu\n", "Harris", hk.size());
     }
 
-    // ---- 2. 二进制检测器 ----
+    // ---- 2. binary detectors ----
     auto detect_show = [&](const std::string& name,
                            const cv::Ptr<cv::Feature2D>& det) {
         std::vector<cv::KeyPoint> kps;
@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
     cv::imwrite(out1, canvas);
     std::cout << "[feature_detection] wrote " << out1 << "\n";
 
-    // ---- 3. ORB 匹配 + 单应性验证 ----
+    // ---- 3. ORB matching + homography verification ----
     cv::Mat d1, d2;
     std::vector<cv::KeyPoint> k1, k2;
     auto orb = cv::ORB::create(1000);
@@ -129,13 +129,14 @@ int main(int argc, char** argv) {
     cv::Mat matchImg, matchInlier;
     cv::drawMatches(g1, k1, g2r, k2, good, matchImg, cv::Scalar::all(-1),
                     cv::Scalar::all(-1), std::vector<char>(), cv::DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
-    // 仅内点
+    // inliers only
     std::vector<cv::DMatch> inl;
     for (size_t i = 0; i < good.size(); ++i) if (!inliers.empty() && inliers[i]) inl.push_back(good[i]);
     cv::drawMatches(g1, k1, g2r, k2, inl, matchInlier, cv::Scalar(0, 255, 0),
                     cv::Scalar(0, 0, 255), std::vector<char>(), cv::DrawMatchesFlags::NOT_DRAW_SINGLE_POINTS);
 
-    // 用 H 把 img1 的四个角重投影像到 img2 (拼接图右侧, 需偏移 img1 宽), 验证单应性.
+    // Reproject img1's four corners onto img2 with H (right side of the stitched image,
+    // offset by img1 width) to verify the homography.
     if (!H.empty()) {
         std::vector<cv::Point2f> corners = {
             cv::Point2f(0.f, 0.f), cv::Point2f((float)g1.cols, 0.f),
@@ -147,12 +148,12 @@ int main(int argc, char** argv) {
         std::vector<cv::Point> poly;
         bool ok = true;
         for (auto& p : dst) {
-            if (!std::isfinite(p.x) || !std::isfinite(p.y)) { ok = false; break; }  // 退化/噪声单应
+            if (!std::isfinite(p.x) || !std::isfinite(p.y)) { ok = false; break; }  // degenerate/noisy homography
             poly.push_back(cv::Point(cvRound(p.x), cvRound(p.y)));
         }
         if (ok) cv::polylines(matchImg, poly, true, cv::Scalar(0, 255, 255), 2, cv::LINE_AA);
     }
-    // 直接拼两张匹配图
+    // stitch the two match images directly
     std::vector<cv::Mat> m2 = {matchInlier, matchImg};
     cv::Mat matchCanvas = gridWithLabels(m2, {"inliers_only", "all_good + H-quad"}, 2, 30);
     std::string out2 = "../out/algorithms/feature_matching.png";

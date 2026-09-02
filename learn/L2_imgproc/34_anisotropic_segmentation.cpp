@@ -1,7 +1,7 @@
-// LEARN: L2 鍚勫悜寮傛€ф墿鏁ｅ垎鍓?
+// LEARN: L2 Anisotropic diffusion segmentation
 // OFFICIAL: tutorial_code/ImgProc/anisotropic_image_segmentation/anisotropic_image_segmentation.cpp
-// THEORY: docs/ch02_imgproc.md 搂2.4.4
-// TASK: 鐢ㄧ粨鏋勫紶閲忎及璁″眬閮ㄦ柟鍚?涓€鑷存€э紝鎸?coherence 闃堝€煎垎鍓茬嚎鎬х粨鏋?
+// THEORY: docs/ch02_imgproc.md §2.4.4
+// TASK: use structure tensor to estimate local orientation coherence, threshold coherence for linear structure segmentation
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -34,7 +34,7 @@ int main() {
     threshold(coherence, mask, 0.5, 255, THRESH_BINARY);
     mask.convertTo(mask, CV_8U);
 
-    logInfo("coherence threshold=0.5: 瓒婇珮瓒婁繚鐣欏己鏂瑰悜缁撴瀯");
+    logInfo("coherence threshold=0.5: higher values preserve strongly oriented structures");
     dbgShowMany({"src", "coherence", "mask"}, {src, coherence, mask}, 0);
     return 0;
 }

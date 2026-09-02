@@ -4,6 +4,16 @@ project(openCv VERSION 0.1.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# This repo is built against a MinGW-built OpenCV. The only MinGW build
+# available here installed the static libs (x64/mingw/staticlib) and NOT the
+# shared ones (x64/mingw/lib). OpenCV's top-level OpenCVConfig.cmake looks in
+# .../lib by default (OpenCV_STATIC=OFF) and reports "no binaries compatible"
+# when only staticlib exists. Force static so find_package() resolves the
+# staticlib path. Override with -DOpenCV_STATIC=OFF if you supply a shared build.
+if(NOT DEFINED OpenCV_STATIC)
+    set(OpenCV_STATIC ON)
+endif()
+
 # OpenCV lookup priority (unchanged):
 #   1) User-specified -DOpenCV_DIR=... (highest priority)
 #   2) Bundled mingw static libs at mingw-build/x64/mingw/staticlib (if present)
@@ -35,9 +45,10 @@ message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
 #     target name is <group>_<stem> to stay globally unique.
 #  3) Output dir: build/<group>/  (the root main target goes to build/main/).
 #  4) Duplicate handling: two .cpp files with the same stem inside one group
-#     trigger a FATAL_ERROR asking you to rename for uniqueness.
-#     Same stem across different groups (different build sub-dirs) is allowed,
-#     disambiguated at the target level by the <group>_ prefix.
+#     are auto-disambiguated by appending the parent directory name (and a
+#     numeric suffix if still colliding), so all sources build without manual
+#     renaming. Same stem across different groups is also allowed, disambiguated
+#     at the target level by the <group>_ prefix.
 #  5) Resource paths: at runtime the exe lives in build/<group>/, which is
 #     always ../../ relative to the source root, so LEARN_*/ALGO_* macros are
 #     defined as relative paths (no hardcoded absolute paths / drive letters).
@@ -128,9 +139,20 @@ function(demo_process_group GROUP_DIR GROUP_NAME STD)
     foreach(_f ${_exes})
         get_filename_component(_stem "${_f}" NAME_WE)
         if(_stem IN_LIST _used)
-            message(FATAL_ERROR
-                "Duplicate target stem '${_stem}' in group '${GROUP_NAME}'. "
-                "Rename one source file so stems are unique within the group: ${_f}")
+            # Auto-disambiguate duplicate stems within one group (e.g. two
+            # equalize_hist.cpp living in different subdirs) by appending the
+            # immediate parent directory name, then a numeric index if still
+            # colliding. This keeps "build everything" working without having
+            # to rename source files.
+            get_filename_component(_pardir "${_f}" DIRECTORY)
+            get_filename_component(_pardir "${_pardir}" NAME)
+            set(_stem "${_stem}_${_pardir}")
+            set(_k 2)
+            while(_stem IN_LIST _used)
+                set(_stem "${_stem}_${_k}")
+                math(EXPR _k "${_k} + 1")
+            endwhile()
+            message(STATUS "[${GROUP_NAME}] duplicate stem disambiguated -> ${_stem} (${_f})")
         endif()
         list(APPEND _used "${_stem}")
 
@@ -165,10 +187,11 @@ endfunction()
 # ---- Build switches (BUILD_*) ----
 # Known groups keep explicit switches; any future new dir auto-generates a
 # BUILD_<GROUP> switch (default OFF).
+# Default build everything. Turn any group OFF with -DBUILD_<GROUP>=OFF.
 option(BUILD_MAIN "Build root openCv main executable" ON)
-option(BUILD_LEARN "Build learn layered exercises" OFF)
-option(BUILD_ALGORITHMS "Build algorithms demo set" OFF)
-option(BUILD_NOTES "Build notes/image_process exercises" OFF)
+option(BUILD_LEARN "Build learn layered exercises" ON)
+option(BUILD_ALGORITHMS "Build algorithms demo set" ON)
+option(BUILD_NOTES "Build notes/image_process exercises" ON)
 
 # Fine-grained switches for learn / algorithms (originally in sub-CMakeLists,
 # promoted to the root so auto-discovery can use them)
@@ -315,7 +338,7 @@ foreach(_e ${_top})
         continue()
     endif()
     string(TOUPPER "${_grp}" _grp_up)
-    option(BUILD_${_grp_up} "Build ${_grp} group" OFF)
+    option(BUILD_${_grp_up} "Build ${_grp} group" ON)
     if(BUILD_${_grp_up})
         message(STATUS "[auto] discovered group '${_grp}' (BUILD_${_grp_up}=ON)")
         demo_process_group("${_e}" "${_grp}" 11)

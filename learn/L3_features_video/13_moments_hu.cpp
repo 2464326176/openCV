@@ -1,6 +1,8 @@
-// LEARN: L3 鐭╀笌 Hu 涓嶅彉閲?// OFFICIAL: samples/cpp/tutorial_code/ShapeDescriptors/moments_demo.cpp
-// THEORY: docs/ch03_features.md 搂杞粨
-// TASK: moments 姹傝川蹇冿紝HuMoments 杈撳嚭 7 缁翠笉鍙橀噺锛坙og 褰掍竴锛?#include <opencv2/opencv.hpp>
+// LEARN: L3 Moments and Hu Invariants
+// OFFICIAL: samples/cpp/tutorial_code/ShapeDescriptors/moments_demo.cpp
+// THEORY: docs/ch03_features.md §轮廓
+// TASK: moments compute centroid, HuMoments output 7 invariants (log normalized)
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
@@ -36,3 +38,4 @@ int main() {
     dbgShow("L3_13 moments+hu", show, 0);
     return 0;
 }
+

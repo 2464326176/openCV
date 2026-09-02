@@ -1,7 +1,7 @@
-// LEARN: L2 Scharr 姊害
+// LEARN: L2 Scharr gradient
 // OFFICIAL: tutorial_code/ImgTrans/Sobel_Demo.cpp
-// THEORY: docs/ch02_imgproc.md 搂4
-// TASK: Scharr 姹?3x3 绮剧‘姊害锛屼笌 Sobel 瀵规瘮
+// THEORY: docs/ch02_imgproc.md §4
+// TASK: Scharr accurate 3x3 gradient, compared with Sobel
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

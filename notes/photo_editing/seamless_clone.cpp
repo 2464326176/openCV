@@ -1,10 +1,10 @@
 //********************
 // Author:  yh
-// 无缝克隆（Poisson 图像编辑）：
-//  原理：把源图目标区域的"梯度场"泊松融合进目标图，使接缝处过渡自然
-//  对应官方示例: tutorial_code/photo/seamless_cloning/cloning_demo.cpp
-//  使用：seamless_clone <源图> <目标图> <掩膜> [模式]
-//        模式: 1=普通克隆 2=混合克隆 3=单色迁移
+// Seamless cloning (Poisson image editing):
+//  Principle: Poisson-fuse the gradient field of the source region into the target image for a natural seam
+//  Official example: tutorial_code/photo/seamless_cloning/cloning_demo.cpp
+//  Usage: seamless_clone <source> <target> <mask> [mode]
+//        Mode: 1=normal clone 2=mixed clone 3=monochrome transfer
 //********************
 #include <opencv2/opencv.hpp>
 #include <opencv2/photo.hpp>
@@ -27,8 +27,8 @@ int main(int argc, char **argv) {
         return -1;
     }
 
-    int flag = argc > 4 ? atoi(argv[4]) : 1;   // 1=普通 2=混合 3=单色
-    // 把源图中心对齐到目标图中心作为粘贴位置
+    int flag = argc > 4 ? atoi(argv[4]) : 1;   // 1=normal 2=mixed 3=monochrome
+    // Align the source center to the target center as the paste position
     Point p(target.cols / 2, target.rows / 2);
 
     Mat result;

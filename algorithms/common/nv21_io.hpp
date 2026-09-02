@@ -1,21 +1,21 @@
 // algorithms/common/nv21_io.hpp
-// NV21 / NV12 / I420 (YUV420) raw reader & writer, 配套文件名元数据解析.
+// NV21 / NV12 / I420 (YUV420) raw reader & writer, with filename metadata parsing.
 //
-// 本工具统一了 Android 相机流水线常见的 3 种 YUV420 格式:
+// This utility unifies the 3 common YUV420 formats in Android camera pipelines:
 //
-//   NV21 : YYYY... V U V U V U V U ...  (Y + VU 交错平面, Android 主相机默认)
-//   NV12 : YYYY... U V U V U V U V ...  (Y + UV 交错平面, 高通/编码常用)
-//   I420 : YYYY... U U ... V V ...      (3 个独立平面, Y+U+V, AOSP 编码中间格式)
+//   NV21 : YYYY... V U V U V U V U ...  (Y + interleaved VU plane, Android main camera default)
+//   NV12 : YYYY... U V U V U V U V ...  (Y + interleaved UV plane, common in Qualcomm/encoding)
+//   I420 : YYYY... U U ... V V ...      (3 separate planes, Y+U+V, AOSP encoding intermediate format)
 //
-// 每类格式的紧凑布局 (stride_y == width) 所需字节数均为 w*h*3/2,
-// 但平面结构不同, 转换到 BGR 的 cvtColor code 也不同.
+// For a compact layout (stride_y == width) every format needs w*h*3/2 bytes,
+// but the plane structures differ, so the cvtColor code to BGR differs too.
 //
-// 工程数据中常见 stride padding (例如文件名标注 3264x2448, 但实际行步长更大),
-// 本工具同时支持:
-//   1) 紧排布 (默认): 仅需 width/height
-//   2) 显式 stride: 调用方传入 stride_y
-// 当原始文件字节数略大于紧凑理论字节数时, 多余尾部字节将被忽略
-// (往往是相机驱动追加的 metadata, 非像素数据)。
+// Real engineering data often has stride padding (e.g. filename says 3264x2448 but the actual row stride is larger),
+// and this utility supports both:
+//   1) compact layout (default): only width/height needed
+//   2) explicit stride: caller passes stride_y
+// When the raw file has a few extra bytes beyond the compact theoretical size, the extra tail is ignored
+// (usually camera-driver metadata, not pixel data).
 #pragma once
 
 #include <opencv2/core.hpp>
@@ -25,132 +25,132 @@
 
 namespace algo {
 
-// YUV420 格式类型枚举。
+// YUV420 format type enumeration.
 enum class YuvFormat {
-    NV21 = 0, // Y + VU 交错 (默认)
-    NV12 = 1, // Y + UV 交错
-    I420 = 2, // Y + U + V (IYUV, 平面式)
+    NV21 = 0, // Y + interleaved VU (default)
+    NV12 = 1, // Y + interleaved UV
+    I420 = 2, // Y + U + V (IYUV, planar)
 };
 
-// YUV420 原始帧描述: 格式 + 尺寸 + stride + 路径 + 可选元数据。
+// YUV420 raw frame descriptor: format + size + stride + path + optional metadata.
 struct YuvFrame {
     YuvFormat fmt = YuvFormat::NV21;
-    int width = 0;            // 有效图像宽度 (偶数)
-    int height = 0;           // 有效图像高度 (偶数)
-    int stride_y = 0;         // Y 平面行步长 (>= width), 0 表示等于 width
-    int stride_uv = 0;        // UV (或 U/V) 行步长, 0 表示等于 stride_y
-    std::string path;         // 原始文件路径
-    size_t file_size = 0;     // 文件实际字节数
-    // 可选: 文件名里解析到的拍摄参数 (未解析到为 0 / 默认)
-    int iso = 0;              // ISO 灵敏度
-    double exposure_time_us = 0; // 曝光时间 (us)
-    int ev_value = 0;         // EV 值 (整数档, -8/-4/0/+2 ...)
-    int base_id = 0;          // "base_0 / base_1" 基准帧 ID
-    double analog_gain = 0;   // 从文件名 ag_XXX 中解析 (0 = 未知)
+    int width = 0;            // active image width (even)
+    int height = 0;           // active image height (even)
+    int stride_y = 0;         // Y plane row stride (>= width), 0 means equals width
+    int stride_uv = 0;        // UV (or U/V) row stride, 0 means equals stride_y
+    std::string path;         // raw file path
+    size_t file_size = 0;     // actual file byte count
+    // optional: capture parameters parsed from the filename (0/default if not found)
+    int iso = 0;              // ISO sensitivity
+    double exposure_time_us = 0; // exposure time (us)
+    int ev_value = 0;         // EV value (integer stops, -8/-4/0/+2 ...)
+    int base_id = 0;          // "base_0 / base_1" reference frame ID
+    double analog_gain = 0;   // parsed from filename ag_XXX (0 = unknown)
     double digital_gain = 0;  // dg_XXX
 };
 
-// 兼容老名称。
+// compatibility alias for the old name.
 using Nv21Frame = YuvFrame;
 
-// 从文件名解析宽高, 匹配 "_WWWWxHHHH_" / "_WWWWXHHHH_" (大小写不敏感)。
-// 宽高必须都为偶数, 成功时返回 true。
+// Parse width/height from the filename, matching "_WWWWxHHHH_" / "_WWWWXHHHH_" (case-insensitive).
+// Both width and height must be even; returns true on success.
 bool parseNv21SizeFromName(const std::string& filename, int& w, int& h);
 
-// 从文件名解析 ISO: 匹配 "iso_XXX". 失败返回 0。
+// Parse ISO from the filename: matches "iso_XXX". Returns 0 on failure.
 int parseIsoFromName(const std::string& filename);
-// 从文件名解析曝光时间 us: 匹配 "et_XXXXXX" (数字串)。失败返回 0。
+// Parse exposure time (us) from the filename: matches "et_XXXXXX" (digit string). Returns 0 on failure.
 double parseExposureTimeFromName(const std::string& filename);
-// 从文件名解析 EV 值: 匹配 "ev_+/-N"。失败返回 0。
+// Parse EV value from the filename: matches "ev_+/-N". Returns 0 on failure.
 int parseEvValueFromName(const std::string& filename);
-// 从文件名解析 base_0 / base_1。失败返回 -1。
+// Parse base_0 / base_1 from the filename. Returns -1 on failure.
 int parseBaseIdFromName(const std::string& filename);
-// 从文件名解析 analog_gain (ag_XX) / digital_gain (dg_XX)。失败返回 0.0。
+// Parse analog_gain (ag_XX) / digital_gain (dg_XX) from the filename. Returns 0.0 on failure.
 double parseAnalogGainFromName(const std::string& filename);
 double parseDigitalGainFromName(const std::string& filename);
-// 统一解析: 填充 frame.iso / exposure_time_us / ev_value / base_id / gain。
+// Unified parsing: fill frame.iso / exposure_time_us / ev_value / base_id / gain.
 void parseAllMetaFromName(YuvFrame& frame);
 
-// 检测扩展名 / 内容并决定 YuvFormat:
-//   .NV21 或含 vu 字样 -> NV21
+// Detect extension / content and decide the YuvFormat:
+//   .NV21 or contains "vu" -> NV21
 //   .NV12 / .uv     -> NV12
-//   .I420 / .IYUV / .YUV + YUV420 planar 推断 -> I420
+//   .I420 / .IYUV / .YUV with YUV420 planar inference -> I420
 YuvFormat guessFormatFromName(const std::string& filename);
 
 // ---------------------------------------------------------------
-// 读: YUV raw → BGR / Y / (RGB)
+// read: YUV raw -> BGR / Y / (RGB)
 // ---------------------------------------------------------------
 
-// 读取一帧 YUV420 raw, 输出 BGR Mat。
-//   若 stride_y > width 则按 stride 模式逐行紧凑拷贝;
-//   多余尾部字节自动忽略。返回非空 Mat 表示成功。
+// Read one YUV420 raw frame, output a BGR Mat.
+//   If stride_y > width, copy row-by-row in stride mode;
+//   extra tail bytes are ignored automatically. A non-empty Mat means success.
 cv::Mat readYuv420(const YuvFrame& frame);
 
-// 便捷: 已知 width/height + path + 可选格式/stride 一次性读出 BGR。
+// Convenience: read BGR in one call with known width/height + path + optional format/stride.
 cv::Mat readYuv420(const std::string& path, int width, int height,
                    YuvFormat fmt = YuvFormat::NV21,
                    int stride_y = 0, int stride_uv = 0);
 
-// 兼容老 API (NV21 默认)。
+// compatibility wrapper for the old API (NV21 default).
 inline cv::Mat readNv21(const YuvFrame& frame) { return readYuv420(frame); }
 inline cv::Mat readNv21(const std::string& path, int w, int h, int stride_y = 0) {
     return readYuv420(path, w, h, YuvFormat::NV21, stride_y, 0);
 }
 
-// 自动检测 (用文件名解析宽高与格式)。
+// Auto-detect (parse width/height and format from the filename).
 cv::Mat readNv21Auto(const std::string& path);
 
-// 把 BGR Mat 写成 NV21 / NV12 / I420 raw (紧排布)。
+// Write a BGR Mat to NV21 / NV12 / I420 raw (compact layout).
 bool writeNv21(const std::string& path, const cv::Mat& bgr);
 bool writeYuv420(const std::string& path, const cv::Mat& bgr, YuvFormat fmt);
 
-// 批量加载某目录下所有 YUV420 (依据文件名解析宽高)。
-//   返回 (BGR, meta) 列表, 加载失败的文件会被跳过并在日志中提示。
+// Batch-load all YUV420 files in a directory (parse width/height from filenames).
+//   Returns a (BGR, meta) list; files that fail to load are skipped and logged.
 struct LoadedFrame {
     cv::Mat bgr;
     YuvFrame meta;
 };
 std::vector<LoadedFrame> loadNv21Dir(const std::string& dir,
                                      bool sortByName = true);
-// 同上, 但支持所有 YuvFormat。
+// same as above, but supports all YuvFormat.
 std::vector<LoadedFrame> loadYuv420Dir(const std::string& dir,
                                         bool sortByName = true);
 
 // ---------------------------------------------------------------
-// 直接 Y / UV 平面提取
+// direct Y / UV plane extraction
 // ---------------------------------------------------------------
 
-// 从 YUV420 直接提取 Y 平面 (单通道 CV_8UC1), 比 BGR 转换快很多。
+// Extract the Y plane directly from YUV420 (single-channel CV_8UC1), much faster than BGR conversion.
 cv::Mat readYuv420Y(const YuvFrame& frame);
 cv::Mat readYuv420Y(const std::string& path, int width, int height,
                     YuvFormat fmt = YuvFormat::NV21,
                     int stride_y = 0);
 
-// 兼容老 API。
+// compatibility wrapper for the old API.
 inline cv::Mat readNv21Y(const YuvFrame& frame) { return readYuv420Y(frame); }
 inline cv::Mat readNv21Y(const std::string& path, int w, int h, int stride_y = 0) {
     return readYuv420Y(path, w, h, YuvFormat::NV21, stride_y);
 }
 
-// 从 YUV420 同时提取 Y + UV (或 U+V) 平面.
-//   - NV12/NV21: UV 输出为 CV_8UC2, size = (w/2, h/2)
-//   - I420: U 与 V 输出为 CV_8UC1, size = (w/2, h/2)
+// Extract Y + UV (or U+V) planes together from YUV420.
+//   - NV12/NV21: UV output is CV_8UC2, size = (w/2, h/2)
+//   - I420: U and V output are CV_8UC1, size = (w/2, h/2)
 struct YuvPlanes {
     cv::Mat Y;                  // (w,h) CV_8UC1
     cv::Mat UV_or_U;            // NV: (w/2, h/2) CV_8UC2; I420: U, (w/2,h/2) CV_8UC1
-    cv::Mat V;                  // 仅 I420 非空, (w/2,h/2) CV_8UC1
+    cv::Mat V;                  // non-empty for I420 only, (w/2,h/2) CV_8UC1
 };
 YuvPlanes readYuv420Planes(const YuvFrame& frame);
 
 // ---------------------------------------------------------------
-// 工具函数
+// utility functions
 // ---------------------------------------------------------------
 
-// 紧凑布局下, 某 format 的理论字节数。
+// Theoretical byte count for a format under a compact layout.
 size_t yuv420ByteCount(int w, int h, YuvFormat fmt = YuvFormat::NV21);
 inline size_t nv21ByteCount(int w, int h) { return (size_t)w * (size_t)h * 3 / 2; }
 
-// 从格式名枚举转字符串, 用于日志打印。
+// Convert the format enum to a string, for logging.
 const char* formatName(YuvFormat fmt);
 
 } // namespace algo

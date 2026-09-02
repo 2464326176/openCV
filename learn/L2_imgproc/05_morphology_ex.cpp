@@ -1,6 +1,7 @@
-// LEARN: L2 morphologyEx 涓冭繍绠?// OFFICIAL: samples/cpp/tutorial_code/ImgProc/Morphology_2.cpp
-// THEORY: docs/ch02_imgproc.md 搂2
-// TASK: morphologyEx 寮€/闂?姊害/绀煎附/榛戝附 trackbar
+// LEARN: L2 morphologyEx — seven operations
+// OFFICIAL: samples/cpp/tutorial_code/ImgProc/Morphology_2.cpp
+// THEORY: docs/ch02_imgproc.md §2
+// TASK: morphologyEx open/close gradient/tophat/blackhat trackbar
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

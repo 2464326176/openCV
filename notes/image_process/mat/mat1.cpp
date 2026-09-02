@@ -17,9 +17,9 @@ int main() {
 
 //    cout << "M = " << M << endl;
     /*Mat M = (Mat_<double>(3,3) << 0, -1, 0, -1, 5, -1, 0, -1, 0);
-    Mat_<double> 对应	CV_64F； 	Mat_<uchar>对应	CV_8U
-    Mat_<char>对应	CV_8S；	Mat_<int>对应	CV_32S
-    Mat_<float>对应	CV_32F；	Mat_<double>对应	CV_64F*/
+    Mat_<double>  ->  CV_64F;     Mat_<uchar> -> CV_8U
+    Mat_<char>    ->  CV_8S;      Mat_<int>   -> CV_32S
+    Mat_<float>   ->  CV_32F;     Mat_<double>-> CV_64F*/
 
     waitKey(0);
     return 0;

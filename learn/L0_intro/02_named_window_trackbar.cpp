@@ -1,13 +1,14 @@
-// LEARN: L0 婊戝姩鏉℃敼浜害瀵规瘮搴?// OFFICIAL: samples/cpp/tutorial_code/HighGUI/BasicLinearTransformsTrackbar.cpp
-// THEORY: docs/ch08_gui_gapi_gpu.md 搂highgui + ch01_core.md 搂1
-// TASK: createTrackbar 璋?alpha/beta锛宑onvertScaleAbs 瀹炴椂鏄剧ず
+// LEARN: L0 Trackbar for brightness and contrast adjustment
+// OFFICIAL: samples/cpp/tutorial_code/HighGUI/BasicLinearTransformsTrackbar.cpp
+// THEORY: docs/ch08_gui_gapi_gpu.md §highgui + ch01_core.md §1
+// TASK: createTrackbar to adjust alpha/beta, convertScaleAbs for real-time display
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
 
 static Mat src;
-static int alpha = 100; // 瀹為檯涔?0.01
+static int alpha = 100; // actual value multiplied by 0.01
 static int beta  = 0;
 
 static void onTrack(int, void*) {

@@ -1,6 +1,7 @@
-// LEARN: L3 BFMatcher + Lowe 姣斿€兼楠?// OFFICIAL: samples/cpp/tutorial_code/features2d/feature_description/SURF_matching_Demo.cpp
-// THEORY: docs/ch03_features.md 搂鍖归厤
-// TASK: ORB 鎻忚堪瀛愶紝knnMatch k=2锛屾瘮鍊?trackbar 鎺у埗绛涢€夛紝鐢?good matches
+// LEARN: L3 BFMatcher + Lowe 比值筛选
+// OFFICIAL: samples/cpp/tutorial_code/features2d/feature_description/SURF_matching_Demo.cpp
+// THEORY: docs/ch03_features.md §匹配
+// TASK: ORB descriptors, knnMatch k=2, ratio test; trackbar to control filtering, good matches
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -43,3 +44,4 @@ int main() {
     waitKey(0);
     return 0;
 }
+

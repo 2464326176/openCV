@@ -1,7 +1,7 @@
-// LEARN: L2 copyMakeBorder 杈圭晫濉厖
+// LEARN: L2 copyMakeBorder border padding
 // OFFICIAL: samples/cpp/tutorial_code/ImgTrans/copyMakeBorder_demo.cpp
-// THEORY: docs/ch02_imgproc.md 搂6
-// TASK: copyMakeBorder 浜旂 borderType trackbar
+// THEORY: docs/ch02_imgproc.md §6
+// TASK: copyMakeBorder five borderType trackbar
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

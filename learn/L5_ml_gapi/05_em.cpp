@@ -1,7 +1,8 @@
-// LEARN: L5 EM 楂樻柉娣峰悎
+// LEARN: L5 EM Gaussian mixture
 // OFFICIAL: samples/cpp/em.cpp
-// THEORY: docs/ch05_ml.md 搂EM
-// TASK: 鍚堟垚涓夊洟楂樻柉鐐癸紝EM 鎷熷悎 3 楂樻柉锛屾寜鍚庨獙鑱氱被鐫€鑹?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch05_ml.md §EM
+// TASK: Generate three Gaussian clusters, EM fits 3 Gaussians, color by posterior clustering
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 using namespace cv;
 using namespace cv::ml;

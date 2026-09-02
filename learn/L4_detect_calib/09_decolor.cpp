@@ -1,7 +1,7 @@
-// LEARN: L4 鍘昏壊 decolor
+// LEARN: L4 decolor
 // OFFICIAL: tutorial_code/photo/decolorization/decolor.cpp
-// THEORY: docs/ch06_objdetect_photo.md 搂6.27
-// TASK: decolor 杈撳叆褰╄壊鍥撅紝杈撳嚭鐏板害鍥句笌瀵规瘮搴﹀寮哄浘锛屼笌鏍囧噯 cvtColor 鐏板害瀵规瘮
+// THEORY: docs/ch06_objdetect_photo.md §6.27
+// TASK: decolor takes color input, outputs grayscale and contrast-enhanced images, compare with standard cvtColor grayscale
 #include <opencv2/opencv.hpp>
 #include <opencv2/photo.hpp>
 #include <opencv_utils.h>

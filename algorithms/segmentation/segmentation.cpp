@@ -1,14 +1,14 @@
 // algorithms/segmentation/main.cpp
-// 图像分割多种方法对比演示.
+// Comparison demo of multiple image segmentation methods.
 //
-// 覆盖方法:
-//   阈值:     Otsu 全局阈值 / 自适应阈值 (mean & gaussian)
-//   颜色聚类: KMeans 色彩量化 (k=3/5/8)
-//   系统:     MeanShift 像素聚类 / GrabCut (rect 初始化交互式前景分割) /
-//             Watershed 分水岭 (距离变换标记) / connectedComponents 连通域
+// Methods covered:
+//   threshold:  Otsu global threshold / adaptive threshold (mean & gaussian)
+//   color clustering: KMeans color quantization (k=3/5/8)
+//   systems:    MeanShift pixel clustering / GrabCut (rect-init interactive foreground segmentation) /
+//               Watershed (distance-transform markers) / connectedComponents
 //
-// 输出: out/algorithms/segmentation_compare.png 全景 + 各方法区域数统计.
-// 用法: segmentation.exe [input_img]
+// Output: out/algorithms/segmentation_compare.png panorama + region count statistics per method.
+// Usage: segmentation.exe [input_img]
 #include "../common/algo_utils.hpp"
 
 #include <cstdio>
@@ -17,7 +17,7 @@
 
 using namespace algo;
 
-// 给连通域 / 标签图涂上随机伪彩, 便于可视化.
+// Colorize connected-component / label maps with random pseudo colors for visualization.
 static cv::Mat colorizeLabels(const cv::Mat& labels, int n) {
     cv::Mat out(labels.size(), CV_8UC3, cv::Scalar(0, 0, 0));
     std::vector<cv::Vec3b> colors(n);
@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
     std::vector<cv::Mat> panels; std::vector<std::string> labels;
     panels.push_back(src); labels.push_back("input");
 
-    // ---- 1. 阈值类 ----
+    // ---- 1. thresholding ----
     cv::Mat otsu;
     double t = cv::threshold(gray, otsu, 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
     panels.push_back(otsu); labels.push_back("Otsu(t=" + std::to_string((int)t) + ")");
@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
     panels.push_back(adaptM); labels.push_back("Adaptive-mean(51)");
     panels.push_back(adaptG); labels.push_back("Adaptive-gauss(51)");
 
-    // ---- 2. KMeans 色彩量化 ----
+    // ---- 2. KMeans color quantization ----
     cv::Mat flat = src.reshape(1, src.rows * src.cols);
     flat.convertTo(flat, CV_32F);
     for (int k : {3, 5, 8}) {
@@ -67,7 +67,7 @@ int main(int argc, char** argv) {
         cv::kmeans(flat, k, bestLabels,
                    cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::COUNT, 30, 0.6),
                    3, cv::KMEANS_PP_CENTERS, centers);
-        // 用聚类中心重着色每个像素 (centers 为 k x 3 CV_32F)
+        // recolor each pixel with the cluster center (centers is k x 3 CV_32F)
         cv::Mat out = cv::Mat::zeros(src.size(), CV_8UC3);
         int count = (int)bestLabels.total();
         for (int i = 0; i < count; ++i) {
@@ -80,12 +80,12 @@ int main(int argc, char** argv) {
         panels.push_back(out); labels.push_back("KMeans k=" + std::to_string(k));
     }
 
-    // ---- 3. MeanShift 像素聚类 (平滑+分割中间体) ----
+    // ---- 3. MeanShift pixel clustering (smoothing + intermediate for segmentation) ----
     cv::Mat ms;
     cv::pyrMeanShiftFiltering(src, ms, 20, 30);
     panels.push_back(ms); labels.push_back("MeanShift(sp=20,sr=30)");
 
-    // ---- 4. GrabCut (rect 初始化, 取 fg+probable-fg) ----
+    // ---- 4. GrabCut (rect init, take fg + probable-fg) ----
     {
         cv::Mat mask = cv::Mat::zeros(src.size(), CV_8UC1);
         cv::Rect rect(cvRound(src.cols * 0.12), cvRound(src.rows * 0.12),
@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
         panels.push_back(fg8); labels.push_back("GrabCut(rect)");
     }
 
-    // ---- 5. Watershed (基于距离变换的标记) ----
+    // ---- 5. Watershed (distance-transform-based markers) ----
     {
         cv::Mat bin;
         cv::threshold(gray, bin, 0, 255, cv::THRESH_BINARY_INV | cv::THRESH_OTSU);
@@ -105,10 +105,10 @@ int main(int argc, char** argv) {
         cv::distanceTransform(bin, dist, cv::DIST_L2, 3);
         cv::Mat sureFg;
         cv::threshold(dist, sureFg, 0.4 * cv::norm(dist, cv::NORM_INF), 255, cv::THRESH_BINARY);
-        sureFg.convertTo(sureFg, CV_8U);  // threshold 保留输入类型(CV_32F), 需转 8U
+        sureFg.convertTo(sureFg, CV_8U);  // threshold preserves the input type (CV_32F), convert to 8U
         cv::Mat markers, m8;
         int n = cv::connectedComponents(sureFg, markers);
-        // 背景标记 = n, 其余标记 +1 (0 保留给未知区域)
+        // background label = n, other labels +1 (0 reserved for unknown region)
         markers = markers + 1;
         cv::Mat unknown;
         cv::dilate(bin, unknown, cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3,3)));
@@ -117,14 +117,14 @@ int main(int argc, char** argv) {
         cv::Mat srcWS = src.clone();
         cv::watershed(srcWS, markers);
         cv::Mat color = colorizeLabels(markers, n + 2);
-        // 把分水岭边界线画成红色
+        // draw watershed boundary lines in red
         for (int y = 0; y < markers.rows; ++y)
             for (int x = 0; x < markers.cols; ++x)
                 if (markers.at<int>(y, x) == -1) color.at<cv::Vec3b>(y, x) = cv::Vec3b(0, 0, 255);
         panels.push_back(color); labels.push_back("Watershed(" + std::to_string(n) + " fg)");
     }
 
-    // ---- 6. connectedComponents 区域数统计 ----
+    // ---- 6. connectedComponents region count statistics ----
     {
         cv::Mat otsu2;
         cv::threshold(gray, otsu2, 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);

@@ -1,7 +1,8 @@
-// LEARN: L1 parallel_for 骞惰鍍忕礌澶勭悊
-// OFFICIAL: samples/cpp/tutorial_code/core/how_to_use_OpenCV_parallel_for_/how_to_use_OpenCV_parallel_for_.cpp銆乭ow_to_use_OpenCV_parallel_for_new.cpp
-// THEORY: docs/ch01_core.md 搂2.8 骞惰璁＄畻
-// TASK: parallel_for_ + Range 鍋氶鑹茬缉鍑忥紱瀵规瘮涓茶涓庡苟琛屾€ц兘锛堥€夊仛锛?#include <opencv2/opencv.hpp>
+// LEARN: L1 parallel_for parallel pixel processing
+// OFFICIAL: samples/cpp/tutorial_code/core/how_to_use_OpenCV_parallel_for_/how_to_use_OpenCV_parallel_for_.cpp、how_to_use_OpenCV_parallel_for_new.cpp
+// THEORY: docs/ch01_core.md §2.8 parallel computing
+// TASK: parallel_for_ + Range for color reduction; compare serial vs parallel performance (optional)
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;

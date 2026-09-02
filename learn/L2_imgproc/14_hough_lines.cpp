@@ -1,7 +1,7 @@
-// LEARN: L2 HoughLines 鏍囧噯闇嶅か鐩寸嚎
-// OFFICIAL: samples/cpp/tutorial_code/ImgTrans/HoughLines_Demo.cpp銆乭oughlines.cpp
-// THEORY: docs/ch02_imgproc.md 搂5
-// TASK: Canny 杈圭紭鍚?HoughLines 鐢绘瀬鍧愭爣鐩寸嚎
+// LEARN: L2 HoughLines standard Hough line
+// OFFICIAL: samples/cpp/tutorial_code/ImgTrans/HoughLines_Demo.cpp、houghlines.cpp
+// THEORY: docs/ch02_imgproc.md §5
+// TASK: Canny edge then HoughLines draw polar lines
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

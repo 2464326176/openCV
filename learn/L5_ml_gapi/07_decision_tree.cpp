@@ -1,6 +1,7 @@
-// LEARN: L5 DTrees 鍐崇瓥鏍?// OFFICIAL: samples/cpp/tree_engine.cpp
-// THEORY: docs/ch05_ml.md 搂DTrees
-// TASK: 鍚堟垚涓ょ被浜岀淮鐐癸紝DTrees 璁粌骞跺彲瑙嗗寲鍐崇瓥杈圭晫
+// LEARN: L5 DTrees decision tree
+// OFFICIAL: samples/cpp/tree_engine.cpp
+// THEORY: docs/ch05_ml.md §DTrees
+// TASK: Generate two-class 2D points, train DTrees and visualize decision boundary
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 using namespace cv;

@@ -1,7 +1,7 @@
-// LEARN: L2 闃堝€间簲绫诲瀷
+// LEARN: L2 Threshold — five types
 // OFFICIAL: samples/cpp/tutorial_code/ImgProc/Threshold.cpp
-// THEORY: docs/ch02_imgproc.md 搂3
-// TASK: threshold 浜旂被鍨?BINARY/TRUNC/TOZERO/INV+OTSU) trackbar
+// THEORY: docs/ch02_imgproc.md §3
+// TASK: threshold five types (BINARY/TRUNC/TOZERO/INV+OTSU) trackbar
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

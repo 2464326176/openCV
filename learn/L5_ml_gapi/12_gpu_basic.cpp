@@ -1,7 +1,8 @@
-// LEARN: L5 GpuMat GPU 鍩虹
+// LEARN: L5 GpuMat GPU basics
 // OFFICIAL: samples/cpp/tutorial_code/gpu/gpu-basics-similarity/gpu-basics-similarity.cpp
-// THEORY: docs/ch08_gui_gapi_gpu.md 搂GPU
-// TASK: GpuMat 涓婁紶/涓嬭浇/杩愮畻锛涙棤 CUDA 鍒欑紪璇戞湡璺宠繃骞惰鏄?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch08_gui_gapi_gpu.md §GPU
+// TASK: GpuMat upload/download/operations; skip at compile time if no CUDA with explanation
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 #ifdef HAVE_CUDA
 #include <opencv2/core/cuda.hpp>

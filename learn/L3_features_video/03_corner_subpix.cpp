@@ -1,7 +1,8 @@
-// LEARN: L3 浜氬儚绱犺鐐?cornerSubPix
+// LEARN: L3 Subpixel Corner
 // OFFICIAL: samples/cpp/tutorial_code/TrackingMotion/cornerSubPix_Demo.cpp
-// THEORY: docs/ch03_features.md 搂瑙掔偣
-// TASK: goodFeaturesToTrack 鍚?cornerSubPix 绮惧寲锛屽姣斿墠鍚庝綅缃?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch03_features.md §角点
+// TASK: goodFeaturesToTrack get corners, cornerSubPix refine, compare positions before/after
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
@@ -20,10 +21,11 @@ int main() {
 
     Mat show; cvtColor(src, show, COLOR_GRAY2BGR);
     for (size_t i = 0; i < corners.size(); ++i) {
-        circle(show, corners[i], 4, Scalar(0, 0, 255), 1);     // 绾細鍘熷
-        circle(show, refined[i], 2, Scalar(0, 255, 0), -1);    // 缁匡細绮惧寲
+        circle(show, corners[i], 4, Scalar(0, 0, 255), 1);     // red: raw
+        circle(show, refined[i], 2, Scalar(0, 255, 0), -1);    // green: refined
     }
     logInfo("refined %zu corners", refined.size());
     dbgShow("L3_03 subpix (red=raw, green=refined)", show, 0);
     return 0;
 }
+

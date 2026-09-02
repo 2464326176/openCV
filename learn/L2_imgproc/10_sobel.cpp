@@ -1,7 +1,7 @@
-// LEARN: L2 Sobel 杈圭紭
+// LEARN: L2 Sobel edge
 // OFFICIAL: samples/cpp/tutorial_code/ImgTrans/Sobel_Demo.cpp
-// THEORY: docs/ch02_imgproc.md 搂4
-// TASK: Sobel x/y 姹傛搴︼紝convertScaleAbs+addWeighted 鍚堟垚
+// THEORY: docs/ch02_imgproc.md §4
+// TASK: Sobel x/y gradient, convertScaleAbs+addWeighted composition
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

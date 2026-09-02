@@ -1,10 +1,10 @@
 // algorithms/optical_flow/main.cpp
-// 光流估计: 稀疏 Lucas-Kanade (金字塔) + 稠密 Farneback.
+// Optical flow estimation: sparse Lucas-Kanade (pyramid) + dense Farneback.
 //
-// 输入: 视频两帧 (默认 data/vtest.avi 第 A/B 帧), 或两张图片.
-// 输出: out/algorithms/optical_flow_compare.png
-//       - LK:   Shi-Tomasi 角点 + 位移向量箭头
-//       - Farneback: HSV 速度场 (Hue=方向, Value=大小), 或箭头场
+// Input: two video frames (default frames A/B of data/vtest.avi), or two images.
+// Output: out/algorithms/optical_flow_compare.png
+//       - LK:   Shi-Tomasi corners + displacement vector arrows
+//       - Farneback: HSV velocity field (Hue=direction, Value=magnitude), or arrow field
 #include "../common/algo_utils.hpp"
 
 #include <cstdio>
@@ -13,7 +13,7 @@
 
 using namespace algo;
 
-// 稠密光流 → HSV 可视化 (H=D方向, S=1, V=归一幅度).
+// Dense flow -> HSV visualization (H=direction, S=1, V=normalized magnitude).
 static cv::Mat flowToHSV(const cv::Mat& flow) {
     cv::Mat ch[2];
     cv::split(flow, ch);
@@ -47,7 +47,8 @@ int main(int argc, char** argv) {
         cap.read(next8);
     } else {
         log("optical_flow", "video open failed, use synthetic affine motion");
-        // 合成可控运动: 对基础图做"平移+轻微旋转"得到下一帧, 便于直观核验光流.
+        // Synthetic controllable motion: apply "translation + slight rotation" to the base
+        // image to get the next frame, easy to verify the flow visually.
         prev8 = cv::imread("../../data/images/lena.jpg");
         if (prev8.empty()) { prev8 = cv::Mat(320, 400, CV_8UC3); cv::randu(prev8, 0, 256); }
         cv::Mat M = (cv::Mat_<double>(2, 3) <<
@@ -69,7 +70,7 @@ int main(int argc, char** argv) {
     cv::cvtColor(next8, gn, cv::COLOR_BGR2GRAY);
     ensureDir("../out/algorithms");
 
-    // ---- 1. LK 稀疏 ----
+    // ---- 1. LK sparse ----
     cv::Mat prevPts;
     std::vector<cv::Point2f> p0;
     cv::goodFeaturesToTrack(gp, p0, 300, 0.01, 10);
@@ -92,7 +93,7 @@ int main(int argc, char** argv) {
     std::printf("LK tracked=%d/%zu  meanVecLen=%.2f px\n",
                 tracked, p0.size(), tracked ? mlen / tracked : 0.0);
 
-    // ---- 2. Farneback 稠密 ----
+    // ---- 2. Farneback dense ----
     cv::Mat flow;
     cv::calcOpticalFlowFarneback(gp, gn, flow, 0.5, 3, 15, 3, 5, 1.2, 0);
     cv::Mat fHSV = flowToHSV(flow);

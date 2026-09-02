@@ -1,9 +1,9 @@
 //********************
 // Author:  yh
 // Time:    2022/8/5.
-//  稀疏光流：Lucas-Kanade 金字塔光流 calcOpticalFlowPyrLK
-//  流程：首帧 goodFeaturesToTrack 选角点 → 逐帧跟踪 → 绘制轨迹
-//  对应官方示例: optical_flow.cpp / lkdemo.cpp
+//  Sparse optical flow: Lucas-Kanade pyramidal flow calcOpticalFlowPyrLK
+//  Workflow: first frame goodFeaturesToTrack picks corners -> track per frame -> draw trajectory
+//  Official example: optical_flow.cpp / lkdemo.cpp
 //********************
 #include <opencv2/opencv.hpp>
 #include <opencv2/video/tracking.hpp>
@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
     cvtColor(old_frame, old_gray, COLOR_BGR2GRAY);
     mask = Mat::zeros(old_frame.size(), old_frame.type());
 
-    // 首帧用 Shi-Tomasi 角点作为跟踪点
+    // First frame: use Shi-Tomasi corners as tracked points
     goodFeaturesToTrack(old_gray, p0, 100, 0.3, 7, Mat(), 7, false, 0.04);
 
     while (true) {
@@ -41,28 +41,28 @@ int main(int argc, char **argv) {
         if (frame.empty()) break;
         cvtColor(frame, frame_gray, COLOR_BGR2GRAY);
 
-        // 金字塔 LK 光流：p0 是上一帧点，p1 是当前帧对应点
+        // Pyramidal LK flow: p0 = points in previous frame, p1 = corresponding points in current frame
         TermCriteria criteria(TermCriteria::COUNT + TermCriteria::EPS, 10, 0.03);
         calcOpticalFlowPyrLK(old_gray, frame_gray, p0, p1, status, err,
                              Size(15, 15), 2, criteria);
 
         vector<Point2f> good_new;
         for (size_t i = 0; i < p0.size(); i++) {
-            if (status[i]) {   // status=1 表示跟踪成功
+            if (status[i]) {   // status=1 means tracking succeeded
                 good_new.push_back(p1[i]);
-                // 上一帧到当前帧连线，绘制轨迹
+                // Draw line from previous frame to current frame to show the trajectory
                 line(mask, p0[i], p1[i], colors[i], 2);
                 circle(frame, p1[i], 3, colors[i], -1);
             }
         }
 
         Mat img;
-        add(frame, mask, img);            // 底图 + 轨迹叠加
+        add(frame, mask, img);            // base image + trajectory overlay
         imshow("LK sparse optical flow", img);
 
-        if (waitKey(30) == 27) break;     // ESC 退出
+        if (waitKey(30) == 27) break;     // ESC to exit
 
-        // 交换：当前帧作为下一轮旧帧
+        // Swap: current frame becomes the next old frame
         old_gray = frame_gray.clone();
         p0 = good_new;
     }

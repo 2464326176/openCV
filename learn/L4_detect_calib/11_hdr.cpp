@@ -1,6 +1,8 @@
-// LEARN: L4 HDR 楂樺姩鎬佽寖鍥存垚鍍?// OFFICIAL: tutorial_code/photo/hdr_imaging/hdr_imaging.cpp
-// THEORY: docs/ch06_objdetect_photo.md 搂6.28
-// TASK: 鐢ㄥ悎鎴愬鏇濆厜搴忓垪婕旂ず MergeDebevec + Tonemap锛涙洕鍏夋椂闂磋秺鍒嗘暎鍔ㄦ€佽寖鍥磋秺澶?#include <opencv2/opencv.hpp>
+// LEARN: L4 HDR high dynamic range imaging
+// OFFICIAL: tutorial_code/photo/hdr_imaging/hdr_imaging.cpp
+// THEORY: docs/ch06_objdetect_photo.md §6.28
+// TASK: demonstrate MergeDebevec + Tonemap with synthetic multi-exposure sequence; wider exposure spread yields larger dynamic range
+#include <opencv2/opencv.hpp>
 #include <opencv2/photo.hpp>
 #include <opencv_utils.h>
 

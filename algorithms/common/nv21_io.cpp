@@ -36,7 +36,7 @@ static size_t fileSize(const std::string& path) {
     return sz > 0 ? (size_t)sz : 0;
 }
 
-// 数字串解析辅助: 从 s 起始位置起取 [0-9], 返回对应的数值.
+// Numeric string parsing helper: read [0-9] from `start` in s and return the value.
 template <class T>
 static T parseNumAfter(const std::string& s, size_t start, T def) {
     size_t end = start;
@@ -48,7 +48,7 @@ static T parseNumAfter(const std::string& s, size_t start, T def) {
 // ------------------------------------------------------------------ parsers
 
 bool parseNv21SizeFromName(const std::string& filename, int& w, int& h) {
-    // 匹配 "_NNNNxNNNN_" 或 "_NNNNXNNNN_", 大小写不敏感
+    // match "_NNNNxNNNN_" or "_NNNNXNNNN_" (case-insensitive)
     std::string s = lowerStr(filename);
     for (size_t i = 1; i + 6 < s.size(); ++i) {
         if (s[i] == 'x' && s[i - 1] >= '0' && s[i - 1] <= '9') {
@@ -138,14 +138,14 @@ YuvFormat guessFormatFromName(const std::string& filename) {
         return YuvFormat::I420;
     }
     if (s.find(".nv21") != std::string::npos) return YuvFormat::NV21;
-    // 默认: 若无其它扩展名, 且文件名含 "yuv" 且无 vu/uv 关键字, 按 NV21
+    // default: if no other extension and the name contains "yuv" without vu/uv keywords, use NV21
     return YuvFormat::NV21;
 }
 
 // ------------------------------------------------------------------ reads
 
-// 按 stride 把 NV12/NV21/I420 的 Y + UV(或 U+V) 数据紧凑拷贝到 buffer,
-// buffer 总长度 = w*h*3/2.
+// Copy NV12/NV21/I420 Y + UV (or U+V) data compactly into the buffer according to stride,
+// total buffer length = w*h*3/2.
 static bool readCompactBuffer(const YuvFrame& frame, std::vector<uint8_t>& compact) {
     size_t need = yuv420ByteCount(frame.width, frame.height, frame.fmt);
     compact.assign(need, 0);
@@ -175,12 +175,12 @@ static bool readCompactBuffer(const YuvFrame& frame, std::vector<uint8_t>& compa
     uint8_t* uvBuf = compact.data() + (size_t)w * h;
     size_t uvSizeBytes = 0;
     if (frame.fmt == YuvFormat::NV21 || frame.fmt == YuvFormat::NV12) {
-        // NV: UV 交错平面 = 2 * w/2 * h/2 bytes (每两个 Y 一对 UV/VU)
+        // NV: interleaved UV plane = 2 * w/2 * h/2 bytes (one UV/VU pair per two Y samples)
         uvSizeBytes = (size_t)(w / 2) * (h / 2) * 2;
         if (suv == sy && sy == w) {
             f.read(reinterpret_cast<char*>(uvBuf), (std::streamsize)uvSizeBytes);
         } else {
-            // UV 每行有 suv * 2 bytes? 不: suv 按"行字节"计, 等于 Y 行步长
+            // UV row has suv * 2 bytes? No: suv is counted in "row bytes" and equals the Y row stride
             std::vector<char> rowUV(suv);
             for (int r = 0; r < h / 2 && f; ++r) {
                 f.read(rowUV.data(), suv);
@@ -194,7 +194,7 @@ static bool readCompactBuffer(const YuvFrame& frame, std::vector<uint8_t>& compa
         uvSizeBytes = uSize + vSize;
         // Read U plane
         if (suv == sy && sy == w) {
-            // stride 等于 width: U plane 是紧排
+            // stride equals width: U plane is compact
             f.read(reinterpret_cast<char*>(uvBuf), (std::streamsize)uSize);
             f.read(reinterpret_cast<char*>(uvBuf + uSize), (std::streamsize)vSize);
         } else {
@@ -217,7 +217,7 @@ static bool readCompactBuffer(const YuvFrame& frame, std::vector<uint8_t>& compa
 cv::Mat readYuv420(const YuvFrame& frame) {
     if (frame.width <= 0 || frame.height <= 0) return cv::Mat();
     int w = frame.width, h = frame.height;
-    // 如果 compact 紧凑 (stride == width), 直接读单 buffer 并使用 cvtColor.
+    // If compact (stride == width), read a single buffer directly and use cvtColor.
     int sy = frame.stride_y ? frame.stride_y : w;
     int suv = frame.stride_uv ? frame.stride_uv : sy;
     if (sy == w && (suv == w || suv == 0)) {
@@ -248,8 +248,8 @@ cv::Mat readYuv420(const YuvFrame& frame) {
             // Layout in buf:
             //   Y rows 0..h-1, U rows h..h+h/4-1, V rows h+h/4..h+h/2-1 (when w even)
             // OpenCV YUV2BGR_YV12 = Y then V then U. I420 = Y then U then V.
-            // 所以 I420 要转换成 YV12 layout 才能用 COLOR_YUV2BGR_YV12,
-            // 这里直接自己写转换更稳.
+            // So I420 must be rearranged into YV12 layout to use COLOR_YUV2BGR_YV12,
+            // writing the conversion ourselves here is more robust.
             uint8_t* y = buf.data;
             uint8_t* u = buf.data + (size_t)w * h;
             uint8_t* v = u + (size_t)(w / 2) * (h / 2);
@@ -261,7 +261,7 @@ cv::Mat readYuv420(const YuvFrame& frame) {
             return bgr;
         }
     }
-    // stride padding 或 stride != width: 统一走紧凑拷贝
+    // stride padding or stride != width: fall back to compact copy
     std::vector<uint8_t> compact;
     if (!readCompactBuffer(frame, compact)) return cv::Mat();
     cv::Mat buf(h + h / 2, w, CV_8UC1, compact.data());
@@ -308,7 +308,7 @@ bool writeYuv420(const std::string& path, const cv::Mat& bgr, YuvFormat fmt) {
 
     cv::Mat yuv;
     if (fmt == YuvFormat::NV21 || fmt == YuvFormat::NV12) {
-        // 先转 I420 再重组
+        // convert to I420 first, then reassemble
         cv::cvtColor(bgr, yuv, cv::COLOR_BGR2YUV_I420);
         std::ofstream f(path, std::ios::binary | std::ios::trunc);
         if (!f) return false;
@@ -332,7 +332,7 @@ bool writeYuv420(const std::string& path, const cv::Mat& bgr, YuvFormat fmt) {
         }
         return (bool)f;
     } else {
-        // I420: 直接写 BGR->YUV_I420
+        // I420: write BGR->YUV_I420 directly
         cv::cvtColor(bgr, yuv, cv::COLOR_BGR2YUV_I420);
         std::ofstream f(path, std::ios::binary | std::ios::trunc);
         if (!f) return false;
@@ -381,7 +381,7 @@ YuvPlanes readYuv420Planes(const YuvFrame& frame) {
     out.Y = readYuv420Y(frame);
     if (out.Y.empty()) return out;
     size_t skipY = (size_t)(frame.stride_y ? frame.stride_y : w) * h;
-    // 直接读 UV/VU/U+V
+    // read UV/VU/U+V directly
     std::ifstream f(frame.path, std::ios::binary);
     if (!f) return out;
     f.seekg((std::streamoff)skipY);
@@ -391,7 +391,7 @@ YuvPlanes readYuv420Planes(const YuvFrame& frame) {
     int uvRowW = (frame.fmt == YuvFormat::I420) ? (w / 2) : w;
     auto readRowUV = [&](std::vector<uint8_t>& storage, int bytesPerRow) {
         storage.resize(bytesPerRow);
-        // 实际读取 suv 字节
+        // actually read suv bytes
         if (suv == bytesPerRow) {
             f.read(reinterpret_cast<char*>(storage.data()), bytesPerRow);
         } else {
@@ -404,7 +404,7 @@ YuvPlanes readYuv420Planes(const YuvFrame& frame) {
         out.UV_or_U = cv::Mat(h / 2, w / 2, CV_8UC2);
         for (int r = 0; r < uvRows; ++r) {
             std::vector<uint8_t> row; readRowUV(row, w);
-            // row 里是 [VU ...] 或 [UV ...] 交错; 直接 copy 到 CV_8UC2 行
+            // row holds interleaved [VU ...] or [UV ...]; copy directly into the CV_8UC2 row
             std::memcpy(out.UV_or_U.ptr(r), row.data(), w);
         }
     } else {

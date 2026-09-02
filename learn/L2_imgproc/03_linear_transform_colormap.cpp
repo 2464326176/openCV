@@ -1,5 +1,7 @@
-// LEARN: L2 绾挎€у彉鎹笌浼僵鑹?// OFFICIAL: samples/cpp/tutorial_code/ImgProc/BasicLinearTransforms.cpp銆乻nippets/imgproc_applyColorMap.cpp
-// THEORY: docs/ch02_imgproc.md 搂1 + 浼僵鑹?// TASK: convertScaleAbs 璋冧寒搴﹀姣斿害锛沘pplyColorMap 澶?LUT
+// LEARN: L2 Linear transform and pseudocolor
+// OFFICIAL: samples/cpp/tutorial_code/ImgProc/BasicLinearTransforms.cpp、snippets/imgproc_applyColorMap.cpp
+// THEORY: docs/ch02_imgproc.md §1 + pseudocolor
+// TASK: convertScaleAbs adjust brightness/contrast; applyColorMap multiple LUTs
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

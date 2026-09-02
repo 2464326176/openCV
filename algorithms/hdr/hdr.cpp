@@ -1,15 +1,15 @@
 // algorithms/hdr/main.cpp
-// HDR & 曝光融合演示, 数据来源: data/nv21/ev/ 或 data/nv21/hdr_*/
+// HDR & exposure fusion demo, data source: data/nv21/ev/ or data/nv21/hdr_*/
 //
-// 相比基础版本, 本 demo 扩展以下能力:
-//   1. 同时运行 Debevec + Robertson 两种 CRF/合并组合并对比.
-//   2. 对每组合成 HDR 跑 6 种 tonemap (Drago / Durand / ReinhardGlobal
-//      / ReinhardLocal / Mantiuk / Linear / PowerLaw), 并输出对比板.
-//   3. 打印 HDR log-luminance 直方图 (字符条形图).
-//   4. 自定义 Mertens (可调对比度/饱和度/曝光权重) 做 A/B 对照.
-//   5. 若有 GT: 对每幅 tonemap 结果自动算 PSNR/SSIM/LOE/MS-SSIM.
+// Compared with the basic version, this demo adds:
+//   1. Runs both Debevec + Robertson CRF/merge combinations and compares them.
+//   2. Runs 7 tonemaps on each merged HDR (Drago / Durand / ReinhardGlobal
+//      / ReinhardLocal / Mantiuk / Linear / PowerLaw) and outputs a comparison board.
+//   3. Prints the HDR log-luminance histogram (ASCII bar chart).
+//   4. Custom Mertens (tunable contrast/saturation/exposure weights) for A/B comparison.
+//   5. If GT exists: automatically computes PSNR/SSIM/LOE/MS-SSIM for each tonemap result.
 //
-// 用法: hdr.exe [ev_dir_or_seq1 [seq2 ...]] [optional: gt_path]
+// Usage: hdr.exe [ev_dir_or_seq1 [seq2 ...]] [optional: gt_path]
 #include "../common/nv21_io.hpp"
 #include "../common/algo_utils.hpp"
 #include "../common/single_denoise.hpp"
@@ -35,7 +35,7 @@ static cv::Mat scaleToEdge(const cv::Mat& in, int maxEdge) {
     return out;
 }
 
-// 将 histogram 打出来 (字符条形图)
+// Print the histogram (ASCII bar chart)
 static void printHistogram(const std::vector<float>& hist,
                            const std::string& title, int barWidth = 40) {
     std::cout << "--- " << title << " (20 bins, log10Y ∈ [-6, 2]) ---\n";
@@ -113,7 +113,7 @@ int main(int argc, char** argv) {
 
     std::vector<cv::Mat> compareImgs;
     std::vector<std::string> compareLabels;
-    // 输入序列前几帧 + EV 标签
+    // first few frames of the input sequence + EV labels
     for (size_t i = 0; i < std::min<size_t>(imgs.size(), 3); ++i) {
         compareImgs.push_back(imgs[i]);
         std::ostringstream os;
@@ -121,7 +121,7 @@ int main(int argc, char** argv) {
         compareLabels.push_back(os.str());
     }
 
-    // 两次流水线: Debevec + Debevec, Robertson + Robertson
+    // two pipelines: Debevec + Debevec, Robertson + Robertson
     std::vector<std::pair<CrfMethod, HdrMergeMethod>> pipelines = {
         {CrfMethod::Debevec, HdrMergeMethod::Debevec},
         {CrfMethod::Robertson, HdrMergeMethod::Robertson},
@@ -143,7 +143,7 @@ int main(int argc, char** argv) {
         std::string head = os.str();
         std::cout << "\n=== Pipeline: " << head << " ===\n";
         printHistogram(r.recoveredLumHistogram, head + " HDR log-luminance hist");
-        // 每种 tonemap 加入对比板
+        // add each tonemap to the comparison board
         for (auto& [key, ldr] : r.tonemapPack.results) {
             std::string full = head + ":" + key;
             compareImgs.push_back(ldr);
@@ -152,11 +152,11 @@ int main(int argc, char** argv) {
         }
     }
 
-    // 自定义 Mertens 权重对比 3 组
+    // custom Mertens weight comparison, 3 groups
     {
         auto mm1 = mertensFusion(imgs, 1, 1, 1);
-        auto mm2 = mertensFusion(imgs, 2.0f, 0.5f, 1.0f); // 偏好对比度
-        auto mm3 = mertensFusion(imgs, 0.8f, 2.0f, 1.2f); // 偏好饱和度
+        auto mm2 = mertensFusion(imgs, 2.0f, 0.5f, 1.0f); // prefers contrast
+        auto mm3 = mertensFusion(imgs, 0.8f, 2.0f, 1.2f); // prefers saturation
         compareImgs.push_back(mm1); compareLabels.push_back("Mertens C:S:E=1:1:1");
         compareImgs.push_back(mm2); compareLabels.push_back("Mertens C↑ S↓");
         compareImgs.push_back(mm3); compareLabels.push_back("Mertens C↓ S↑ E↑");
@@ -171,7 +171,7 @@ int main(int argc, char** argv) {
         compareImgs.push_back(gt); compareLabels.push_back("GT: merge_3");
     }
 
-    // 输出对比图 (按列 wrap 到最多 4 列)
+    // output comparison image (wrap to at most 4 columns)
     const int colsPerRow = 4;
     cv::Mat bigCanvas = gridWithLabels(compareImgs, compareLabels, colsPerRow, 32);
     std::string outPath = "../out/algorithms/hdr_tonemap_mosaic.png";

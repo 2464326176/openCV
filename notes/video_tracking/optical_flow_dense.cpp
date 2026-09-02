@@ -1,8 +1,10 @@
 //********************
 // Author:  yh
-// 稠密光流（Farneback）：对每个像素求运动矢量，并用 HSV 编码可视化
-//  HSV 编码规则：H=光流方向角度，S=饱和度固定为1，V=速度大小（归一化）
-//  对应官方示例: tutorial_code/video/optical_flow/optical_flow_dense.cpp
+// Dense optical flow (Farneback): estimate a motion vector for every pixel,
+//   visualized with HSV encoding
+//  HSV encoding rule: H = flow direction angle, S = fixed saturation 1,
+//                     V = speed magnitude (normalized)
+//  Official example: tutorial_code/video/optical_flow/optical_flow_dense.cpp
 //********************
 #include <opencv2/opencv.hpp>
 #include <opencv2/video.hpp>
@@ -29,28 +31,28 @@ int main(int argc, char **argv) {
         if (frame2.empty()) break;
         cvtColor(frame2, next, COLOR_BGR2GRAY);
 
-        // Farneback 稠密光流：输出 CV_32FC2（每像素 (dx, dy)）
+        // Farneback dense optical flow: outputs CV_32FC2 (per-pixel (dx, dy))
         Mat flow(prvs.size(), CV_32FC2);
         calcOpticalFlowFarneback(prvs, next, flow,
-                                 0.5,     // pyr_scale：金字塔缩放
-                                 3,       // levels：金字塔层数
-                                 15,      // winsize：平均窗口
-                                 3,       // iterations：每层迭代次数
-                                 5,       // poly_n：多项式邻域
-                                 1.2,     // poly_sigma：高斯标准差
+                                 0.5,     // pyr_scale: pyramid scaling
+                                 3,       // levels: number of pyramid layers
+                                 15,      // winsize: averaging window size
+                                 3,       // iterations: iterations per layer
+                                 5,       // poly_n: polynomial neighborhood size
+                                 1.2,     // poly_sigma: Gaussian standard deviation
                                  0);      // flags
 
-        // 拆分 dx、dy → 极坐标（magnitude 速度, angle 方向）
+        // Split dx, dy -> polar (magnitude = speed, angle = direction)
         Mat flow_parts[2];
         split(flow, flow_parts);
         Mat magnitude, angle, magn_norm;
         cartToPolar(flow_parts[0], flow_parts[1], magnitude, angle, true);
 
-        // 速度归一化到 [0,1]，角度缩放到 H 通道范围
+        // Normalize speed to [0,1]; scale angle to the H channel range
         normalize(magnitude, magn_norm, 0.0f, 1.0f, NORM_MINMAX);
         angle *= ((1.f / 360.f) * (180.f / 255.f));
 
-        // 组 HSV 并转 BGR 显示：H=方向、S=1、V=速度
+        // Build HSV and convert to BGR for display: H=direction, S=1, V=speed
         Mat _hsv[3], hsv, hsv8, bgr;
         _hsv[0] = angle;
         _hsv[1] = Mat::ones(angle.size(), CV_32F);

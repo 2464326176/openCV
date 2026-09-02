@@ -17,7 +17,7 @@ int mat_text() {
     //    Pass the number of dimensions and a pointer to an array containing the size of each dimension.
     int matSize[3] = {2, 2, 2};
     Mat L(3, matSize, CV_8UC1, Scalar::all(0));
-    Mat L_2d = L.reshape(1, matSize[0] * matSize[1]); // 行数=深度*行，列数=原始列
+    Mat L_2d = L.reshape(1, matSize[0] * matSize[1]); // rows = depth * rows; cols = original cols
     cout << L_2d << endl;
 
     // 3. Load an image and create a deep copy (clone) of it.

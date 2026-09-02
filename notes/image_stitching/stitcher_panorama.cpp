@@ -1,9 +1,9 @@
 //********************
 // Author:  yh
 // Time:    2022/8/5.
-//  官方 Stitcher 一键全景拼接
-//  对应官方示例: stitching.cpp（简化版）/ stitching_detailed.cpp（完整调参版）
-//  用法: 传 2 张及以上有重叠的图像路径
+//  Official one-shot panorama stitching via Stitcher
+//  Official example: stitching.cpp (simplified) / stitching_detailed.cpp (full tuning)
+//  Usage: pass 2 or more overlapping image paths
 //********************
 #include <opencv2/opencv.hpp>
 #include <opencv2/stitching.hpp>
@@ -14,7 +14,7 @@ using namespace std;
 int main(int argc, char **argv) {
     vector<Mat> images;
 
-    // 默认用两张测试图；也可从命令行传入多张
+    // Use two test images by default; or pass several from the command line
     if (argc > 2) {
         for (int i = 1; i < argc; i++) images.push_back(imread(argv[i]));
     } else {
@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
     for (size_t i = 0; i < images.size(); i++)
         if (images[i].empty()) { cout << "image " << i << " empty" << endl; return -1; }
 
-    // 创建拼接器并执行
+    // Create the stitcher and run it
     Ptr<Stitcher> stitcher = Stitcher::create(Stitcher::PANORAMA);
     Mat pano;
     Stitcher::Status status = stitcher->stitch(images, pano);

@@ -1,9 +1,9 @@
 // algorithms/hdr/hdr_pipeline.hpp
-// HDR/曝光融合流水线封装: CalibrateDebevec/Robertson -> MergeDebevec/Robertson
-//  -> 多种 Tonemap (Drago / Durand / Reinhard / Mantiuk / Linear / CustomGamma),
-// 以及 Mertens 曝光融合 (无需曝光时间).
+// HDR / exposure fusion pipeline wrapper: CalibrateDebevec/Robertson -> MergeDebevec/Robertson
+//  -> multiple Tonemaps (Drago / Durand / Reinhard / Mantiuk / Linear / CustomGamma),
+// plus Mertens exposure fusion (no exposure times needed).
 //
-// 所有接口均接受 8UC3 输入, 内部自动转 32F.
+// All interfaces accept 8UC3 input and internally convert to 32F.
 #pragma once
 
 #include <opencv2/core.hpp>
@@ -14,76 +14,76 @@
 
 namespace algo {
 
-// 解析文件名中 "et_XXXXXX" 字段为曝光时间 (微秒), 失败返回 0.
+// Parse the "et_XXXXXX" field in the filename as exposure time (microseconds); returns 0 on failure.
 double parseExposureTimeFromName(const std::string& filename);
 
-// 解析 ev_-4 / ev_0 / ev_-8 字段, 返回 EV 值; 失败返回 0.
+// Parse ev_-4 / ev_0 / ev_-8 fields, return the EV value; returns 0 on failure.
 int parseEvValueFromName(const std::string& filename);
 
-// 从文件名中解析 ISO: iso_200 / ISO_800 / _iso1600 等, 失败返回 0.
+// Parse ISO from the filename: iso_200 / ISO_800 / _iso1600, etc.; returns 0 on failure.
 int parseIsoFromName(const std::string& filename);
 
-// 相机响应函数 (CRF) 校准方法
+// Camera response function (CRF) calibration method
 enum class CrfMethod {
-    Debevec = 0,    // Debevec-Malik 1997, OpenCV 原生
-    Robertson = 1,  // Robertson-Borman-Stevenson 2003, OpenCV 原生
+    Debevec = 0,    // Debevec-Malik 1997, native OpenCV
+    Robertson = 1,  // Robertson-Borman-Stevenson 2003, native OpenCV
 };
 
-// HDR 融合方法 (如何合并多张 LDR → 一张 HDR radiance map)
+// HDR merge method (how to merge multiple LDRs into one HDR radiance map)
 enum class HdrMergeMethod {
-    Debevec = 0,    // Debevec 加权 (CRF 反演后曝光加权平均)
-    Robertson = 1,  // Robertson 迭代估计辐照度
+    Debevec = 0,    // Debevec weighting (exposure-weighted average after CRF inversion)
+    Robertson = 1,  // Robertson iterative irradiance estimation
 };
 
-// Tonemap 算法
+// Tonemap algorithms
 enum class TonemapMethod {
     Drago = 0,          // Adaptive logarithmic mapping, F. Drago 2003
     Durand = 1,         // Bilateral filtering in the tone mapping domain, F. Durand 2002
     Reinhard = 2,       // Photographic tone reproduction for digital images, E. Reinhard 2002
     ReinhardLocal = 3,  // Local version of Reinhard with dodging-and-burning
     Mantiuk = 4,        // A perceptual framework for contrast processing, R. Mantiuk 2006
-    Linear = 5,         // 简单线性缩放 (min/max stretch)
-    Gamma = 6,          // 幂律 gamma + 线性 stretch
+    Linear = 5,         // simple linear scaling (min/max stretch)
+    Gamma = 6,          // power-law gamma + linear stretch
 };
 
-// Tonemap 参数集合 (可根据不同算法使用不同字段)
+// Tonemap parameter set (different fields used by different algorithms)
 struct TonemapParams {
-    float gamma = 2.2f;        // Reinhard/Drago: gamma; 也用于 Gamma tonemap 的幂次
-    float intensity = 0.0f;    // Reinhard: 0=auto; 否则 Lmean 设定值 (cd/m^2)
-    float lightAdapt = 1.0f;   // Reinhard local: 光适应
-    float colorAdapt = 0.0f;   // Reinhard local: 色适应
-    float saturation = 1.0f;   // Reinhard: 色彩饱和倍率
+    float gamma = 2.2f;        // Reinhard/Drago: gamma; also the exponent of the Gamma tonemap
+    float intensity = 0.0f;    // Reinhard: 0=auto; otherwise the Lmean value (cd/m^2)
+    float lightAdapt = 1.0f;   // Reinhard local: light adaptation
+    float colorAdapt = 0.0f;   // Reinhard local: color adaptation
+    float saturation = 1.0f;   // Reinhard: color saturation multiplier
     float bias = 0.85f;        // Mantiuk: bias parameter
     float contrast = 3.0f;     // Durand: contrast factor
-    float spatialKernel = 8.f; // Durand: spatial sigma of bilateral (像素)
-    float rangeKernel = 0.4f;  // Durand: range sigma of bilateral (对数单位)
+    float spatialKernel = 8.f; // Durand: spatial sigma of bilateral (pixels)
+    float rangeKernel = 0.4f;  // Durand: range sigma of bilateral (log units)
 };
 
-// 多种 tonemap 结果容器 (methodName -> ldrImage).
+// Container for multiple tonemap results (methodName -> ldrImage).
 struct TonemapPack {
-    std::map<std::string, cv::Mat> results;  // key = "Drago γ=2.2" 等
+    std::map<std::string, cv::Mat> results;  // key = "Drago γ=2.2" etc.
 };
 
-// HDR 完整结果
+// Full HDR result
 struct HdrResult {
     cv::Mat hdrF;                                 // HDR float32 (linear radiance)
-    cv::Mat ldr;                                  // 默认 Tonemap (Drago γ=2.2)
-    cv::Mat fusion;                               // Mertens 曝光融合 8UC3
-    TonemapPack tonemapPack;                      // 多种 tonemap 的对比结果
-    std::vector<double> exposureTimes;            // 实际使用的曝光时间
+    cv::Mat ldr;                                  // default tonemap (Drago γ=2.2)
+    cv::Mat fusion;                               // Mertens exposure fusion 8UC3
+    TonemapPack tonemapPack;                      // comparison results of multiple tonemaps
+    std::vector<double> exposureTimes;            // actually used exposure times
     std::string crfMethodName;                    // "Debevec" / "Robertson"
     std::string mergeMethodName;                  // "Debevec" / "Robertson"
     cv::Mat responseCurve;                        // CRF g(z), 256x1x3 (BGR) CV_32F
-    std::vector<float> recoveredLumHistogram;     // HDR log10(Y) 直方图 (20 bins)
+    std::vector<float> recoveredLumHistogram;     // HDR log10(Y) histogram (20 bins)
 };
 
-// 完整 HDR 流水线.
-//   images8u:  曝光序列
-//   times:     对应的实际曝光时间 (任意单位但需成比例); 全为 0 则仅做 Mertens.
-//   crf:       CRF 校准方法
-//   merge:     HDR 合并方法
-//   tonemaps:  要求生成的 tonemap 种类; 为空则仅生成默认 Drago.
-//   tmParams:  全局 tonemap 参数 (所有 tonemap 共用 gamma, 其他字段算法自取)
+// Full HDR pipeline.
+//   images8u:  exposure bracket
+//   times:     corresponding actual exposure times (any unit, but proportional); all 0 => Mertens only.
+//   crf:       CRF calibration method
+//   merge:     HDR merge method
+//   tonemaps:  requested tonemap kinds; empty => only the default Drago.
+//   tmParams:  global tonemap params (all tonemaps share gamma; other fields are algorithm-specific)
 HdrResult hdrPipeline(const std::vector<cv::Mat>& images8u,
                        const std::vector<double>& times,
                        CrfMethod crf = CrfMethod::Debevec,
@@ -91,23 +91,23 @@ HdrResult hdrPipeline(const std::vector<cv::Mat>& images8u,
                        const std::vector<TonemapMethod>& tonemaps = {},
                        TonemapParams tmParams = TonemapParams{});
 
-// 只跑多种 Tonemap (对已存在的 HDR 结果): 返回 TonemapPack
+// Run multiple tonemaps only (on an existing HDR result): returns a TonemapPack
 TonemapPack runMultipleTonemaps(const cv::Mat& hdrF,
                                  const std::vector<TonemapMethod>& tonemaps,
                                  TonemapParams p = TonemapParams{});
 
-// 线性 Tonemap 实现 (min/max stretch + gamma, 不依赖 OpenCV photo 子模块)
+// Linear tonemap implementation (min/max stretch + gamma, independent of the OpenCV photo submodule)
 cv::Mat tonemapLinear(const cv::Mat& hdrF, float gamma = 2.2f);
 
-// 手动 Gamma 映射: L_out = (L / L_white)^(1/gamma)
+// Manual gamma mapping: L_out = (L / L_white)^(1/gamma)
 cv::Mat tonemapGamma(const cv::Mat& hdrF, float gamma = 2.2f,
                       float whitePointPct = 0.1f);
 
-// 从 HDR 图中计算 log10(Y) 直方图 (binCount 个 bin, 范围 [-6, 2])
+// Compute a log10(Y) histogram from an HDR image (binCount bins, range [-6, 2])
 std::vector<float> computeHdrLogLuminanceHistogram(const cv::Mat& hdrF,
                                                      int binCount = 20);
 
-// Mertens 曝光融合: 自定义三个权重的权重
+// Mertens exposure fusion: custom weights for the three weight terms
 cv::Mat mertensFusion(const std::vector<cv::Mat>& images8u,
                        float wContrast = 1.0f,
                        float wSaturation = 1.0f,

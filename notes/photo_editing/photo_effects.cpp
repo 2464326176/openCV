@@ -1,14 +1,14 @@
 //********************
 // Author:  yh
-// 照片特效与去色：
-//  ① decolor 高质量去色（保留局部对比度，输出灰度 + 彩色增强图）
-//  ② edgePreservingFilter 保边平滑（磨皮/降噪）
-//  ③ detailEnhance 细节增强
-//  ④ pencilSketch 素描
-//  ⑤ stylization 风格化（卡通/油画）
-//  对应官方示例: tutorial_code/photo/decolorization/decolor.cpp
-//               tutorial_code/photo/non_photorealistic_rendering/npr_demo.cpp
-//  使用：photo_effects <图片>
+// Photo effects and decolorization:
+//  ① decolor high-quality decolorization (preserves local contrast; outputs gray + color-boosted image)
+//  ② edgePreservingFilter edge-preserving smoothing (skin softening / denoising)
+//  ③ detailEnhance detail enhancement
+//  ④ pencilSketch pencil sketch
+//  ⑤ stylization stylization (cartoon / oil painting)
+//  Official examples: tutorial_code/photo/decolorization/decolor.cpp
+//                    tutorial_code/photo/non_photorealistic_rendering/npr_demo.cpp
+//  Usage: photo_effects <image>
 //********************
 #include <opencv2/opencv.hpp>
 #include <opencv2/photo.hpp>
@@ -23,20 +23,20 @@ int main(int argc, char **argv) {
     if (src.empty()) { cout << "图像加载失败" << endl; return -1; }
 
     Mat gray, color_boost;
-    decolor(src, gray, color_boost);                 // ① 高质量去色
+    decolor(src, gray, color_boost);                 // ① high-quality decolorization
 
     Mat epf_norm, epf_rec;
-    edgePreservingFilter(src, epf_norm, 1);          // ②a 保边平滑(归一化卷积)
-    edgePreservingFilter(src, epf_rec, 2);           // ②b 保边平滑(递归滤波)
+    edgePreservingFilter(src, epf_norm, 1);          // ②a edge-preserving smoothing (normalized convolution)
+    edgePreservingFilter(src, epf_rec, 2);           // ②b edge-preserving smoothing (recursive filter)
 
     Mat detail;
-    detailEnhance(src, detail);                      // ③ 细节增强
+    detailEnhance(src, detail);                      // ③ detail enhancement
 
     Mat sketch, color_sketch;
-    pencilSketch(src, sketch, color_sketch, 10, 0.1f, 0.03f);  // ④ 素描/彩色素描
+    pencilSketch(src, sketch, color_sketch, 10, 0.1f, 0.03f);  // ④ pencil / color sketch
 
     Mat stylized;
-    stylization(src, stylized);                      // ⑤ 风格化
+    stylization(src, stylized);                      // ⑤ stylization
 
     imshow("source", src);
     imshow("decolor_gray", gray);

@@ -1,7 +1,8 @@
-// LEARN: L3 MOG2 鑳屾櫙鍑忛櫎
-// OFFICIAL: samples/cpp/tutorial_code/video/bg_sub.cpp銆乥gfg_segm.cpp
-// THEORY: docs/ch04_video.md 搂鑳屾櫙
-// TASK: 鐢?VCG1 浣滆儗鏅紝鍚堟垚绉诲姩鏂瑰潡搴忓垪锛宑reateBackgroundSubtractorMOG2 姹傚墠鏅?#include <opencv2/opencv.hpp>
+// LEARN: L3 MOG2 Background Subtraction
+// OFFICIAL: samples/cpp/tutorial_code/video/bg_sub.cpp、bgfg_segm.cpp
+// THEORY: docs/ch04_video.md §背景
+// TASK: use VCG1 as background, synthesize moving square sequence, createBackgroundSubtractorMOG2 get foreground
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
@@ -38,3 +39,4 @@ int main() {
     if (!bgEst.empty()) dbgShow("L3_16 background est", bgEst, 0);
     return 0;
 }
+

@@ -1,7 +1,7 @@
-// LEARN: L3 MSER 鍖哄煙妫€娴?
+// LEARN: L3 MSER Region Detection
 // OFFICIAL: samples/cpp/detect_mser.cpp
-// THEORY: docs/ch03_features.md 搂3.3
-// TASK: MSER 妫€娴嬬ǔ瀹氭瀬鍊煎尯鍩燂紱delta/minArea/maxArea 鎺у埗鍖哄煙灏哄害
+// THEORY: docs/ch03_features.md §3.3
+// TASK: MSER detect stable extremal regions; delta/minArea/maxArea control region scale
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -21,7 +21,8 @@ int main() {
     Mat vis = src.clone();
     for (const auto& r : bboxes) rectangle(vis, r, Scalar(0, 255, 0), 1);
     logInfo("MSER regions=%zu bboxes=%zu", regions.size(), bboxes.size());
-    logInfo("delta=5: 瓒婂皬瓒婃晱鎰燂紱minArea/maxArea 闄愬埗鍖哄煙闈㈢Н鑼冨洿");
+    logInfo("delta=5: smaller is more sensitive; minArea/maxArea limit region area range");
     dbgShow("L3_23 mser", vis, 0);
     return 0;
 }
+

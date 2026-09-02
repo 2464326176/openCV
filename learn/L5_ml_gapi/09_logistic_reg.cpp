@@ -1,7 +1,7 @@
-// LEARN: L5 LogisticRegression 閫昏緫鍥炲綊
+// LEARN: L5 LogisticRegression
 // OFFICIAL: samples/cpp/logistic_regression.cpp
-// THEORY: docs/ch05_ml.md 搂Logistic
-// TASK: 鍚堟垚涓ょ被鐐癸紝閫昏緫鍥炲綊璁粌骞跺彲瑙嗗寲鍐崇瓥杈圭晫
+// THEORY: docs/ch05_ml.md §Logistic
+// TASK: Generate two-class points, train logistic regression and visualize decision boundary
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 using namespace cv;

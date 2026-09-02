@@ -1,7 +1,7 @@
-// LEARN: L3 鍗曞簲鍒嗚В涓庝綅濮?
+// LEARN: L3 Homography Decomposition and Pose
 // OFFICIAL: tutorial_code/features2d/Homography/decompose_homography.cpp
-// THEORY: docs/ch03_features.md 搂3.2.5
-// TASK: 浼拌 H 鍚?decomposeHomographyMat 寰楀埌鏃嬭浆/骞崇Щ鍊欓€夛紱闇€鐩告満鍐呭弬 K
+// THEORY: docs/ch03_features.md §3.2.5
+// TASK: estimate H, decomposeHomographyMat get rotation/translation candidates; need camera intrinsics K
 #include <opencv2/opencv.hpp>
 #include <opencv2/calib3d.hpp>
 #include <opencv_utils.h>
@@ -45,3 +45,4 @@ int main() {
     dbgShow("L3_25 homography decompose", vis, 0);
     return 0;
 }
+

@@ -1,6 +1,7 @@
-// LEARN: L2 HoughCircles 闇嶅か鍦?// OFFICIAL: samples/cpp/tutorial_code/ImgTrans/HoughCircle_Demo.cpp銆乭oughcircles.cpp
-// THEORY: docs/ch02_imgproc.md 搂5
-// TASK: 涓€兼护娉㈠悗 HoughCircles 鐢诲渾
+// LEARN: L2 HoughCircles Hough circle
+// OFFICIAL: samples/cpp/tutorial_code/ImgTrans/HoughCircle_Demo.cpp、houghcircles.cpp
+// THEORY: docs/ch02_imgproc.md §5
+// TASK: medianBlur then HoughCircles draw circles
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

@@ -1,17 +1,18 @@
 // algorithms/morphology/main.cpp
-// 形态学 (Morphology) 处理对比演示. 针对二值 mask 做全套形态学操作,
-// 并演示两个实用场景: 用开运算去毛刺 / 用闭运算填补空洞.
+// Morphological processing comparison demo. Applies the full set of morphological
+// operations to a binary mask, plus two practical scenarios:
+// removing spurs with opening / filling holes with closing.
 //
-// 覆盖算子 (cv::morphologyEx 与手工 erode/dilate):
-//   基础: 腐蚀 erode / 膨胀 dilate
-//   组合: 开 open = erode→dilate / 闭 close = dilate→erode
-//         形态学梯度 gradient = dilate − erode
-//         顶帽 tophat = src − open / 黑帽 blackhat = close − src
-//   进阶: hit-or-miss (角点检测)
-//   SE:  结构元素矩形/椭圆/十字 对比; 核大小 3/5/7 对比
+// Operators covered (cv::morphologyEx and manual erode/dilate):
+//   basic:    erode / dilate
+//   combined: open = erode→dilate / close = dilate→erode
+//             morphological gradient = dilate − erode
+//             tophat = src − open / blackhat = close − src
+//   advanced: hit-or-miss (corner detection)
+//   SE:       structuring element rect/ellipse/cross comparison; kernel size 3/5/7 comparison
 //
-// 输出: out/algorithms/morphology_compare.png 全景 + 像素变化统计.
-// 用法: morphology.exe [input_img] [bin_threshold(缺省 Otsu)]
+// Output: out/algorithms/morphology_compare.png panorama + pixel change statistics.
+// Usage: morphology.exe [input_img] [bin_threshold(default Otsu)]
 #include "../common/algo_utils.hpp"
 
 #include <cstdio>
@@ -20,7 +21,7 @@
 
 using namespace algo;
 
-// 对 8UC1 二值图做指定形态学操作.
+// Apply a given morphological operation to an 8UC1 binary image.
 static cv::Mat morph(const cv::Mat& bin, int op, int ksize = 3,
                      int shape = cv::MORPH_RECT) {
     cv::Mat kernel = cv::getStructuringElement(shape, cv::Size(ksize, ksize));
@@ -40,7 +41,7 @@ int main(int argc, char** argv) {
         cv::resize(src, src, cv::Size(), s, s, cv::INTER_AREA);
     }
 
-    // 二值化得到前景 mask (白色=前景). Otsu 自动选阈值.
+    // Binarize to get the foreground mask (white=foreground). Otsu picks the threshold automatically.
     cv::Mat bin;
     double thr = (argc > 2) ? std::stod(argv[2]) :
                  cv::threshold(src, bin, 0, 255, cv::THRESH_BINARY | cv::THRESH_OTSU);
@@ -52,7 +53,7 @@ int main(int argc, char** argv) {
     panels.push_back(src); labels.push_back("gray input");
     panels.push_back(bin); labels.push_back("binary(mask)");
 
-    // ---- 1. 基础: 腐蚀 / 膨胀 (结构元素 3x3 矩形) ----
+    // ---- 1. basic: erode / dilate (3x3 rect SE) ----
     cv::Mat k3 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(3,3));
     cv::Mat er, di;
     cv::erode(bin, er, k3);
@@ -60,14 +61,14 @@ int main(int argc, char** argv) {
     panels.push_back(er); labels.push_back("erode(3x3)");
     panels.push_back(di); labels.push_back("dilate(3x3)");
 
-    // ---- 2. 组合: 开 / 闭 / 形态学梯度 / 顶帽 / 黑帽 ----
+    // ---- 2. combined: open / close / gradient / tophat / blackhat ----
     panels.push_back(morph(bin, cv::MORPH_OPEN));   labels.push_back("open(3x3)");
     panels.push_back(morph(bin, cv::MORPH_CLOSE));  labels.push_back("close(3x3)");
     panels.push_back(morph(bin, cv::MORPH_GRADIENT)); labels.push_back("gradient(3x3)");
     panels.push_back(morph(bin, cv::MORPH_TOPHAT)); labels.push_back("tophat(3x3)");
     panels.push_back(morph(bin, cv::MORPH_BLACKHAT)); labels.push_back("blackhat(3x3)");
 
-    // ---- 3. 结构元素形状对比 (开运算) ----
+    // ---- 3. structuring element shape comparison (opening) ----
     {
         cv::Mat ker1 = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(5,5));
         cv::Mat ker2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5,5));
@@ -81,30 +82,30 @@ int main(int argc, char** argv) {
         panels.push_back(o3); labels.push_back("open-rect(5)");
     }
 
-    // ---- 4. 核大小对比 (矩形闭运算, 填补细小空洞) ----
+    // ---- 4. kernel size comparison (rect closing, fill small holes) ----
     for (int k : {5, 9}) {
         panels.push_back(morph(bin, cv::MORPH_CLOSE, k, cv::MORPH_ELLIPSE));
         labels.push_back("close-Ell(" + std::to_string(k) + ")");
     }
 
-    // ---- 5. hit-or-miss: 用一对互补核检测 2x2 全前景角点块 ----
+    // ---- 5. hit-or-miss: use a complementary kernel pair to detect 2x2 all-foreground corner blocks ----
     {
-        // 真实 hit-or-miss 需要 fg 核命中前景且 bg 核命中背景 (背景核 = !内核)
-        // 这里用 opencv 的 hit-or-miss (fg 归一化), 输出"角点"位置的白色标记.
+        // True hit-or-miss requires the fg kernel to hit foreground and the bg kernel to hit background (bg kernel = !kernel)
+        // Here we use OpenCV's hit-or-miss (fg normalized), outputting white markers at "corner" positions.
         cv::Mat kHit = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(2,2));
         cv::Mat hit;
         cv::morphologyEx(bin, hit, cv::MORPH_HITMISS, kHit);
-        // 3x3 内只有中心为前景才命中 → 用于"像素完全孤立检测", 演示用途
+        // With 3x3 only a foreground center hits -> used for "fully isolated pixel detection", demo purpose
         cv::Mat thin;
         cv::erode(bin, thin, kHit);
         panels.push_back(hit);   labels.push_back("hit-miss(2x2)");
         panels.push_back(thin);  labels.push_back("erode(2x2)");
     }
 
-    // ---- 指标: 前景面积占比 / 连通域数量 / 变化量 ----
+    // ---- metrics: foreground area ratio / connected-component count / change amount ----
     std::printf("%-28s %14s %10s\n", "panel", "fg_pixels", "components");
     for (size_t i = 0; i < panels.size(); ++i) {
-        if (i == 0) continue;  // 跳过 gray input
+        if (i == 0) continue;  // skip gray input
         cv::Mat g;
         if (panels[i].channels() == 3) cv::cvtColor(panels[i], g, cv::COLOR_BGR2GRAY);
         else g = panels[i];

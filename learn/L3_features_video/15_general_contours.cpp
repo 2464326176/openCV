@@ -1,7 +1,7 @@
-// LEARN: L3 杞粨缁煎悎搴﹂噺
-// OFFICIAL: samples/cpp/tutorial_code/ShapeDescriptors/generalContours_demo1.cpp銆乬eneralContours_demo2.cpp
-// THEORY: docs/ch03_features.md 搂杞粨
-// TASK: 瀵规瘡涓疆寤撹緭鍑?area/perimeter/boundingRect/鍦嗗害锛屽苟鏍囧湪鍥句笂
+// LEARN: L3 Comprehensive Contour Metrics
+// OFFICIAL: samples/cpp/tutorial_code/ShapeDescriptors/generalContours_demo1.cpp、generalContours_demo2.cpp
+// THEORY: docs/ch03_features.md §轮廓
+// TASK: for each contour output area/perimeter/boundingRect/circularity, and annotate on image
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -34,3 +34,4 @@ int main() {
     dbgShow("L3_15 general contours", show, 0);
     return 0;
 }
+

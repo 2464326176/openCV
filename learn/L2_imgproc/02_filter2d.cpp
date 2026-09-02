@@ -1,7 +1,8 @@
-// LEARN: L2 filter2D 鑷畾涔夊嵎绉牳
+// LEARN: L2 filter2D custom convolution kernel
 // OFFICIAL: samples/cpp/tutorial_code/ImgTrans/filter2D_demo.cpp
-// THEORY: docs/ch02_imgproc.md 搂1
-// TASK: filter2D 鐢ㄩ攼鍖?妯＄硦/娴洉鏍革紱flip 鏍告柟鍚?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch02_imgproc.md §1
+// TASK: filter2D with sharpen/blur/emboss kernels; flip kernel orientation
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;

@@ -1,7 +1,8 @@
-// LEARN: L2 妯℃澘鍖归厤
-// OFFICIAL: samples/cpp/tutorial_code/Histograms_Matching/MatchTemplate_Demo.cpp銆乵ask_tmpl.cpp
-// THEORY: docs/ch02_imgproc.md 搂8
-// TASK: 浠庡師鍥惧垏 ROI 褰撴ā鏉匡紝matchTemplate 鍏柟娉曟壘鏈€浣充綅缃?#include <opencv2/opencv.hpp>
+// LEARN: L2 Template matching
+// OFFICIAL: samples/cpp/tutorial_code/Histograms_Matching/MatchTemplate_Demo.cpp、mask_tmpl.cpp
+// THEORY: docs/ch02_imgproc.md §8
+// TASK: crop ROI from source as template, matchTemplate six methods find best location
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
@@ -31,7 +32,7 @@ int main() {
     src = imread(getImagePath("lena.jpg"));
     if (src.empty()) { logInfo("imread failed"); return -1; }
     cvtColor(src, gray, COLOR_BGR2GRAY);
-    // 浠庡師鍥惧垏 ROI 浣滀负妯℃澘
+    // crop ROI from source as template
     Rect roi(80, 100, 80, 100);
     roi &= Rect(0, 0, src.cols, src.rows);
     tmpl = src(roi).clone();

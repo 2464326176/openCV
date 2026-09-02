@@ -1,7 +1,7 @@
-// LEARN: L3 Harris 瑙掔偣
+// LEARN: L3 Harris Corner
 // OFFICIAL: samples/cpp/tutorial_code/TrackingMotion/cornerHarris_Demo.cpp
-// THEORY: docs/ch03_features.md 搂瑙掔偣
-// TASK: cornerHarris 姹傚搷搴斿浘锛屽綊涓€鍖栨樉绀猴紱婊戝姩鏉℃敼 blockSize/kappa
+// THEORY: docs/ch03_features.md §角点
+// TASK: cornerHarris compute response map, normalize display; trackbar to change blockSize/kappa
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -9,7 +9,7 @@ using namespace cv;
 
 static Mat src, dst;
 static int blockSize = 2;
-static int kappa_x100 = 4;  // 瀹為檯 *0.01
+static int kappa_x100 = 4;  // actual *0.01
 
 static void onTrack(int, void*) {
     int bs = std::max(blockSize, 1);
@@ -30,3 +30,4 @@ int main() {
     waitKey(0);
     return 0;
 }
+

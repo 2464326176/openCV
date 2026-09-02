@@ -1,13 +1,14 @@
 // algorithms/inpaint/main.cpp
-// 图像修复 (inpainting): 划痕/文本遮挡区域的恢复.
+// Image inpainting: restoration of scratch / text-occluded regions.
 //
-// 算法:
-//   INPAINT_TELEA   Telea (基于快速步进法, 沿等照度线填充)
-//   INPAINT_NS      Navier-Stokes (流场引导, 保留边缘)
-//   半径参数 r_ 影响扩散范围
-// 评估: 对干净图人为制造划痕/文本遮挡 → 修复后与干净图在"遮挡区"内做
-//       MAE/PSNR, 同时给出整图 PSNR (内容被保持得如何).
-// 输出: out/algorithms/inpaint_compare.png + 指标表.
+// Algorithms:
+//   INPAINT_TELEA   Telea (fast marching method, fills along isophotes)
+//   INPAINT_NS      Navier-Stokes (flow-field guided, edge preserving)
+//   The radius parameter r_ controls the diffusion range.
+// Evaluation: artificially create scratches/text occlusion on a clean image ->
+//       after restoration compute MAE/PSNR within the "occluded region" against the clean image,
+//       plus whole-image PSNR (how well the content is preserved).
+// Output: out/algorithms/inpaint_compare.png + metrics table.
 #include "../common/algo_utils.hpp"
 
 #include <cstdio>
@@ -16,18 +17,18 @@
 
 using namespace algo;
 
-// 在 img 上画若干白色划痕 + 一块文本区域, 返回 mask (255=受损).
+// Draw several white scratches + a text-like block on img, returns the mask (255=damaged).
 static void drawDamage(cv::Mat& img, cv::Mat& mask) {
     mask = cv::Mat::zeros(img.size(), CV_8UC1);
     cv::RNG rng(12345);
-    // 几条随机细线划痕
+    // several random thin-line scratches
     for (int i = 0; i < 5; ++i) {
         cv::Point p1(rng.uniform(5, img.cols - 5), rng.uniform(5, img.rows - 5));
         cv::Point p2(p1.x + rng.uniform(-150, 150), p1.y + rng.uniform(-60, 60));
         cv::line(img, p1, p2, cv::Scalar(255, 255, 255), 2);
         cv::line(mask, p1, p2, cv::Scalar(255), 3);
     }
-    // 一块文本样式的遮挡块
+    // a text-style occlusion block
     cv::Rect textBox(30, 30, 180, 46);
     cv::rectangle(img, textBox, cv::Scalar(255, 255, 255), cv::FILLED);
     cv::putText(img, "HELP?", cv::Point(38, 64), cv::FONT_HERSHEY_SIMPLEX, 1.0,
@@ -35,13 +36,13 @@ static void drawDamage(cv::Mat& img, cv::Mat& mask) {
     cv::rectangle(mask, textBox, cv::Scalar(255), cv::FILLED);
 }
 
-// 只在 mask 区域内评估 MAE (重建质量).
+// Evaluate MAE only within the mask region (restoration quality).
 static double maskedMAE(const cv::Mat& ref, const cv::Mat& out, const cv::Mat& mask) {
     cv::Mat df, ref32, out32, m32;
     ref.convertTo(ref32, CV_32F); out.convertTo(out32, CV_32F);
     mask.convertTo(m32, CV_32F);
     cv::absdiff(ref32, out32, df);
-    df = df.mul(m32);  // 用 mask[0..1] 作为权重, 等价于只看受损区
+    df = df.mul(m32);  // use mask[0..1] as weight, equivalent to only counting damaged areas
     int n = cv::countNonZero(mask);
     return n ? cv::sum(df)[0] / (double)n : 0;
 }

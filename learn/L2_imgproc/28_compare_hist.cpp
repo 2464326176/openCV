@@ -1,6 +1,7 @@
-// LEARN: L2 鐩存柟鍥炬瘮杈?// OFFICIAL: samples/cpp/tutorial_code/Histograms_Matching/compareHist_Demo.cpp
-// THEORY: docs/ch02_imgproc.md 搂8
-// TASK: compareHist 鍥涙柟娉?鐩稿叧/鍗℃柟/浜ら泦/宸存皬)
+// LEARN: L2 Histogram comparison
+// OFFICIAL: samples/cpp/tutorial_code/Histograms_Matching/compareHist_Demo.cpp
+// THEORY: docs/ch02_imgproc.md §8
+// TASK: compareHist four methods (CORREL/CHISQR/INTERSECT/BHATTACHARYYA)
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

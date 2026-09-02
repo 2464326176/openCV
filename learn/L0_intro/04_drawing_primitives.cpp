@@ -1,7 +1,8 @@
-// LEARN: L0 缁樺浘鍩哄厓
+// LEARN: L0 Drawing primitives
 // OFFICIAL: samples/cpp/drawing.cpp, tutorial_code/ImgProc/basic_drawing/Drawing_1.cpp
-// THEORY: docs/ch01_core.md 搂鍑犱綍鍥惧厓 + ch08_gui_gapi_gpu.md
-// TASK: line/rectangle/circle/ellipse/putText/fillPoly/arrowedLine 鍏ㄧ敾涓€閬?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch01_core.md §geometric primitives + ch08_gui_gapi_gpu.md
+// TASK: draw all primitives: line/rectangle/circle/ellipse/putText/fillPoly/arrowedLine
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;

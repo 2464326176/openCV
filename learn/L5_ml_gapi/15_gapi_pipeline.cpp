@@ -1,7 +1,7 @@
-// LEARN: L5 G-API 灏忓簲鐢ㄧ绾?
+// LEARN: L5 G-API application pipeline
 // OFFICIAL: samples/cpp/tutorial_code/gapi/face_beautification/face_beautification.cpp
-// THEORY: docs/ch08_gui_gapi_gpu.md 搂G-API
-// TASK: 澹版槑寮忓浘锛氱伆搴?-> 鍙岃竟婊ゆ尝 -> Canny锛屽姣斿懡浠ゅ紡鍐欐硶
+// THEORY: docs/ch08_gui_gapi_gpu.md §G-API
+// TASK: Declarative graph: grayscale -> bilateral filter -> Canny, compare with imperative approach
 #include <opencv2/opencv.hpp>
 #include <opencv2/gapi.hpp>
 #include <opencv2/gapi/core.hpp>

@@ -1,6 +1,7 @@
-// LEARN: L2 鏋佸潗鏍囧彉鎹?// OFFICIAL: samples/cpp/polar_transforms.cpp
-// THEORY: docs/ch02_imgproc.md 搂6
-// TASK: warpPolar 涓?linearPolar 瀵规瘮
+// LEARN: L2 Polar transform
+// OFFICIAL: samples/cpp/polar_transforms.cpp
+// THEORY: docs/ch02_imgproc.md §6
+// TASK: warpPolar vs linearPolar comparison
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

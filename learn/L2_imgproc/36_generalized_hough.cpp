@@ -1,7 +1,7 @@
-// LEARN: L2 骞夸箟闇嶅か鍙樻崲
+// LEARN: L2 Generalized Hough transform
 // OFFICIAL: tutorial_code/ImgTrans/generalizedHoughTransform.cpp
-// THEORY: docs/ch02_imgproc.md 搂5
-// TASK: 鐢?GeneralizedHoughBallard 鍦ㄨ竟缂樺浘涓婃娴嬫ā鏉匡紱param dp/minDist 褰卞搷宄板€兼娴?
+// THEORY: docs/ch02_imgproc.md §5
+// TASK: detect template on edge image with GeneralizedHoughBallard; param dp/minDist affects peak detection
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

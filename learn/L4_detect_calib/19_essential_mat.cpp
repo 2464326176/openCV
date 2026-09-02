@@ -1,17 +1,19 @@
-// LEARN: L4 鏈川鐭╅樀 + 涓夌淮鎭㈠
+// LEARN: L4 essential matrix + 3D reconstruction
 // OFFICIAL: samples/cpp/essential_mat_reconstr.cpp
-// THEORY: docs/ch07_calib3d_stitching.md 搂6
-// TASK: 鐢ㄥ悎鎴?8 瀵瑰綊涓€鍖栫偣 + 宸茬煡鍐呭弬 K 浼拌 E锛宺ecoverPose 寰?R/t 骞舵墦鍗?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch07_calib3d_stitching.md §6
+// TASK: estimate E from 8 synthetic normalized point pairs + known intrinsic K, recoverPose to get R/t and print
+#include <opencv2/opencv.hpp>
 #include <opencv2/calib3d.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
 
 int main() {
-    // 宸叉爣瀹氱浉鏈哄唴鍙?    Mat K = (Mat_<double>(3, 3) << 800, 0, 320, 0, 800, 240, 0, 0, 1);
+    // calibrated camera intrinsics
+    Mat K = (Mat_<double>(3, 3) << 800, 0, 320, 0, 800, 240, 0, 0, 1);
     logInfo("intrinsic K set: fx=fy=800, cx=320, cy=240");
 
-    // 8 瀵瑰悎鎴愬綊涓€鍖栧浘鍍忕偣锛堝儚绱犲潗鏍囷級锛岀浜屽紶鍥炬暣浣撳钩绉?+灏戦噺鎵板姩
+    // 8 pairs of synthetic normalized image points (pixel coordinates), global translation + small perturbation on second image
     std::vector<Point2f> pts1 = {
         {100, 100}, {150, 90}, {200, 110}, {250, 130},
         {110, 200}, {160, 210}, {210, 220}, {260, 230}};

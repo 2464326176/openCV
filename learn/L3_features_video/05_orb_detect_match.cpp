@@ -1,6 +1,7 @@
-// LEARN: L3 ORB 妫€娴嬩笌鍖归厤
-// OFFICIAL: samples/cpp/tutorial_code/features2d/AKAZE_match.cpp銆乵atchmethod_orb_akaze_brisk.cpp
-// THEORY: docs/ch03_features.md 搂鎻忚堪瀛?// TASK: ORB detectAndCompute 涓ゅ浘锛孊FMatcher(NORM_HAMMING)+Lowe 姣斿€肩瓫鍖归厤
+// LEARN: L3 ORB 检测与匹配
+// OFFICIAL: samples/cpp/tutorial_code/features2d/AKAZE_match.cpp、matchmethod_orb_akaze_brisk.cpp
+// THEORY: docs/ch03_features.md §描述子
+// TASK: ORB detectAndCompute two images, BFMatcher(NORM_HAMMING)+Lowe ratio test matching
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -9,7 +10,7 @@ using namespace cv;
 int main() {
     Mat img1 = imread(getImagePath("lena.jpg"), IMREAD_GRAYSCALE);
     if (img1.empty()) { logInfo("imread failed"); return -1; }
-    // 鐢ㄤ豢灏勬壈鍔ㄤ綔涓虹浜屽紶鍥撅紙淇濊瘉鏈夌湡瀹炲搴旓級
+    // use affine perturbation as second image (guarantees real correspondence)
     Mat M = getRotationMatrix2D(Point2f(img1.cols / 2.f, img1.rows / 2.f), 15, 0.9);
     Mat img2; warpAffine(img1, img2, M, img1.size());
 
@@ -35,3 +36,4 @@ int main() {
     dbgShow("L3_05 orb match", out, 0);
     return 0;
 }
+

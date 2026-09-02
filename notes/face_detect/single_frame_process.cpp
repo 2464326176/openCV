@@ -4,7 +4,7 @@
 
 #define IMAGE_NV21_PATH "../data/nv21/20240808_085239_105_085239_hdr_4000x3000_0000_0_in_ev0.000.nv21"
 
-// 拉普拉斯锐化函数
+// Laplacian sharpening function
 cv::Mat laplacianSharpen(const cv::Mat& input, float alpha = 0.5) {
     if (input.empty()) return cv::Mat();
     
@@ -14,7 +14,7 @@ cv::Mat laplacianSharpen(const cv::Mat& input, float alpha = 0.5) {
     return sharpened;
 }
 
-// 非锐化掩蔽函数
+// Unsharp masking function
 cv::Mat unsharpMask(const cv::Mat& input, int kernelSize = 5, float sigma = 1.0, float amount = 1.0) {
     if (input.empty()) return cv::Mat();
     
@@ -27,35 +27,35 @@ cv::Mat unsharpMask(const cv::Mat& input, int kernelSize = 5, float sigma = 1.0,
 }
 
 int main() {
-    // 设置图像尺寸 (实际使用中替换为你的图像尺寸)
+    // set image size (replace with your image size in real use)
     // const int width = 640;
     // const int height = 480;
     
-    // // 创建模拟的 NV21 数据 (实际应用中替换为你的真实数据)
+    // // create simulated NV21 data (replace with your real data in practice)
     // const size_t nv21Size = width * height * 3 / 2;
     // std::vector<uint8_t> nv21Data(nv21Size);
     
-    // // 填充模拟数据 - Y 平面
+    // // fill simulated data - Y plane
     // for (int i = 0; i < height; i++) {
     //     for (int j = 0; j < width; j++) {
-    //         // 创建简单的渐变图案
+    //         // create a simple gradient pattern
     //         nv21Data[i * width + j] = static_cast<uint8_t>((i + j) * 0.2);
     //     }
     // }
     
-    // // 填充模拟数据 - VU 平面
+    // // fill simulated data - VU plane
     // for (int i = 0; i < height / 2; i++) {
     //     for (int j = 0; j < width; j += 2) {
     //         int index = width * height + i * width + j;
-    //         // V 分量
+    //         // V component
     //         nv21Data[index] = 128 + static_cast<uint8_t>(j * 0.1);
-    //         // U 分量
+    //         // U component
     //         nv21Data[index + 1] = 128 + static_cast<uint8_t>(i * 0.2);
     //     }
     // }
 
     try {
-        // 1. 将 NV21 转换为 BGR
+        // 1. Convert NV21 to BGR
         int width = 4000; // Example width
         int height = 3000; // Example height
 
@@ -70,34 +70,34 @@ int main() {
         cv::cvtColor(nv21Mat, bgrMat, cv::COLOR_YUV2BGR_NV21);
 
 
-        // 检查图像是否有效
+        // check whether the image is valid
         if (bgrMat.empty()) {
             std::cerr << "Error: Failed to convert NV21 to BGR" << std::endl;
             return -1;
         }
         imshow("Display window", bgrMat);
         
-        // 2. 平滑处理 (降噪)
+        // 2. Smoothing (denoising)
         cv::Mat smoothed;
-        // 使用高斯模糊
+        // use Gaussian blur
         cv::GaussianBlur(bgrMat, smoothed, cv::Size(5, 5), 0);
         
-        // // 3. 锐化处理
+        // // 3. Sharpening
         // cv::Mat sharpened;
-        // // 方法1: 使用拉普拉斯锐化
+        // // Method 1: Laplacian sharpening
         // sharpened = laplacianSharpen(smoothed, 0.3);
         
-        // // 方法2: 使用非锐化掩蔽 (取消下面一行的注释来使用)
+        // // Method 2: unsharp masking (uncomment the line below to use)
         // // sharpened = unsharpMask(smoothed, 5, 1.0, 1.5);
         
-        // 显示结果
+        // show results
         cv::imshow("Original (BGR)", bgrMat);
         cv::imshow("Smoothed", smoothed);
         // cv::imshow("Sharpened", sharpened);
         
         imwrite("Original.png", bgrMat);
         imwrite("Smoothed.png", smoothed);
-        // 等待按键
+        // wait for a key
         cv::waitKey(0);
         
     } catch (const cv::Exception& e) {

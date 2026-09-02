@@ -1,7 +1,8 @@
-// LEARN: L3 CamShift 璺熻釜
-// OFFICIAL: samples/cpp/camshiftdemo.cpp銆乼utorial_code/video/meanshift/camshift.cpp
-// THEORY: docs/ch04_video.md 搂璺熻釜
-// TASK: VCG1 鍙?ROI 绠?hue 鐩存柟鍥撅紝VCG2 鍙嶆姇褰憋紝CamShift 鏀舵暃鍒扮洰鏍?#include <opencv2/opencv.hpp>
+// LEARN: L3 CamShift Tracking
+// OFFICIAL: samples/cpp/camshiftdemo.cpp、tutorial_code/video/meanshift/camshift.cpp
+// THEORY: docs/ch04_video.md §跟踪
+// TASK: VCG1 get ROI, hue histogram, VCG2 backproject, CamShift converge to target
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
@@ -31,8 +32,9 @@ int main() {
     Mat show = f2.clone();
     Point2f v[4]; box.points(v);
     for (int i = 0; i < 4; ++i) line(show, v[i], v[(i + 1) % 4], Scalar(0, 255, 0), 2);
-    rectangle(show, Rect(180, 100, 120, 120), Scalar(0, 0, 255), 1); // 鍒濆 ROI
+    rectangle(show, Rect(180, 100, 120, 120), Scalar(0, 0, 255), 1); // initial ROI
     logInfo("camshift center=(%.1f,%.1f)", box.center.x, box.center.y);
     dbgShow("L3_20 camshift (red=init, green=result)", show, 0);
     return 0;
 }
+

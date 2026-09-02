@@ -1,7 +1,7 @@
-// LEARN: L5 Boost 鎻愬崌
-// OFFICIAL: samples/cpp/letter_recog.cpp (鍊?Boost API)
-// THEORY: docs/ch05_ml.md 搂Boost
-// TASK: 鍚堟垚涓ょ被鐐癸紝Boost 璁粌骞跺彲瑙嗗寲鍐崇瓥杈圭晫
+// LEARN: L5 Boost boosting
+// OFFICIAL: samples/cpp/letter_recog.cpp (uses Boost API)
+// THEORY: docs/ch05_ml.md §Boost
+// TASK: Generate two-class points, train Boost and visualize decision boundary
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 using namespace cv;

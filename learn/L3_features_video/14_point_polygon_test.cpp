@@ -1,7 +1,7 @@
-// LEARN: L3 鐐瑰埌杞粨璺濈 pointPolygonTest
+// LEARN: L3 Point-to-Contour Distance pointPolygonTest
 // OFFICIAL: samples/cpp/tutorial_code/ShapeDescriptors/pointPolygonTest_demo.cpp
-// THEORY: docs/ch03_features.md 搂杞粨
-// TASK: 鍙栨渶澶ц疆寤擄紝瀵瑰浘鍍忔瘡涓儚绱?pointPolygonTest锛岀敾 inside/edge/outside 涓夎壊
+// THEORY: docs/ch03_features.md §轮廓
+// TASK: get largest contour, pointPolygonTest for each pixel, draw inside/edge/outside three colors
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -26,10 +26,13 @@ int main() {
     for (int y = 0; y < show.rows; ++y) {
         for (int x = 0; x < show.cols; ++x) {
             double d = pointPolygonTest(conts[k], Point2f((float)x, (float)y), true);
-            if (d > 0)      show.at<Vec3b>(y, x) = Vec3b(0, 100, 0);   // 鍐?            else if (d < 0) show.at<Vec3b>(y, x) = Vec3b(0, 0, 50);   // 澶?            else            show.at<Vec3b>(y, x) = Vec3b(255, 255, 255); // 杈?        }
+            if (d > 0)      show.at<Vec3b>(y, x) = Vec3b(0, 100, 0);   // inside
+            else if (d < 0) show.at<Vec3b>(y, x) = Vec3b(0, 0, 50);   // outside
+            else            show.at<Vec3b>(y, x) = Vec3b(255, 255, 255); // edge
     }
     drawContours(show, conts, (int)k, Scalar(0, 255, 255), 2);
     logInfo("pointPolygonTest rendered");
     dbgShow("L3_14 polygon test", show, 0);
     return 0;
 }
+

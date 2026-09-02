@@ -1,7 +1,7 @@
-// LEARN: L2 warpAffine 浠垮皠鍙樻崲
+// LEARN: L2 warpAffine affine transform
 // OFFICIAL: samples/cpp/tutorial_code/ImgTrans/Geometric_Transforms_Demo.cpp
-// THEORY: docs/ch02_imgproc.md 搂6
-// TASK: getRotationMatrix2D + warpAffine 鏃嬭浆/缂╂斁
+// THEORY: docs/ch02_imgproc.md §6
+// TASK: getRotationMatrix2D + warpAffine rotate/scale
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

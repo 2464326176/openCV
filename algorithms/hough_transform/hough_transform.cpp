@@ -1,10 +1,10 @@
 // algorithms/hough_transform/main.cpp
-// 霍夫变换: 直线 (HoughLinesP) + 圆 (HoughCircles) 检测.
+// Hough transform: line (HoughLinesP) + circle (HoughCircles) detection.
 //
-// 直线:    对 Canny 边缘做概率霍夫直线检测, 在 sudoku/building 上画线段.
-// 圆:      HOUGH_GRADIENT/(ALT) 在 smarties/星轨等圆图上检测圆.
-// 说明:    打印检测数量 + 直线角度/长度、圆半径统计.
-// 输出:    out/algorithms/hough_lines.png, hough_circles.png.
+// Lines:   probabilistic Hough line detection on Canny edges, draw segments on sudoku/building.
+// Circles: HOUGH_GRADIENT/(ALT) detection on round images such as smarties/star trails.
+// Notes:   prints detection counts + line angle/length and circle radius statistics.
+// Output:  out/algorithms/hough_lines.png, hough_circles.png.
 #include "../common/algo_utils.hpp"
 
 #include <cstdio>
@@ -59,7 +59,7 @@ int main(int argc, char** argv) {
 
     ensureDir("../out/algorithms");
 
-    // ---- 直线 ----
+    // ---- lines ----
     cv::Mat imgL = cv::imread(lineImg, cv::IMREAD_COLOR);
     if (imgL.empty()) { imgL = cv::Mat(400, 600, CV_8UC3, cv::Scalar(255,255,255));
                         cv::line(imgL, cv::Point(30,40), cv::Point(560,300), cv::Scalar(0,0,0), 3);
@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
     cv::Mat canvas1 = gridWithLabels(panel1, lab1, 3, 26);
     cv::imwrite("../out/algorithms/hough_lines.png", canvas1);
 
-    // ---- 圆 ----
+    // ---- circles ----
     cv::Mat imgC = cv::imread(circleSrc, cv::IMREAD_COLOR);
     if (imgC.empty()) { imgC = cv::Mat(360, 460, CV_8UC3, cv::Scalar(255,255,255));
                         for (int i=0;i<6;++i) cv::circle(imgC, cv::Point(60+i*74, 60+(i%2)*80),

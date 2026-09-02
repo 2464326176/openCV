@@ -1,7 +1,7 @@
-// LEARN: L0 榧犳爣鐢荤煩褰?ROI
-// OFFICIAL: samples/cpp/drawing.cpp (榧犳爣浜嬩欢瀛愰泦)
-// THEORY: docs/ch08_gui_gapi_gpu.md 搂highgui
-// TASK: setMouseCallback 宸﹂敭鎷栨嫿鐢荤煩褰紱鏉惧紑鎶?ROI 澶嶅埗鍒版柊绐楀彛
+// LEARN: L0 Mouse drawing rectangle ROI
+// OFFICIAL: samples/cpp/drawing.cpp (mouse event subset)
+// THEORY: docs/ch08_gui_gapi_gpu.md §highgui
+// TASK: setMouseCallback left-click drag to draw rectangle; release to copy ROI to new window
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

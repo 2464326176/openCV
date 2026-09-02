@@ -1,9 +1,3 @@
-#include <opencv2/opencv.hpp>
-#include <opencv2/highgui.hpp>
-#include <opencv2/imgproc.hpp>
-
-using namespace cv;
-
 void readImage() {
     const Mat srcImage = imread("../data/images/3.jpg");
 
@@ -76,7 +70,7 @@ void ImageVideo() {
  * @brief create alpha mask
  * @param mat input image blur 255, green left light right dark horizontal change, red top light bottom dark vertical change, alpha average of horizontal and vertical gradual change
  * @return none
- * @note Mat 类型 | at<> 模板参数 |
+ * @note Mat type | at<> template parameter
  * - `CV_8UC1` | `uchar`
  * - `CV_8UC3` | `Vec3b`
  * - `CV_8UC4` | `Vec4b`

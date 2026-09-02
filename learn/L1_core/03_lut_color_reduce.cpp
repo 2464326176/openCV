@@ -1,19 +1,19 @@
-// LEARN: L1 LUT 棰滆壊缂╁噺
-// OFFICIAL: samples/cpp/color_reduce.cpp銆乻amples/cpp/tutorial_code/core/how_to_use_OpenCV_parallel_for_/how_to_use_OpenCV_parallel_for_.cpp
-// THEORY: docs/ch01_core.md 搂LUT
-// TASK: 鏌ヨ〃 256 鍘?32 绾э紱瀵规瘮鎵嬪啓寰幆涓?LUT 鎬ц兘锛沘pplyColorMap 婕旂ず
+// LEARN: L1 LUT color reduction
+// OFFICIAL: samples/cpp/color_reduce.cpp、samples/cpp/tutorial_code/core/how_to_use_OpenCV_parallel_for_/how_to_use_OpenCV_parallel_for_.cpp
+// THEORY: docs/ch01_core.md §LUT
+// TASK: LUT 256->32 levels; compare manual loop vs LUT performance; applyColorMap demo
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
 
 static Mat src;
-static int g_div = 32; // 娉ㄦ剰锛氬彉閲忓悕涓嶈兘鐢?div锛屼笌 stdlib div() 鍐茬獊
+static int g_div = 32; // NOTE: name 'div' conflicts with stdlib div()
 
 static void onTrack(int, void*) {
     if (g_div < 2) g_div = 2;
 
-    // 1) LUT 璺緞锛氭瀯寤?1x256 鏌ヨ〃
+    // 1) LUT path: build 1x256 lookup table
     Mat lut(1, 256, CV_8UC1);
     uchar* lp = lut.ptr();
     for (int i = 0; i < 256; ++i)
@@ -25,7 +25,7 @@ static void onTrack(int, void*) {
     double t1 = (double)getTickCount();
     logInfo("LUT      %.3f ms", (t1 - t0) * 1000.0 / getTickFrequency());
 
-    // 2) 鎵嬪啓寰幆锛坧tr 琛屾壂鎻忥級
+    // 2) Manual loop (ptr row scan)
     Mat manual = src.clone();
     int n = manual.cols * manual.channels();
     double t2 = (double)getTickCount();
@@ -37,7 +37,7 @@ static void onTrack(int, void*) {
     double t3 = (double)getTickCount();
     logInfo("manual   %.3f ms", (t3 - t2) * 1000.0 / getTickFrequency());
 
-    // 3) applyColorMap锛氭妸鐏板害 LUT 缁撴灉浼僵鑹插彲瑙嗗寲
+    // 3) applyColorMap: pseudo-color visualize the grayscale LUT result
     Mat colored;
     applyColorMap(reduced, colored, COLORMAP_JET);
 

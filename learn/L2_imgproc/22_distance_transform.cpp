@@ -1,7 +1,8 @@
-// LEARN: L2 璺濈鍙樻崲
+// LEARN: L2 Distance transform
 // OFFICIAL: samples/cpp/distrans.cpp
-// THEORY: docs/ch02_imgproc.md 搂7
-// TASK: distanceTransform + connectedComponents 鍒嗗墠鏅?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch02_imgproc.md §7
+// TASK: distanceTransform + connectedComponents separate foreground
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;

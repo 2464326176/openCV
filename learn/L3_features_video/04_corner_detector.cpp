@@ -1,7 +1,8 @@
-// LEARN: L3 瑙掔偣妫€娴嬬患鍚堝姣?Harris vs Shi-Tomasi
+// LEARN: L3 Corner Detection Comprehensive Comparison
 // OFFICIAL: samples/cpp/tutorial_code/TrackingMotion/cornerDetector_Demo.cpp
-// THEORY: docs/ch03_features.md 搂瑙掔偣
-// TASK: cornerHarris 涓?cornerMinEigenVal 涓ゅ紶鍝嶅簲鍥惧苟鎺掞紝褰掍竴鍖栨樉绀?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch03_features.md §角点
+// TASK: cornerHarris compute response map; cornerMinEigenVal two response maps side-by-side, normalized display
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
@@ -24,3 +25,4 @@ int main() {
     dbgShowMany({"L3_04 harris", "L3_04 shi-tomasi"}, {hC, sC}, 0);
     return 0;
 }
+

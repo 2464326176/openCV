@@ -1,6 +1,8 @@
-// LEARN: L4 浜鸿劯浜斿畼锛堢溂/榧?鍢达級绾ц仈閾?// OFFICIAL: samples/cpp/facial_features.cpp
-// THEORY: docs/ch06_objdetect_photo.md 搂6.5
-// TASK: 鐢?FaceDetectorYN(yunet) 鎵捐劯+鍏抽敭鐐癸紱鏃犵溂鐫?榧?鍢?xml 鏃舵墦鍗拌鏄庤烦杩囧祵濂楃骇鑱?#include <opencv2/opencv.hpp>
+// LEARN: L4 facial features (eyes/nose/mouth) cascade chain
+// OFFICIAL: samples/cpp/facial_features.cpp
+// THEORY: docs/ch06_objdetect_photo.md §6.5
+// TASK: use FaceDetectorYN(yunet) to find face+landmarks; skip nested cascade if no eyes/nose/mouth xml
+#include <opencv2/opencv.hpp>
 #include <opencv2/objdetect.hpp>
 #include <opencv_utils.h>
 
@@ -21,7 +23,7 @@ int main() {
     det->detect(img, faces);
     logInfo("FaceDetectorYN -> %d faces", faces.rows);
 
-    // 鐪?榧?鍢寸骇鑱?xml 璺緞锛堟寜 facial_features.cpp 鐨勮璁″懡鍚嶏級
+    // eyes/nose/mouth cascade xml paths (named per facial_features.cpp convention)
     const char* parts[] = {
         "../mingw-build/opencv_sources/data/haarcascades/haarcascade_eye.xml",
         "../mingw-build/opencv_sources/data/haarcascades/haarcascade_mcs_nose.xml",
@@ -37,7 +39,7 @@ int main() {
         for (int k = 0; k < 5; ++k) circle(img,
             Point(cvRound(f[4 + 2 * k]), cvRound(f[5 + 2 * k])), 2, Scalar(0, 0, 255), -1);
         if (allEmpty) continue;
-        // 鍦?face ROI 鍐呰皟鐢ㄥ祵濂楃骇鑱旓紙濡?haarcascade_eye.xml 缂哄け鍒欒烦杩囧搴旈儴浠讹級
+        // invoke nested cascade inside face ROI (skip part if haarcascade_eye.xml missing)
         Mat roi = img(face);
         for (int p = 0; p < 3; ++p) {
             if (partsCls[p].empty()) continue;

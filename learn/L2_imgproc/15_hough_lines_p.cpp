@@ -1,7 +1,7 @@
-// LEARN: L2 HoughLinesP 姒傜巼闇嶅か鐩寸嚎
+// LEARN: L2 HoughLinesP probabilistic Hough line
 // OFFICIAL: samples/cpp/snippets/imgproc_HoughLinesP.cpp
-// THEORY: docs/ch02_imgproc.md 搂5
-// TASK: Canny 鍚?HoughLinesP 鐢荤嚎娈?绔偣)
+// THEORY: docs/ch02_imgproc.md §5
+// TASK: Canny then HoughLinesP draw segments (endpoints)
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

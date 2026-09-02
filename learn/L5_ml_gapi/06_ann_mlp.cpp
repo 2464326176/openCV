@@ -1,7 +1,7 @@
-// LEARN: L5 ANN_MLP 绁炵粡缃戠粶
+// LEARN: L5 ANN_MLP neural network
 // OFFICIAL: samples/cpp/neural_network.cpp
-// THEORY: docs/ch05_ml.md 搂ANN
-// TASK: 鍚堟垚 XOR 鏁版嵁锛岃缁冧袱灞?MLP锛屽彲瑙嗗寲鍐崇瓥杈圭晫
+// THEORY: docs/ch05_ml.md §ANN
+// TASK: Generate XOR data, train a two-layer MLP, visualize decision boundary
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 using namespace cv;

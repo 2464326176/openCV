@@ -1,7 +1,7 @@
-// LEARN: L3 Farneback 绋犲瘑鍏夋祦
-// OFFICIAL: samples/cpp/tutorial_code/video/optical_flow/optical_flow_dense.cpp銆乫back.cpp
-// THEORY: docs/ch04_video.md 搂鍏夋祦
-// TASK: calcOpticalFlowFarneback 姹?VCG1鈫扸CG2 浣嶇Щ鍦猴紝HSV 缂栫爜鏄剧ず
+// LEARN: L3 Farneback 稠密光流
+// OFFICIAL: samples/cpp/tutorial_code/video/optical_flow/optical_flow_dense.cpp、fback.cpp
+// THEORY: docs/ch04_video.md §光流
+// TASK: calcOpticalFlowFarneback compute VCG1→VCG2 displacement field, HSV encoded display
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -32,3 +32,4 @@ int main() {
     dbgShowMany({"L3_18 frame1", "L3_18 flow hsv"}, {f1, bgr}, 0);
     return 0;
 }
+

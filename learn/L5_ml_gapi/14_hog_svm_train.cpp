@@ -1,7 +1,7 @@
-// LEARN: L5 HOG 鐗瑰緛涓?SVM 璁粌鍏崇郴
+// LEARN: L5 HOG feature and SVM training relationship
 // OFFICIAL: samples/cpp/train_HOG.cpp, digits_svm.cpp
-// THEORY: docs/ch05_ml.md 搂5.8.1
-// TASK: 瀵瑰悎鎴愭璐熸牱鏈彁鍙?HOG 骞惰缁冪嚎鎬?SVM锛汣 瓒婂ぇ闂撮殧瓒婄‖
+// THEORY: docs/ch05_ml.md §5.8.1
+// TASK: Extract HOG from synthetic positive/negative samples and train linear SVM; larger C means harder margin
 #include <opencv2/opencv.hpp>
 #include <opencv2/ml.hpp>
 #include <opencv_utils.h>
@@ -38,7 +38,7 @@ int main() {
     svm->setC(1.0);
     svm->train(samples, ROW_SAMPLE, labels);
     float err = svm->calcError(TrainData::create(samples, ROW_SAMPLE, labels), false, noArray());
-    logInfo("linear SVM train error=%.3f; C=1.0 瓒婂ぇ瓒婁笉瀹归敊", err);
+    logInfo("linear SVM train error=%.3f; C=1.0 larger C means less tolerance for error", err);
     logInfo("pipeline: img -> HOGDescriptor -> CV_32F rows -> SVM::train");
     return 0;
 }

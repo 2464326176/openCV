@@ -1,15 +1,17 @@
 // algorithms/edge_detection/main.cpp
-// 边缘检测算法综合对比演示 (经典梯度类算子 + Laplacian/LoG + Canny + DoG).
+// Comprehensive edge detection algorithm comparison demo
+// (classic gradient operators + Laplacian/LoG + Canny + DoG).
 //
-// 覆盖算法:
-//   梯度类:   Sobel / Scharr / Prewitt (2 方向梯度幅值)
-//   二阶类:   Laplacian / LoG (高斯-拉普拉斯) / DoG (高斯差分)
-//   最优化:   Canny (传统双阈值) 与 自动双阈值 Canny (Otsu)
+// Algorithms covered:
+//   gradient:  Sobel / Scharr / Prewitt (two-direction gradient magnitude)
+//   second-order: Laplacian / LoG (Laplacian of Gaussian) / DoG (Difference of Gaussians)
+//   optimal:   Canny (classic dual threshold) and auto dual-threshold Canny (Otsu)
 //
-// 指标: 边缘密度 (edge 像素占比), 分块边缘熵, 连通分量平均规模 (粗略连续性).
-// 输出: 全景网格图 out/algorithms/edge_detection_<sub>.png + 指标表.
+// Metrics: edge density (edge pixel ratio), block edge entropy,
+//          mean connected-component size (rough continuity).
+// Output: panorama grid out/algorithms/edge_detection_<sub>.png + metrics table.
 //
-// 用法: edge_detection.exe [input_img] [sigma_or_threshold]
+// Usage: edge_detection.exe [input_img] [sigma_or_threshold]
 #include "../common/algo_utils.hpp"
 
 #include <algorithm>
@@ -19,7 +21,7 @@
 
 using namespace algo;
 
-// 基于导数的梯度幅值检测 (sx/sy 为两个方向的卷积核).
+// Derivative-based gradient magnitude detection (sx/sy are the two directional kernels).
 static cv::Mat gradientMag(const cv::Mat& gray, cv::InputArray sx, cv::InputArray sy) {
     cv::Mat gx, gy;
     cv::filter2D(gray, gx, CV_32F, sx);
@@ -31,12 +33,12 @@ static cv::Mat gradientMag(const cv::Mat& gray, cv::InputArray sx, cv::InputArra
     return m8;
 }
 
-// 边缘像素占比: gray > thr 视为边缘 (thr 针对已归一化 0~255 的响应).
+// Edge pixel ratio: gray > thr counts as edge (thr applies to the normalized 0~255 response).
 static double edgeDensity(const cv::Mat& gray, int thr = 40) {
     return cv::countNonZero(gray > thr) / double(gray.total());
 }
 
-// 连通分量平均规模: 衡量分块边缘连续性 (越大连续性越好).
+// Mean connected-component size: measures block edge continuity (larger = more continuous).
 static double avgComponentSize(const cv::Mat& gray, int thr = 40) {
     cv::Mat bin = gray > thr;
     cv::Mat labels, stats, cent;
@@ -45,7 +47,7 @@ static double avgComponentSize(const cv::Mat& gray, int thr = 40) {
     double sum = 0, cnt = 0;
     for (int i = 1; i < n; ++i) {
         double area = stats.at<int>(i, cv::CC_STAT_AREA);
-        if (area < 3) continue;  // 忽略孤立噪声点
+        if (area < 3) continue;  // ignore isolated noise dots
         sum += area; cnt += 1;
     }
     return cnt ? sum / cnt : 0;
@@ -70,7 +72,7 @@ int main(int argc, char** argv) {
     ensureDir("../out/algorithms");
     std::vector<Result> res;
 
-    // ---- 1. 基于导数的一阶梯度算子 ----
+    // ---- 1. first-order derivative gradient operators ----
     {
         cv::Mat sx9 = (cv::Mat_<float>(3,3) << -1,0,1, -2,0,2, -1,0,1);   // Sobel X
         cv::Mat sy9 = (cv::Mat_<float>(3,3) << -1,-2,-1, 0,0,0, 1,2,1);   // Sobel Y
@@ -85,9 +87,10 @@ int main(int argc, char** argv) {
         res.push_back({"Prewitt(3x3)", gradientMag(gray, sxP, syP), 0, 0});
     }
 
-    // ---- 2. 二阶算子是零交叉 / 归一化拉普拉斯 ----
+    // ---- 2. second-order operators: zero crossing / normalized Laplacian ----
     {
-        // 二阶响应带符号, 取绝对值得到与梯度一致的"边缘强度", 阈值才有意义.
+        // Second-order responses are signed; take the absolute value to get an "edge strength"
+        // consistent with gradients so that thresholding is meaningful.
         cv::Mat lap, lap8;
         cv::Laplacian(gray, lap, CV_32F, 3);
         cv::Mat lapAbs = cv::abs(lap);
@@ -106,13 +109,13 @@ int main(int argc, char** argv) {
         cv::GaussianBlur(gray, g1, cv::Size(), 1.0);
         cv::GaussianBlur(gray, g2, cv::Size(), 3.0);
         cv::Mat dog, dog8;
-        dog = g1 - g2;   // DoG: 高斯差分近似 LoG, 边缘/角点响应
+        dog = g1 - g2;   // DoG: difference of Gaussians approximates LoG, edge/corner response
         cv::Mat dogAbs = cv::abs(dog);
         cv::normalize(dogAbs, dog8, 0, 255, cv::NORM_MINMAX, CV_8U);
         res.push_back({"DoG(1.0=>3.0)", dog8, 0, 0});
     }
 
-    // ---- 3. Canny: 经典双阈值 & Otsu 自动阈值 ----
+    // ---- 3. Canny: classic dual threshold & Otsu auto threshold ----
     {
         cv::Mat canny;
         cv::Canny(gray, canny, 100, 200);
@@ -129,7 +132,7 @@ int main(int argc, char** argv) {
         res.push_back({"Canny-Otsu(" + std::to_string((int)low) + "," + std::to_string((int)high) + ")", show2, 0, 0});
     }
 
-    // ---- 指标: 边缘密度 + 连续性 (固定低阈值 40, 针对归一化 0~255 响应) ----
+    // ---- metrics: edge density + continuity (fixed low threshold 40, on normalized 0~255 responses) ----
     std::printf("%-30s %10s %12s\n", "method", "density", "avg_comp_size");
     std::vector<cv::Mat> panels; std::vector<std::string> labels;
     panels.push_back(src); labels.push_back("input");

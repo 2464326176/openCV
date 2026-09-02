@@ -1,6 +1,6 @@
-// LEARN: L2 褰㈡€佸鑵愯殌鑶ㄨ儉
+// LEARN: L2 Morphology erode and dilate
 // OFFICIAL: samples/cpp/tutorial_code/ImgProc/Morphology_1.cpp
-// THEORY: docs/ch02_imgproc.md 搂2
+// THEORY: docs/ch02_imgproc.md §2
 // TASK: erode/dilate + getStructuringElement(MORPH_RECT/CROSS/ELLIPSE)
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>

@@ -1,15 +1,15 @@
 // algorithms/denoise_single/main.cpp
-// 单帧降噪算法综合对比演示.
+// Single-frame denoising algorithm comprehensive comparison demo.
 //
-// 扩展能力:
-//   1. 噪声类型: 高斯 / 椒盐 / 乘性斑点 / 泊松 四种, 支持命令行参数.
-//   2. 算法: Gaussian/Median/Bilateral/NLM/Guided + AdaptiveBilateral +
+// Extended capabilities:
+//   1. Noise types: Gaussian / salt-pepper / multiplicative speckle / Poisson, 4 kinds, with CLI args.
+//   2. Algorithms: Gaussian/Median/Bilateral/NLM/Guided + AdaptiveBilateral +
 //           Wiener + AnisotropicDiffusion + LaplacianSoftThreshold + denoiseAuto.
-//   3. 参数扫描: 例如 sigma=10/20/30 的高斯噪声, 扫描 h={5,10,15} 的 NLM.
-//   4. 表格输出 PSNR/SSIM/MAE/MS-SSIM/LOE 五项指标, 并输出算法推荐排名.
-//   5. 同时画"原图→噪声→各算法降噪图"的马赛克大图.
+//   3. Parameter sweeps: e.g. Gaussian noise with sigma=10/20/30, NLM sweep over h={5,10,15}.
+//   4. Table output of five metrics PSNR/SSIM/MAE/MS-SSIM/LOE, plus algorithm recommendation ranking.
+//   5. Also draws a mosaic of "clean -> noisy -> each algorithm's denoised image".
 //
-// 用法: denoise_single.exe [input_img] [noise_type:gauss|sp|speckle|poisson]
+// Usage: denoise_single.exe [input_img] [noise_type:gauss|sp|speckle|poisson]
 //                        [noise_p1] [noise_p2]
 #include "../common/algo_utils.hpp"
 #include "../common/single_denoise.hpp"
@@ -94,17 +94,17 @@ static void compareMany(const std::vector<NoiseConfig>& noises, const cv::Mat& c
             {"Auto[" + autoMethod + "]", autoOut, {}},
         };
 
-        // 打分 (skip noisy)
+        // score (skip noisy)
         for (size_t i = 1; i < rows.size(); ++i) rows[i].s = scoreOf(clean, rows[i].img);
 
-        // 排序 (按 PSNR desc)
+        // sort (PSNR desc)
         std::vector<size_t> idx(rows.size());
         for (size_t i = 0; i < idx.size(); ++i) idx[i] = i;
         std::sort(idx.begin(), idx.end(), [&](size_t a, size_t b){
             return rows[a].s.psnr > rows[b].s.psnr;
         });
 
-        // 打印表格
+        // print table
         std::printf("estimated sigma via MAD: %.2f\n", estimatedSigma);
         std::printf("%-28s %8s %8s %8s %8s %8s\n",
                     "method", "PSNR", "SSIM", "MS-SSIM", "MAE", "LOE");
@@ -115,7 +115,7 @@ static void compareMany(const std::vector<NoiseConfig>& noises, const cv::Mat& c
                         r.s.mae, r.s.loe);
         }
 
-        // 构造大图 4 列
+        // build mosaic, 4 columns
         std::vector<cv::Mat> panels;
         std::vector<std::string> labels;
         panels.push_back(clean); labels.push_back("clean");
@@ -147,12 +147,12 @@ int main(int argc, char** argv) {
         cv::resize(clean, clean, cv::Size(), s, s, cv::INTER_AREA);
     }
 
-    // 传参模式: 单一噪声
+    // parameter mode: a single noise
     std::vector<NoiseConfig> cfg;
     if (argc > 2) {
         cfg.push_back({noiseType, p1, p2});
     } else {
-        // 默认参数扫描: 4 种噪声 × 2 档强度
+        // default sweep: 4 noise types x 2 intensity levels
         cfg = {
             {"gauss", 10, 0}, {"gauss", 25, 0},
             {"sp", 0.03, 0},  {"sp", 0.08, 0},

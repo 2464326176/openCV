@@ -1,6 +1,7 @@
-// LEARN: L2 remap 鑷畾涔夋槧灏?// OFFICIAL: samples/cpp/tutorial_code/ImgTrans/Remap_Demo.cpp
-// THEORY: docs/ch02_imgproc.md 搂6
-// TASK: 鑷缓 map_x/map_y 鍋氶暅鍍?娉㈡氮/缂╁皬
+// LEARN: L2 remap custom mapping
+// OFFICIAL: samples/cpp/tutorial_code/ImgTrans/Remap_Demo.cpp
+// THEORY: docs/ch02_imgproc.md §6
+// TASK: custom map_x/map_y for mirror/wave/shrink
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

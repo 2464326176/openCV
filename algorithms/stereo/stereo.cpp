@@ -1,17 +1,17 @@
 // algorithms/stereo/main.cpp
-// 立体匹配 (视差估计) 演示: StereoBM 与 SGBM 在真实双目样本上的对比.
+// Stereo matching (disparity estimation) demo: StereoBM vs SGBM on real stereo samples.
 //
-// 样本: data/aloeL.jpg / data/aloeR.jpg 为 OpenCV 经典校准双目图; 也可换成
-//       data/left01.jpg + right01.jpg (同名 0x 构成对母板双目序列).
+// Samples: data/aloeL.jpg / data/aloeR.jpg are OpenCV classic calibrated stereo pairs;
+//          can also use data/left01.jpg + right01.jpg (paired stereo sequence).
 //
-// 步骤:
-//   1. 灰度化 (SGBM/BM 输入要求单通道);
-//   2. StereoBM 多组参数 (blockSize=5/11/21) + SGBM (blockSize=3/11);
-//   3. 视差 CV_16S → 归一化 8U, 加 COLORMAP_JET 伪彩;
-//   4. 指标: 有效视差占比 / 平均视差 / 视差平滑度 (|梯度|均值).
+// Steps:
+//   1. grayscale (SGBM/BM inputs must be single channel);
+//   2. StereoBM with several parameter sets (blockSize=5/11/21) + SGBM (blockSize=3/11);
+//   3. disparity CV_16S -> normalized 8U, with COLORMAP_JET pseudo color;
+//   4. metrics: valid disparity ratio / mean disparity / disparity smoothness (mean |gradient|).
 //
-// 输出: out/algorithms/stereo_compare.png
-// 用法: stereo.exe [left_img] [right_img]
+// Output: out/algorithms/stereo_compare.png
+// Usage: stereo.exe [left_img] [right_img]
 #include "../common/algo_utils.hpp"
 
 #include <opencv2/calib3d.hpp>
@@ -21,7 +21,7 @@
 
 using namespace algo;
 
-// 把 CV_16S 视差 (scale 系数) 归一化到 8U, 并对无效(<=0)像素置灰.
+// Normalize CV_16S disparity (with scale factor) to 8U and gray out invalid (<=0) pixels.
 static cv::Mat disparityTo8U(const cv::Mat& disp, int scale = 16) {
     cv::Mat f;
     disp.convertTo(f, CV_32F, 1.0 / scale);
@@ -30,7 +30,7 @@ static cv::Mat disparityTo8U(const cv::Mat& disp, int scale = 16) {
     cv::Mat valid = disp > 0;
     cv::Mat out;
     f8.copyTo(out);
-    out.setTo(128, ~valid);  // 无效区域置中灰
+    out.setTo(128, ~valid);  // set invalid region to mid gray
     return out;
 }
 
@@ -40,7 +40,8 @@ static cv::Mat pseudoColor(const cv::Mat& disp8) {
     return cm;
 }
 
-// 全参考指标不一定存在 GT, 这里用无参考统计: 有效占比 / 平均视差 / 平滑度.
+// Full-reference metrics may have no GT; use no-reference statistics here:
+// valid ratio / mean disparity / smoothness.
 static void reportStats(const char* tag, const cv::Mat& disp, double scale) {
     cv::Mat f;
     disp.convertTo(f, CV_32F, 1.0 / scale);
@@ -53,7 +54,7 @@ static void reportStats(const char* tag, const cv::Mat& disp, double scale) {
     cv::Sobel(f, gy, CV_32F, 0, 1, 3);
     cv::Mat mag;
     cv::magnitude(gx, gy, mag);
-    double smooth = cv::mean(mag, valid)[0];  // 越小越平滑
+    double smooth = cv::mean(mag, valid)[0];  // smaller means smoother
     std::printf("%-24s valid=%.1f%% mean_disp=%6.2f std=%.2f smoothness=%.3f\n",
                 tag, ratio * 100.0, mean[0], stddev[0], smooth);
 }
@@ -73,7 +74,7 @@ int main(int argc, char** argv) {
         cv::ellipse(imgL, cv::Point(200, 160), cv::Size(60, 60), 0, 0, 360, 200, -1);
         imgL = imgL.clone();
         imgR = imgL.clone();
-        // 人为制造水平视差
+        // artificially create horizontal disparity
         cv::ellipse(imgR, cv::Point(190, 160), cv::Size(60, 60), 0, 0, 360, 200, -1);
     }
     if (imgL.size() != imgR.size()) {
@@ -87,7 +88,7 @@ int main(int argc, char** argv) {
 
     std::printf("%-24s %s\n", "method", "valid/mean_disp/smoothness");
 
-    constexpr int numDisp = 64;          // 需为 16 的倍数
+    constexpr int numDisp = 64;          // must be a multiple of 16
     constexpr int minDisp = 0;
 
     // ---- StereoBM ----

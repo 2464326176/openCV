@@ -1,7 +1,7 @@
-// LEARN: L3 LK 鍏夋祦鍒嗘婕旂ず
+// LEARN: L3 LK 光流分步演示
 // OFFICIAL: tutorial_code/video/optical_flow/optical_flow.cpp
-// THEORY: docs/ch04_video.md 搂4.2
-// TASK: goodFeaturesToTrack + calcOpticalFlowPyrLK 鍒嗘璺熻釜锛泈inSize/maxLevel 褰卞搷鏀舵暃
+// THEORY: docs/ch04_video.md §4.2
+// TASK: goodFeaturesToTrack + calcOpticalFlowPyrLK stepwise tracking; winSize/maxLevel affect convergence
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -40,3 +40,4 @@ int main() {
     dbgShow("L3_26 lk stepwise", vis, 0);
     return 0;
 }
+

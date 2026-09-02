@@ -1,7 +1,7 @@
-// LEARN: L2 鐩镐綅鐩稿叧骞崇Щ浼拌
+// LEARN: L2 Phase correlation shift estimation
 // OFFICIAL: samples/cpp/phase_corr.cpp
-// THEORY: docs/ch02_imgproc.md 搂6
-// TASK: 瀵瑰钩绉诲悗鐨勫浘鍍忕敤 phaseCorrelate 浼拌 (dx,dy)锛涘弬鏁?response 瓒婂ぇ鍖归厤瓒婂彲闈?
+// THEORY: docs/ch02_imgproc.md §6
+// TASK: phaseCorrelate on shifted images to estimate (dx,dy); higher response means more reliable match
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -25,7 +25,7 @@ int main() {
     Point2d est = phaseCorrelate(shiftedF, srcF, noArray(), &response);
     logInfo("ground truth shift: (%.1f, %.1f)", shift.x, shift.y);
     logInfo("estimated shift   : (%.2f, %.2f), response=%.4f", est.x, est.y, response);
-    logInfo("response: 瓒婃帴杩?1 琛ㄧず棰戝煙宄板€艰秺灏栭攼锛屽尮閰嶈秺鍙潬");
+    logInfo("response: closer to 1 means sharper frequency-domain peak, more reliable match");
 
     Mat vis;
     cvtColor(src, vis, COLOR_GRAY2BGR);

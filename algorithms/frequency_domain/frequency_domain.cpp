@@ -1,13 +1,14 @@
 // algorithms/frequency_domain/main.cpp
-// 频域分析与滤波: 二维 DFT、幅值谱可视化、低通/高通/陷波滤波.
+// Frequency-domain analysis and filtering: 2D DFT, magnitude spectrum visualization,
+// low-pass / high-pass / notch filtering.
 //
-// 覆盖:
-//   DFT 幅值谱 (中心化 + log 拉伸)
-//   高斯低通   (平滑/去噪)
-//   高斯高通   (边缘/细节提取)
-//   陷波(带阻) (去除周期性正弦噪声)
-// 评估: 低通/陷波与参考的 PSNR; 高通输出边缘二值密度.
-// 输出: out/algorithms/frequency_domain_compare.png.
+// Covers:
+//   DFT magnitude spectrum (centered + log stretch)
+//   Gaussian low-pass    (smoothing / denoising)
+//   Gaussian high-pass   (edge / detail extraction)
+//   notch (band-stop)    (removes periodic sinusoidal noise)
+// Evaluation: PSNR of low-pass/notch vs the reference; high-pass output edge binary density.
+// Output: out/algorithms/frequency_domain_compare.png.
 #include "../common/algo_utils.hpp"
 
 #include <cmath>
@@ -16,7 +17,7 @@
 
 using namespace algo;
 
-// 中心化幅值谱 → 8U (log 压缩便于观察).
+// Centered magnitude spectrum -> 8U (log compression for visibility).
 static cv::Mat magnitudeSpectrum(const cv::Mat& complexI) {
     cv::Mat planes[2];
     cv::split(complexI, planes);
@@ -38,7 +39,8 @@ static cv::Mat magnitudeSpectrum(const cv::Mat& complexI) {
     return mag8;
 }
 
-// 象限交换 (中心化 ↔ 角落布局). DFT 未移位时低频在四角, 掩膜/谱展示需换算.
+// Quadrant swap (centered <-> corner layout). With an unshifted DFT the low frequencies
+// sit at the corners; masks/spectrum display need this conversion.
 static cv::Mat swapQuadrants(const cv::Mat& src) {
     cv::Mat centered = src(cv::Rect(0, 0, src.cols & -2, src.rows & -2)).clone();
     int cx = centered.cols / 2, cy = centered.rows / 2;
@@ -52,7 +54,7 @@ static cv::Mat swapQuadrants(const cv::Mat& src) {
     return centered;
 }
 
-// 构造高斯掩膜 (32F, 尺寸同 dftSize, 中心化布局): D=1 低通保存低频, D=0 高通.
+// Build a Gaussian mask (32F, size = dftSize, centered layout): D=1 low-pass keeps low frequencies, D=0 high-pass.
 template <bool LOW>
 static cv::Mat gaussFilterMask(int rows, int cols, double sigma) {
     cv::Mat H(rows, cols, CV_32F);
@@ -65,10 +67,10 @@ static cv::Mat gaussFilterMask(int rows, int cols, double sigma) {
     return H;
 }
 
-// 频域滤波: src8 灰度/彩色 → 应用掩膜 → 逆 DFT.
+// Frequency-domain filtering: src8 gray/color -> apply mask -> inverse DFT.
 static cv::Mat applyFreqFilter(const cv::Mat& img8, const cv::Mat& maskCentered,
                                int H, int W) {
-    cv::Mat mask = swapQuadrants(maskCentered); // 转成未移位布局, 与 dft 对齐
+    cv::Mat mask = swapQuadrants(maskCentered); // convert to unshifted layout to align with dft
     std::vector<cv::Mat> ch;
     cv::split(img8, ch);
     std::vector<cv::Mat> outCh;
@@ -87,8 +89,8 @@ static cv::Mat applyFreqFilter(const cv::Mat& img8, const cv::Mat& maskCentered,
     }
     std::vector<cv::Mat> out8ch;
     for (auto& o : outCh) {
-        // 直接饱和转 8U (保留真实幅度, 便于 PSNR 与干净图比较);
-        // 高通等负/超范围值被裁剪.
+        // saturating conversion to 8U (keeps true magnitudes, so PSNR is comparable to the clean image);
+        // negative / out-of-range values of high-pass etc. are clipped.
         cv::Mat n; o.convertTo(n, CV_8U); out8ch.push_back(n);
     }
     cv::Mat result;
@@ -108,7 +110,7 @@ int main(int argc, char** argv) {
 
     ensureDir("../out/algorithms");
 
-    // 中心化幅值谱展示 (用灰度)
+    // centered magnitude spectrum display (use gray)
     cv::Mat grayF;
     gray.convertTo(grayF, CV_32F);
     cv::Mat padded = cv::Mat::zeros(H, W, CV_32F);
@@ -116,16 +118,16 @@ int main(int argc, char** argv) {
     cv::Mat complexI; cv::dft(padded, complexI, cv::DFT_COMPLEX_OUTPUT);
     cv::Mat spec = magnitudeSpectrum(complexI);
 
-    // 低通与高通
+    // low-pass and high-pass
     cv::Mat lowMask = gaussFilterMask<true>(H, W, 40.0);
     cv::Mat highMask = gaussFilterMask<false>(H, W, 30.0);
     cv::Mat lowOut = applyFreqFilter(img, lowMask, H, W);
     cv::Mat highOut = applyFreqFilter(gray, highMask, H, W);
-    // 高通边缘密度
+    // high-pass edge density
     cv::Mat hg; highOut.convertTo(hg, CV_8U);
     double edgeDW = cv::countNonZero(hg > 40) / (double)hg.total();
 
-    // 周期性噪声 + 陷波去除: 叠加正弦纹波 → 谱上出现两个亮点 → 陷波带阻.
+    // periodic noise + notch removal: add sinusoidal ripple -> two bright spots in the spectrum -> notch band-stop.
     cv::Mat noisy = img.clone();
     cv::Mat rip = cv::Mat::zeros(img.size(), CV_32FC3);
     double amp = 42.0, fx = 0.08, fy = 0.05;
@@ -138,10 +140,10 @@ int main(int argc, char** argv) {
     cv::Mat noisyF = nf32 + rip;
     cv::Mat noisy8; cv::normalize(noisyF, noisy8, 0, 255, cv::NORM_MINMAX, CV_8U);
 
-    // 陷波带阻: 在两噪声峰位置设 0 (近似以中心对称的带阻坑)
+    // notch band-stop: set 0 near the two noise peak positions (approximately center-symmetric band-stop pits)
     cv::Mat notch = cv::Mat::ones(H, W, CV_32F);
     int px = (int)std::lround(fx * W), py = (int)std::lround(fy * H);
-    // 直接置零两个峰值附近区域 (中心化坐标)
+    // directly zero the regions near the two peaks (centered coordinates)
     for (int dy = -3; dy <= 3; ++dy) for (int dx = -3; dx <= 3; ++dx) {
         int y0 = H/2 - py + dy, x0 = W/2 - px + dx;
         if (y0 >= 0 && y0 < H && x0 >= 0 && x0 < W) notch.at<float>(y0, x0) = 0.f;

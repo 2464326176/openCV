@@ -1,7 +1,7 @@
-// LEARN: L0 閫氶亾鎷嗗垎鍚堝苟
+// LEARN: L0 channel split and merge
 // OFFICIAL: samples/cpp/snippets/core_split.cpp, core_merge.cpp
-// THEORY: docs/ch01_core.md 搂Mat 閫氶亾
-// TASK: split 鎷?BGR锛涘垎鍒樉绀哄崟閫氶亾锛沵erge 鍚堝洖
+// THEORY: docs/ch01_core.md §Mat channels
+// TASK: split BGR; display each channel; merge back
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

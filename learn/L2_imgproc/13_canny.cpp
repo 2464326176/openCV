@@ -1,7 +1,7 @@
-// LEARN: L2 Canny 杈圭紭
-// OFFICIAL: samples/cpp/tutorial_code/ImgTrans/CannyDetector_Demo.cpp銆乪dge.cpp
-// THEORY: docs/ch02_imgproc.md 搂4
-// TASK: 楂樻柉棰勫鐞?+ 鍙岄槇鍊兼粦鍔ㄦ潯
+// LEARN: L2 Canny edge
+// OFFICIAL: samples/cpp/tutorial_code/ImgTrans/CannyDetector_Demo.cpp、edge.cpp
+// THEORY: docs/ch02_imgproc.md §4
+// TASK: Gaussian pre-filter + dual-threshold trackbar
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

@@ -1,9 +1,9 @@
 //********************
 // Author:  yh
 // Time:    2022/8/4.
-//  五种滤波对比：方框 / 均值 / 高斯 / 中值 / 双边
-//  - 线性滤波：boxFilter, blur, GaussianBlur
-//  - 非线性滤波：medianBlur (去椒盐), bilateralFilter (保边)
+//  Five filters compared: box / mean / Gaussian / median / bilateral
+//  - Linear filters: boxFilter, blur, GaussianBlur
+//  - Non-linear filters: medianBlur (removes salt-and-pepper), bilateralFilter (edge-preserving)
 //********************
 #include <opencv2/opencv.hpp>
 
@@ -18,27 +18,27 @@ int main() {
     }
     imshow("original image", src);
 
-    // 1. 方框滤波：核内系数相等，normalize=true 时等价均值滤波
+    // 1. Box filter: equal kernel weights; equals mean filter when normalize=true
     Mat boxDst;
     boxFilter(src, boxDst, -1, Size(5, 5));
     imshow("box filter", boxDst);
 
-    // 2. 均值滤波：归一化方框，简单快速但模糊边缘
+    // 2. Mean filter: normalized box; simple and fast but blurs edges
     Mat meanDst;
     blur(src, meanDst, Size(5, 5), Point(-1, -1));
     imshow("mean filter", meanDst);
 
-    // 3. 高斯滤波：中心权重最大，保边性优于均值，Canny 标准预处理
+    // 3. Gaussian filter: max weight at center, better edge-preserving than mean; standard Canny preprocessing
     Mat gaussDst;
     GaussianBlur(src, gaussDst, Size(5, 5), 0, 0);
     imshow("gaussian filter", gaussDst);
 
-    // 4. 中值滤波：取邻域中位数，椒盐噪声克星
+    // 4. Median filter: take neighborhood median; the nemesis of salt-and-pepper noise
     Mat medianDst;
     medianBlur(src, medianDst, 5);
     imshow("median filter", medianDst);
 
-    // 5. 双边滤波：空间 + 值域双重加权，去噪同时保住边缘
+    // 5. Bilateral filter: spatial + range double weighting; denoises while preserving edges
     Mat bilateralDst;
     bilateralFilter(src, bilateralDst, 5, 10.0, 2.5);
     imshow("bilateral filter", bilateralDst);

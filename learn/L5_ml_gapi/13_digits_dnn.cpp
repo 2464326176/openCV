@@ -1,7 +1,7 @@
-// LEARN: L5 DNN 鎵嬪啓鏁板瓧鎺ㄧ悊妗ユ
+// LEARN: L5 DNN handwritten digit inference bridge
 // OFFICIAL: samples/cpp/digits_lenet.cpp
-// THEORY: docs/ch05_ml.md 搂5.9
-// TASK: 鑻ユ棤 LeNet 妯″瀷鍒欐紨绀?blobFromImage + Net 鎺ュ彛锛涜鏄?ml 涓?dnn 杈圭晫
+// THEORY: docs/ch05_ml.md §5.9
+// TASK: If no LeNet model, demonstrate blobFromImage + Net API; explain the ml vs dnn boundary
 #include <opencv2/opencv.hpp>
 #include <opencv2/dnn.hpp>
 #include <fstream>

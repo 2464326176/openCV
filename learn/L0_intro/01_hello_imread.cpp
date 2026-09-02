@@ -1,7 +1,7 @@
 // LEARN: L0 Hello imread
 // OFFICIAL: samples/cpp/tutorial_code/introduction/display_image/display_image.cpp
-// THEORY: docs/ch01_core.md 搂1.1
-// TASK: imread 璇诲浘锛涘垽 empty锛沬mshow锛泈aitKey锛涙寜 s 淇濆瓨 PNG
+// THEORY: docs/ch01_core.md §1.1
+// TASK: imread image; check empty; imshow; waitKey; press 's' to save as PNG
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

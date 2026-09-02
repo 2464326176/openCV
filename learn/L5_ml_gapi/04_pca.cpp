@@ -1,6 +1,8 @@
-// LEARN: L5 PCA 闄嶇淮涓庝富鎴愬垎鍙鍖?// OFFICIAL: samples/cpp/pca.cpp, tutorial_code/ml/introduction_to_pca/introduction_to_pca.cpp
-// THEORY: docs/ch05_ml.md 搂PCA
-// TASK: 鍚堟垚鏃嬭浆楂樻柉鐐逛簯锛孭CA 姹備富鎴愬垎锛屽湪鏁ｇ偣鍥句笂鐢荤壒寰佸悜閲?#include <opencv2/opencv.hpp>
+// LEARN: L5 PCA dimensionality reduction and principal component visualization
+// OFFICIAL: samples/cpp/pca.cpp, tutorial_code/ml/introduction_to_pca/introduction_to_pca.cpp
+// THEORY: docs/ch05_ml.md §PCA
+// TASK: Generate rotated Gaussian point cloud, PCA finds principal components, draw eigenvectors on scatter plot
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 using namespace cv;
 
@@ -12,7 +14,7 @@ int main() {
     for (int i = 0; i < N; ++i) {
         float x = (float)rng.gaussian(40);
         float y = (float)rng.gaussian(15);
-        pts.at<float>(i,0) = c.x + 0.9f*x - 0.4f*y; // 鏃嬭浆
+        pts.at<float>(i,0) = c.x + 0.9f*x - 0.4f*y; // rotation
         pts.at<float>(i,1) = c.y + 0.4f*x + 0.9f*y;
     }
 

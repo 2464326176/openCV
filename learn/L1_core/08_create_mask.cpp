@@ -1,7 +1,8 @@
-// LEARN: L1 鍒涘缓鎺╄啘
+// LEARN: L1 create mask
 // OFFICIAL: samples/cpp/create_mask.cpp
-// THEORY: docs/ch01_core.md 搂2.15 create_mask
-// TASK: Mat::setTo + bitwise_and/or/not 瀹炵幇鍦嗗舰鎺╄啘鎶犲浘涓庤儗鏅悎鎴?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch01_core.md §2.15 create_mask
+// TASK: Mat::setTo + bitwise_and/or/not for circular mask extraction and background composition
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
@@ -10,23 +11,24 @@ int main() {
     Mat src = imread(getImagePath("lena.jpg"));
     if (src.empty()) { logInfo("imread failed"); return -1; }
 
-    // 1) 鍒涘缓鍦嗗舰鎺╄啘锛歴etTo 鎶婂叏鍥剧疆 0锛宑ircle 鍦嗗唴濉?255
+    // 1) Create circular mask: setTo zeros the whole image, circle fills 255 inside
     Mat mask = Mat::zeros(src.size(), CV_8UC1);
     circle(mask, Point(src.cols / 2, src.rows / 2),
            std::min(src.cols, src.rows) / 3, Scalar(255), -1);
 
-    // 2) bitwise_and锛氬彧淇濈暀鍦嗗唴鐨?src 鍍忕礌
+    // 2) bitwise_and: keep only pixels inside the circle
     Mat masked;
     bitwise_and(src, src, masked, mask);
 
-    // 3) 鍙嶆帺鑶?+ setTo锛氬渾澶栧尯鍩熷～鍏呯豢鑹茶儗鏅?    Mat invMask;
+    // 3) Inverse mask + setTo: fill outside area with green background
+    Mat invMask;
     bitwise_not(mask, invMask);
     Mat bg = Mat::zeros(src.size(), src.type());
-    bg.setTo(Scalar(0, 255, 0));               // 鐢?setTo 濉厖搴曡壊
+    bg.setTo(Scalar(0, 255, 0));               // fill background color with setTo
     Mat bgOut;
-    bitwise_and(bg, bg, bgOut, invMask);      // 鍦嗗涓虹豢鑹诧紝鍦嗗唴 0
+    bitwise_and(bg, bg, bgOut, invMask);      // outside circle: green, inside: 0
 
-    // 4) bitwise_or 鍚堟垚鏈€缁堝浘
+    // 4) bitwise_or to compose the final image
     Mat composed;
     bitwise_or(masked, bgOut, composed);
 

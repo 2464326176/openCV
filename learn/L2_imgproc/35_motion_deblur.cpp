@@ -1,7 +1,7 @@
-// LEARN: L2 棰戝煙杩愬姩鍘绘ā绯婏紙Wiener 杩戜技锛?
+// LEARN: L2 Frequency-domain motion deblur (Wiener approximation)
 // OFFICIAL: tutorial_code/ImgProc/motion_deblur_filter/motion_deblur_filter.cpp
-// THEORY: docs/ch02_imgproc.md 搂2.9.5
-// TASK: 鍚堟垚杩愬姩妯＄硦鍚庣敤 DFT 閫嗘护娉㈣繎浼兼仮澶嶏紱PSF 闀垮害/瑙掑害褰卞搷鎭㈠璐ㄩ噺
+// THEORY: docs/ch02_imgproc.md §2.9.5
+// TASK: synthesize motion blur then DFT inverse filter approximate restoration; PSF length/angle affects quality
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -61,7 +61,7 @@ int main() {
     dft(restoredF, restored, DFT_INVERSE | DFT_SCALE | DFT_REAL_OUTPUT);
     restored.convertTo(restored, CV_8U);
 
-    logInfo("PSF len=%d angle=%.0f: len 瓒婂ぇ妯＄硦瓒婂己锛屾仮澶嶈秺闅?, psfLen, psfAngle);
+    logInfo("PSF len=%d angle=%.0f: larger len means stronger blur, harder to restore", psfLen, psfAngle);
     dbgShowMany({"src", "motion blur", "restored"}, {src, blur, restored}, 0);
     return 0;
 }

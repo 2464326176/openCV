@@ -1,6 +1,8 @@
-// LEARN: L2 鐩存柟鍥捐绠?// OFFICIAL: samples/cpp/tutorial_code/Histograms_Matching/calcHist_Demo.cpp銆乻nippets/imgproc_calc_hist.cpp
-// THEORY: docs/ch02_imgproc.md 搂8
-// TASK: calcHist 鐏板害鍥?256 bin 骞剁粯鍒?#include <opencv2/opencv.hpp>
+// LEARN: L2 Histogram calculation
+// OFFICIAL: samples/cpp/tutorial_code/Histograms_Matching/calcHist_Demo.cpp、snippets/imgproc_calc_hist.cpp
+// THEORY: docs/ch02_imgproc.md §8
+// TASK: calcHist grayscale 256 bins and draw
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;

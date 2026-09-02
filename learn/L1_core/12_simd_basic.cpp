@@ -1,12 +1,15 @@
-// LEARN: L1 SIMD 閫氱敤鍐呰仈
-// OFFICIAL: samples/cpp/univ_intrin.cpp銆乻imd_basic.cpp
-// THEORY: docs/ch01_core.md 搂2.9 SIMD 鍚戦噺鍖?// TASK: v_ universal intrinsics 鍋氶槇鍊煎寲锛堟渶灏忕ず渚嬶紝閫夊仛锛?#include <opencv2/opencv.hpp>
+// LEARN: L1 SIMD universal intrinsics
+// OFFICIAL: samples/cpp/univ_intrin.cpp、simd_basic.cpp
+// THEORY: docs/ch01_core.md §2.9 SIMD vectorization
+
+// TASK: v_ universal intrinsics for thresholding (minimal example, optional)
+#include <opencv2/opencv.hpp>
 #include <opencv2/core/hal/intrin.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
 
-// 鐢?universal intrinsics 鎶?src 闃堝€煎寲锛? thr -> maxv锛?=thr -> 0
+// Use universal intrinsics to threshold src: > thr -> maxv, <= thr -> 0
 static void thresholdSimd(const Mat& src, Mat& dst, uchar thr, uchar maxv) {
     CV_Assert(src.type() == CV_8UC1 && src.isContinuous());
     dst.create(src.size(), src.type());
@@ -36,7 +39,8 @@ int main() {
     Mat simdDst;
     thresholdSimd(src, simdDst, 128, 255);
 
-    // 鐢?OpenCV 鍐呯疆 threshold 鍋氬鐓?    Mat ref;
+    // Use OpenCV built-in threshold as reference
+    Mat ref;
     threshold(src, ref, 128, 255, THRESH_BINARY);
 
     Mat diff;

@@ -1,6 +1,7 @@
-// LEARN: L2 Laplacian 浜岄樁瀵?// OFFICIAL: samples/cpp/tutorial_code/ImgTrans/Laplace_Demo.cpp銆乴aplace.cpp
-// THEORY: docs/ch02_imgproc.md 搂4
-// TASK: 楂樻柉棰勫鐞嗗悗 Laplacian锛宎bs+threshold
+// LEARN: L2 Laplacian second derivative
+// OFFICIAL: samples/cpp/tutorial_code/ImgTrans/Laplace_Demo.cpp、laplace.cpp
+// THEORY: docs/ch02_imgproc.md §4
+// TASK: Gaussian pre-filter then Laplacian, abs+threshold
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

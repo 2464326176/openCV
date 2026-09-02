@@ -1,35 +1,38 @@
 // algorithms/watermark/main.cpp
-// 水印算法演示: 可见水印叠加 + DFT域不可见水印 + DCT域不可见水印(8x8块) + 鲁棒性攻击测试
+// Watermark algorithm demo: visible watermark overlay + DFT-domain invisible watermark
+// + DCT-domain invisible watermark (8x8 blocks) + robustness attack tests.
 //
-// 1. 可见水印:
-//    - 文字水印叠加在右下角, alpha 混合 + 描边增强可读性
-//    - logo 水印 (若 data/images/opencv-logo.png 存在) 平铺半透明
-//    - 纹理水印: 斜线/网格半透明叠加
-// 2. DFT 域盲水印 (Cox 1997 类):
-//    - 生成 32x32 二进制水印位 (程序化图案)
-//    - 把水印位嵌入到原图 DFT 幅度谱的中频区域 (一对共轭位置同时修改 log|F|)
-//    - IDFT 得到含水印的视觉无差别图
-//    - 提取: 对含水印图做 DFT, 在嵌入位置取幅度差, 阈值化恢复水印位 (非盲: 需原图)
-// 3. DCT 域块水印 (Kutter 类, JPEG 鲁棒):
-//    - 图像分 8x8 块, 每块做 DCT
-//    - 在每块中频系数 (如 (4,1), (3,2), (2,3), (1,4)) 嵌入 1bit
-//    - 量化索引调制 (QIM) 风格: 根据 bit 把系数量化到 alpha 的偶数/奇数倍附近
-//    - 提取: 计算系数离偶数倍近还是奇数倍近 -> bit (盲提取, 不需原图)
-// 4. 鲁棒性攻击测试套件:
-//    - JPEG 压缩 (Quality 90/70/50/30)
-//    - 高斯噪声 (sigma=5/10/20)
-//    - 椒盐噪声 (密度 0.5%/1%/3%)
-//    - 中值滤波 (3x3/5x5/7x7)
-//    - 均值滤波 (3x3/5x5)
-//    - 旋转 (±5°, ±15°, +双线性插值+裁剪回原尺寸)
-//    - 缩放 (0.8x -> 1.25x, 0.5x -> 2.0x 往返)
-//    - 裁剪 (四周 5%/10% 黑边填充回来)
-//    - 亮度调整 (±20, ±50)
-//    - 对比度调整 (factor 0.8 / 1.2)
-//    - 直方图均衡化
-//    - 组合攻击: JPEG Q50 + 高斯噪声 sigma=10 + 3x3 中值
+// 1. Visible watermark:
+//    - text watermark overlaid at bottom-right, alpha blend + outline for readability
+//    - logo watermark (if data/images/opencv-logo.png exists) tiled semi-transparent
+//    - texture watermark: diagonal/grid semi-transparent overlay
+// 2. DFT-domain watermark (Cox 1997 style):
+//    - generate 32x32 binary watermark bits (procedural pattern)
+//    - embed watermark bits into the mid-frequency region of the source DFT magnitude spectrum
+//      (modify log|F| at a conjugate pair)
+//    - IDFT yields a visually indistinguishable watermarked image
+//    - extract: DFT the watermarked image, take the magnitude difference at embedding positions,
+//      threshold to recover bits (non-blind: needs the source)
+// 3. DCT-domain block watermark (Kutter style, JPEG-robust):
+//    - split the image into 8x8 blocks, DCT each block
+//    - embed 1 bit in each block's mid-frequency coefficients (e.g. (4,1),(3,2),(2,3),(1,4))
+//    - quantization index modulation (QIM) style: quantize the coefficient near an even/odd multiple of alpha
+//    - extract: check whether the coefficient is closer to an even or odd multiple -> bit (blind, no source needed)
+// 4. Robustness attack test suite:
+//    - JPEG compression (Quality 90/70/50/30)
+//    - Gaussian noise (sigma=5/10/20)
+//    - salt-and-pepper noise (density 0.5%/1%/3%)
+//    - median filter (3x3/5x5/7x7)
+//    - mean filter (3x3/5x5)
+//    - rotation (±5°, ±15°, bilinear interp + crop back to original size)
+//    - scaling round-trip (0.8x -> 1.25x, 0.5x -> 2.0x)
+//    - cropping (5%/10% black border filled back)
+//    - brightness adjustment (±20, ±50)
+//    - contrast adjustment (factor 0.8 / 1.2)
+//    - histogram equalization
+//    - combined attack: JPEG Q50 + Gaussian noise sigma=10 + 3x3 median
 //
-// 用法: watermark.exe [输入图]
+// Usage: watermark.exe [input_image]
 #include "../common/nv21_io.hpp"
 #include "../common/algo_utils.hpp"
 
@@ -48,7 +51,7 @@
 using namespace algo;
 
 // ===========================================================================
-// 工具: 水印位正确恢复率
+// Utility: watermark bit correct recovery rate
 // ===========================================================================
 static double bitRecoveryRate(const cv::Mat& origMark, const cv::Mat& extractedMark) {
     CV_Assert(origMark.size() == extractedMark.size());
@@ -65,7 +68,7 @@ static double bitRecoveryRate(const cv::Mat& origMark, const cv::Mat& extractedM
 }
 
 // ===========================================================================
-// 可见水印: 文字 + logo + 纹理
+// Visible watermark: text + logo + texture
 // ===========================================================================
 static cv::Mat visibleTextWatermark(const cv::Mat& src, const std::string& text,
                                       double alpha = 0.35) {
@@ -78,10 +81,10 @@ static cv::Mat visibleTextWatermark(const cv::Mat& src, const std::string& text,
     int x = src.cols - ts.width - 20;
     int y = src.rows - ts.height - 20;
     cv::Mat overlay = out.clone();
-    // 阴影
+    // shadow
     cv::putText(overlay, text, cv::Point(x + 2, y + ts.height + 2), fontFace,
                 fontScale, cv::Scalar(0, 0, 0), thickness + 1, cv::LINE_AA);
-    // 白字
+    // white text
     cv::putText(overlay, text, cv::Point(x, y + ts.height), fontFace,
                 fontScale, cv::Scalar(255, 255, 255, 255), thickness, cv::LINE_AA);
     cv::addWeighted(overlay, alpha, out, 1.0 - alpha, 0, out);
@@ -121,7 +124,7 @@ static cv::Mat visibleLogoWatermark(const cv::Mat& src, const cv::Mat& logo,
     return out;
 }
 
-// 纹理水印: 生成斜线网格叠加 (可作为防伪底纹)
+// Texture watermark: generate a diagonal-line grid overlay (can be used as anti-counterfeit background)
 static cv::Mat visibleTextureWatermark(const cv::Mat& src, double alpha = 0.12,
                                         int spacing = 24, int angleDeg = 30) {
     cv::Mat overlay = src.clone();
@@ -130,7 +133,7 @@ static cv::Mat visibleTextureWatermark(const cv::Mat& src, double alpha = 0.12,
     cv::Scalar color(200, 200, 200);
     if (src.channels() == 1) color = cv::Scalar(180);
 
-    // 画一组斜线: y = tanA * x + c
+    // draw a set of diagonal lines: y = tanA * x + c
     int diag = (int)std::sqrt((double)src.cols * src.cols + (double)src.rows * src.rows);
     for (int c = -diag; c <= diag; c += spacing) {
         std::vector<cv::Point> pts;
@@ -152,7 +155,7 @@ static cv::Mat visibleTextureWatermark(const cv::Mat& src, double alpha = 0.12,
 }
 
 // ===========================================================================
-// DFT 域不可见水印 (Cox, 非盲提取)
+// DFT-domain invisible watermark (Cox, non-blind extraction)
 // ===========================================================================
 static cv::Mat optimalDftPad(const cv::Mat& src) {
     cv::Mat padded;
@@ -180,7 +183,7 @@ static cv::Mat dftLogMagGray(const cv::Mat& in) {
     return mag;
 }
 
-// 嵌入: 3通道时, 在 YCrCb 的 Y 通道嵌入, 再转回 BGR 保持彩色
+// Embed: for 3 channels, embed into the Y channel of YCrCb, then convert back to BGR to keep color
 static cv::Mat dftWatermarkEmbed(const cv::Mat& src8u, const cv::Mat& mark32,
                                   double alpha = 2.0) {
     cv::Mat work;
@@ -192,7 +195,7 @@ static cv::Mat dftWatermarkEmbed(const cv::Mat& src8u, const cv::Mat& mark32,
         std::vector<cv::Mat> chs(3);
         cv::split(ycrcb, chs);
         gray = chs[0];
-        work = src8u.clone();  // 占位, 后面会重新写
+        work = src8u.clone();  // placeholder, will be overwritten later
     } else {
         gray = src8u.clone();
     }
@@ -278,42 +281,42 @@ static cv::Mat dftWatermarkExtract(const cv::Mat& marked8u, const cv::Mat& ref8u
 }
 
 // ===========================================================================
-// DCT 域 8x8 块水印 (QIM 量化索引调制, 盲提取)
+// DCT-domain 8x8 block watermark (QIM quantization index modulation, blind extraction)
 // ===========================================================================
-// 水印位排布: 把 32x32 的 mark 展开成 1024 bits, 顺序扫描 8x8 块, 每块 1 bit
-// 每个块嵌入到 4 个中频系数的平均值上, 提高鲁棒性
-// 4 个中频坐标: (1,5),(2,4),(3,3),(4,2) -> 经典 ZigZag 中后段
+// Watermark bit layout: unfold the 32x32 mark into 1024 bits, scan 8x8 blocks in order, 1 bit per block
+// Embed into the average of 4 mid-frequency coefficients per block for robustness
+// 4 mid-frequency coordinates: (1,5),(2,4),(3,3),(4,2) -> classic ZigZag mid-late stage
 struct DctWatermarkCtx {
     int blockSize = 8;
-    double alpha = 6.0;       // 量化步长, 越大越鲁棒但失真越大
-    // 4 个中频系数坐标 (u, v)
+    double alpha = 6.0;       // quantization step; larger => more robust but more distortion
+    // 4 mid-frequency coefficient coordinates (u, v)
     std::vector<cv::Point> midFreq = { {1,5},{2,4},{3,3},{4,2},{5,1} };
 };
 
-// 对 8x8 块 float, 计算 4 个中频系数的平均
+// For an 8x8 float block, compute the average of the 4 mid-frequency coefficients
 static double dctBlockMidMean(const cv::Mat& blockDct, const std::vector<cv::Point>& pts) {
     double s = 0;
     for (auto& p : pts) s += blockDct.at<float>(p.y, p.x);
     return s / pts.size();
 }
 
-// 把 4 个中频系数朝目标方向平移 delta (保持整体偏移量一致)
+// Shift the 4 mid-frequency coefficients toward the target by delta (keep the overall offset consistent)
 static void dctBlockShiftMid(cv::Mat& blockDct, const std::vector<cv::Point>& pts, double delta) {
     for (auto& p : pts) blockDct.at<float>(p.y, p.x) += (float)delta;
 }
 
-// QIM 量化: 已知步长 alpha, 使 midMean 接近 k*alpha (bit=0) 或 (k+0.5)*alpha (bit=1)
-// 方法: 计算当前最近的偶数倍 q0, 再根据 bit 偏移 0 或 alpha/2
+// QIM quantization: given step alpha, make midMean close to k*alpha (bit=0) or (k+0.5)*alpha (bit=1)
+// Method: compute the nearest even multiple q0, then offset by 0 or alpha/2 depending on the bit
 static void qimQuantize(cv::Mat& blockDct, const std::vector<cv::Point>& pts,
                         double alpha, bool bit) {
     double m = dctBlockMidMean(blockDct, pts);
-    double q = std::round(m / alpha) * alpha;  // 最近的整数倍
+    double q = std::round(m / alpha) * alpha;  // nearest integer multiple
     double target;
     if (bit == 0) {
-        // 贴近偶数倍: q 本身若已对齐, 则 q; 否则用 q
+        // Snap to even multiple: if q is already aligned use q, otherwise use q
         target = std::round(m / (2 * alpha)) * 2 * alpha;
     } else {
-        // 贴近奇数倍偏移 alpha/2: 即 ..., q-alpha/2, q+alpha/2, ...
+        // Snap to odd multiple offset by alpha/2: i.e. ..., q-alpha/2, q+alpha/2, ...
         double base = std::round(m / alpha - 0.5) * alpha;
         target = base + alpha / 2.0;
     }
@@ -321,7 +324,7 @@ static void qimQuantize(cv::Mat& blockDct, const std::vector<cv::Point>& pts,
     dctBlockShiftMid(blockDct, pts, delta);
 }
 
-// 盲提取 bit: 看更靠近偶倍数 (0) 还是偏移 alpha/2 的中心 (1)
+// Blind bit extraction: check whether closer to the even multiple (0) or the center offset by alpha/2 (1)
 static bool qimExtractBit(const cv::Mat& blockDct, const std::vector<cv::Point>& pts,
                           double alpha) {
     double m = dctBlockMidMean(blockDct, pts);
@@ -331,8 +334,8 @@ static bool qimExtractBit(const cv::Mat& blockDct, const std::vector<cv::Point>&
     return d1 < d0;
 }
 
-// 嵌入 DCT 水印: 32x32 mark -> 1024 bits, 需要至少 1024 个 8x8 块
-// 对彩色图在 Y 通道嵌入
+// Embed DCT watermark: 32x32 mark -> 1024 bits, needs at least 1024 8x8 blocks
+// For color images, embed into the Y channel
 static cv::Mat dctWatermarkEmbed(const cv::Mat& src8u, const cv::Mat& mark32,
                                   const DctWatermarkCtx& ctx) {
     CV_Assert(mark32.rows == 32 && mark32.cols == 32);
@@ -353,7 +356,7 @@ static cv::Mat dctWatermarkEmbed(const cv::Mat& src8u, const cv::Mat& mark32,
     } else {
         out.convertTo(grayF, CV_32F);
     }
-    // 计算需要的块数
+    // compute the number of blocks needed
     int bh = grayF.rows / ctx.blockSize;
     int bw = grayF.cols / ctx.blockSize;
     int blockCnt = bh * bw;
@@ -363,7 +366,7 @@ static cv::Mat dctWatermarkEmbed(const cv::Mat& src8u, const cv::Mat& mark32,
         return src8u.clone();
     }
 
-    // 按顺序填充 bits
+    // fill bits in order
     std::vector<bool> bits(bitTotal);
     for (int i = 0; i < bitTotal; ++i) {
         int y = i / 32, x = i % 32;
@@ -399,7 +402,7 @@ static cv::Mat dctWatermarkEmbed(const cv::Mat& src8u, const cv::Mat& mark32,
     return gray8u;
 }
 
-// 盲提取 DCT 水印
+// Blind extraction of DCT watermark
 static cv::Mat dctWatermarkExtract(const cv::Mat& marked8u, const DctWatermarkCtx& ctx) {
     const int bitTotal = 32 * 32;
     cv::Mat grayF;
@@ -433,25 +436,25 @@ static cv::Mat dctWatermarkExtract(const cv::Mat& marked8u, const DctWatermarkCt
 }
 
 // ===========================================================================
-// 水印图案生成: 程序化 32x32 (含 "T" 中心 + 外框 + 4 角点阵)
+// Watermark pattern generation: procedural 32x32 (with centered "T" + outer frame + 4 corner dot matrices)
 // ===========================================================================
 static cv::Mat buildMark(const std::string& seedText = "TRAE-WATERMARK-2026") {
-    // 固定种子伪随机: 基于 seedText 哈希
+    // Fixed-seed pseudo-random: hash based on seedText
     std::size_t seed = 0;
     for (char c : seedText) seed = seed * 131 + (unsigned char)c;
     cv::RNG rng((uint64_t)seed);
     cv::Mat m = cv::Mat::zeros(32, 32, CV_8U);
-    // 1) 外框
+    // 1) outer frame
     for (int y = 0; y < 32; ++y) for (int x = 0; x < 32; ++x) {
         if (x == 0 || x == 31 || y == 0 || y == 31)
             m.at<uchar>(y, x) = 255;
     }
-    // 2) 中心 "T" 字
+    // 2) centered "T"
     for (int y = 4; y <= 8; ++y) for (int x = 4; x <= 27; ++x)
         m.at<uchar>(y, x) = 255;
     for (int y = 8; y <= 27; ++y) for (int x = 14; x <= 17; ++x)
         m.at<uchar>(y, x) = 255;
-    // 3) 4 角 3x3 对齐点 (类似 QR code)
+    // 3) 4 corner 3x3 alignment dots (like QR code)
     auto fillSquare = [&](int ox, int oy) {
         for (int dy = 0; dy < 3; ++dy) for (int dx = 0; dx < 3; ++dx) {
             int yy = oy + dy, xx = ox + dx;
@@ -466,7 +469,7 @@ static cv::Mat buildMark(const std::string& seedText = "TRAE-WATERMARK-2026") {
     fillSquare(26, 3);
     fillSquare(3, 26);
     fillSquare(26, 26);
-    // 4) 剩余区域撒伪随机散点 (约 20% 填充) 增加容量 & 随机性
+    // 4) scatter pseudo-random dots in the remaining area (~20% fill) to increase capacity & randomness
     for (int y = 2; y < 30; ++y) for (int x = 2; x < 30; ++x) {
         if (m.at<uchar>(y, x) == 0 && rng.uniform(0, 100) < 22) {
             m.at<uchar>(y, x) = 255;
@@ -476,12 +479,12 @@ static cv::Mat buildMark(const std::string& seedText = "TRAE-WATERMARK-2026") {
 }
 
 // ===========================================================================
-// 鲁棒性攻击集合 (每个 attack 返回 cv::Mat, 不修改输入)
+// Robustness attack set (each attack returns a cv::Mat, does not modify the input)
 // ===========================================================================
 struct AttackResult {
     std::string name;
     cv::Mat attacked;
-    double psnrToMarked;   // 与含水印原图相比的保真度
+    double psnrToMarked;   // fidelity vs the watermarked source image
 };
 
 static AttackResult makeAttack(const std::string& name, const cv::Mat& marked,
@@ -495,7 +498,7 @@ static AttackResult makeAttack(const std::string& name, const cv::Mat& marked,
 static std::vector<AttackResult> buildAttackSuite(const cv::Mat& marked) {
     std::vector<AttackResult> res;
 
-    // 1) JPEG 压缩
+    // 1) JPEG compression
     auto jpegFn = [](int q) {
         return [q](const cv::Mat& in) -> cv::Mat {
             std::vector<uchar> buf;
@@ -509,7 +512,7 @@ static std::vector<AttackResult> buildAttackSuite(const cv::Mat& marked) {
     res.push_back(makeAttack("JPEG-Q50", marked, jpegFn(50)));
     res.push_back(makeAttack("JPEG-Q30", marked, jpegFn(30)));
 
-    // 2) 高斯噪声
+    // 2) Gaussian noise
     auto gaussFn = [](double sigma) {
         return [sigma](const cv::Mat& in) -> cv::Mat {
             cv::Mat out = in.clone();
@@ -523,7 +526,7 @@ static std::vector<AttackResult> buildAttackSuite(const cv::Mat& marked) {
     res.push_back(makeAttack("Gauss-σ10", marked, gaussFn(10)));
     res.push_back(makeAttack("Gauss-σ20", marked, gaussFn(20)));
 
-    // 3) 椒盐噪声
+    // 3) salt-and-pepper noise
     auto spFn = [](double density) {
         return [density](const cv::Mat& in) -> cv::Mat {
             cv::Mat out = in.clone();
@@ -548,7 +551,7 @@ static std::vector<AttackResult> buildAttackSuite(const cv::Mat& marked) {
     res.push_back(makeAttack("SP-1.0%", marked, spFn(0.010)));
     res.push_back(makeAttack("SP-3.0%", marked, spFn(0.030)));
 
-    // 4) 中值滤波
+    // 4) median filter
     res.push_back(makeAttack("Median-3x3", marked, [](const cv::Mat& in) {
         cv::Mat out; cv::medianBlur(in, out, 3); return out;
     }));
@@ -559,7 +562,7 @@ static std::vector<AttackResult> buildAttackSuite(const cv::Mat& marked) {
         cv::Mat out; cv::medianBlur(in, out, 7); return out;
     }));
 
-    // 5) 均值滤波
+    // 5) mean filter
     res.push_back(makeAttack("Blur-3x3", marked, [](const cv::Mat& in) {
         cv::Mat out; cv::blur(in, out, cv::Size(3, 3)); return out;
     }));
@@ -567,7 +570,7 @@ static std::vector<AttackResult> buildAttackSuite(const cv::Mat& marked) {
         cv::Mat out; cv::blur(in, out, cv::Size(5, 5)); return out;
     }));
 
-    // 6) 旋转 (crop + resize 回原尺寸)
+    // 6) rotation (crop + resize back to original size)
     auto rotateFn = [](double deg) {
         return [deg](const cv::Mat& in) -> cv::Mat {
             cv::Point2f center((float)in.cols / 2, (float)in.rows / 2);
@@ -583,7 +586,7 @@ static std::vector<AttackResult> buildAttackSuite(const cv::Mat& marked) {
     res.push_back(makeAttack("Rotate-+15°", marked, rotateFn(+15)));
     res.push_back(makeAttack("Rotate--15°", marked, rotateFn(-15)));
 
-    // 7) 缩放往返
+    // 7) scaling round-trip
     auto scaleFn = [](double s1, double s2) {
         return [s1, s2](const cv::Mat& in) -> cv::Mat {
             cv::Mat tmp, out;
@@ -595,7 +598,7 @@ static std::vector<AttackResult> buildAttackSuite(const cv::Mat& marked) {
     res.push_back(makeAttack("Scale-0.8→1.25", marked, scaleFn(0.8, 1.0 / 0.8)));
     res.push_back(makeAttack("Scale-0.5→2.0", marked, scaleFn(0.5, 1.0 / 0.5)));
 
-    // 8) 裁剪 + 黑边填充回原尺寸
+    // 8) cropping + black border filled back to original size
     auto cropFn = [](double marginRatio) {
         return [marginRatio](const cv::Mat& in) -> cv::Mat {
             int mx = (int)(in.cols * marginRatio);
@@ -613,7 +616,7 @@ static std::vector<AttackResult> buildAttackSuite(const cv::Mat& marked) {
     res.push_back(makeAttack("Crop-5%", marked, cropFn(0.05)));
     res.push_back(makeAttack("Crop-10%", marked, cropFn(0.10)));
 
-    // 9) 亮度调整
+    // 9) brightness adjustment
     auto brightnessFn = [](int delta) {
         return [delta](const cv::Mat& in) -> cv::Mat {
             cv::Mat out;
@@ -626,7 +629,7 @@ static std::vector<AttackResult> buildAttackSuite(const cv::Mat& marked) {
     res.push_back(makeAttack("Brightness-50", marked, brightnessFn(+50)));
     res.push_back(makeAttack("Brightness--50", marked, brightnessFn(-50)));
 
-    // 10) 对比度调整
+    // 10) contrast adjustment
     auto contrastFn = [](double f) {
         return [f](const cv::Mat& in) -> cv::Mat {
             cv::Mat out;
@@ -637,7 +640,7 @@ static std::vector<AttackResult> buildAttackSuite(const cv::Mat& marked) {
     res.push_back(makeAttack("Contrast-0.8", marked, contrastFn(0.8)));
     res.push_back(makeAttack("Contrast-1.2", marked, contrastFn(1.2)));
 
-    // 11) 直方图均衡化 (对 Y 通道)
+    // 11) histogram equalization (on Y channel)
     res.push_back(makeAttack("HEQ", marked, [](const cv::Mat& in) -> cv::Mat {
         if (in.channels() == 3) {
             cv::Mat ycrcb; cv::cvtColor(in, ycrcb, cv::COLOR_BGR2YCrCb);
@@ -651,7 +654,7 @@ static std::vector<AttackResult> buildAttackSuite(const cv::Mat& marked) {
         }
     }));
 
-    // 12) 组合攻击: JPEG Q50 + 高斯 σ10 + 3x3 中值
+    // 12) combined attack: JPEG Q50 + Gaussian σ10 + 3x3 median
     res.push_back(makeAttack("Combo(JPEG50+σ10+Med3)", marked, [](const cv::Mat& in) {
         std::vector<uchar> buf;
         cv::imencode(".jpg", in, buf, {cv::IMWRITE_JPEG_QUALITY, 50});
@@ -686,7 +689,7 @@ int main(int argc, char** argv) {
     }
     ensureDir("../out/algorithms");
 
-    // ========== 1. 可见水印 ==========
+    // ========== 1. Visible watermark ==========
     cv::Mat vText   = visibleTextWatermark(src, "TRAE 2026", 0.35);
     cv::Mat logo    = cv::imread("../../data/images/opencv-logo.png", cv::IMREAD_UNCHANGED);
     cv::Mat vLogo   = visibleLogoWatermark(src, logo, 0.20);
@@ -699,16 +702,16 @@ int main(int argc, char** argv) {
     cv::imwrite("../out/algorithms/watermark_visible_texture.png", vTex);
     cv::imwrite("../out/algorithms/watermark_visible_dual.png", vDual);
 
-    // ========== 2. 水印图案 ==========
+    // ========== 2. Watermark pattern ==========
     cv::Mat mark = buildMark("TRAE-WATERMARK-2026");
 
-    // ========== 3. DFT 域水印 (非盲) ==========
+    // ========== 3. DFT-domain watermark (non-blind) ==========
     cv::Mat dftMarked = dftWatermarkEmbed(src, mark, 2.0);
     cv::Mat dftExNoAtt = dftWatermarkExtract(dftMarked, src);
     cv::imwrite("../out/algorithms/watermark_dft_marked.png", dftMarked);
     cv::imwrite("../out/algorithms/watermark_dft_extracted_noatt.png", dftExNoAtt);
 
-    // ========== 4. DCT 域水印 (盲提取, alpha 扫描对比) ==========
+    // ========== 4. DCT-domain watermark (blind extraction, alpha sweep comparison) ==========
     std::vector<double> alphas = {3.0, 6.0, 9.0, 12.0};
     std::vector<cv::Mat> dctMarkedVec, dctExVec;
     std::vector<double> dctPsnrVec, dctSsimVec, dctRecovVec;
@@ -728,7 +731,7 @@ int main(int argc, char** argv) {
         cv::imwrite(oss.str(), m);
     }
 
-    // ========== 5. 鲁棒性攻击测试 (在 DCT alpha=6 上) ==========
+    // ========== 5. Robustness attack test (on DCT alpha=6) ==========
     DctWatermarkCtx ctxRob;
     ctxRob.alpha = 6.0;
     cv::Mat dctMarkedRob = dctWatermarkEmbed(src, mark, ctxRob);
@@ -736,13 +739,13 @@ int main(int argc, char** argv) {
 
     struct RobustRow {
         std::string name;
-        double psnrAtt;     // 攻击后 vs 含水印原图
-        double recovDct;    // DCT 盲提取恢复率
-        double recovDft;    // DFT 非盲提取恢复率
+        double psnrAtt;     // after attack vs watermarked source
+        double recovDct;    // DCT blind extraction recovery rate
+        double recovDft;    // DFT non-blind extraction recovery rate
     };
     std::vector<RobustRow> robustTable;
 
-    // 先记无攻击基线
+    // record the no-attack baseline first
     {
         cv::Mat eDct = dctWatermarkExtract(dctMarkedRob, ctxRob);
         cv::Mat eDft = dftWatermarkExtract(dftMarked, src);
@@ -753,7 +756,7 @@ int main(int argc, char** argv) {
         });
     }
 
-    // 保存部分攻击后的图作展示 (挑 6 张代表性攻击)
+    // save a few attacked images for display (pick 6 representative attacks)
     std::vector<std::string> saveAttacks = {"JPEG-Q50", "Gauss-σ10", "Median-5x5",
                                              "Rotate-+15°", "Crop-10%", "Combo(JPEG50+σ10+Med3)"};
     std::vector<cv::Mat> attackedShowImgs;
@@ -775,7 +778,7 @@ int main(int argc, char** argv) {
         }
     }
 
-    // ========== 6. 控制台输出 ==========
+    // ========== 6. Console output ==========
     std::printf("\n========== VISIBLE WATERMARKS ==========\n");
     std::printf("text overlay PSNR/SSIM : %.2f dB / %.4f\n", psnr(src, vText), ssim(src, vText));
     std::printf("logo overlay PSNR/SSIM : %.2f dB / %.4f\n", psnr(src, vLogo), ssim(src, vLogo));
@@ -793,12 +796,12 @@ int main(int argc, char** argv) {
         std::printf("%-10.1f  %10.2f  %10.4f  %14.1f\n",
             alphas[i], dctPsnrVec[i], dctSsimVec[i], dctRecovVec[i]);
     }
-    std::printf("  注: alpha 越大->水印越鲁棒, 但 PSNR/SSIM 越低, 视觉失真越明显\n");
+    std::printf("   note: larger alpha => more robust watermark, but lower PSNR/SSIM and more visible distortion\n");
 
     std::printf("\n========== ROBUSTNESS TEST (DCT alpha=6.0 vs DFT alpha=2.0) ==========\n");
     std::printf("%-34s  %10s  %12s  %12s\n",
                 "Attack", "PSNR_att", "DCT_blind%", "DFT_nonBlind%");
-    // 对 DCT 盲提取按恢复率从高到低排序输出
+    // sort by DCT blind recovery rate (high to low)
     std::sort(robustTable.begin() + 1, robustTable.end(),
               [](const RobustRow& a, const RobustRow& b){ return a.recovDct > b.recovDct; });
     for (auto& r : robustTable) {
@@ -806,8 +809,8 @@ int main(int argc, char** argv) {
                     r.name.c_str(), r.psnrAtt, r.recovDct, r.recovDft);
     }
 
-    // ========== 7. 拼接展示图 ==========
-    // 7a. 可见水印对比
+    // ========== 7. Stitched display images ==========
+    // 7a. visible watermark comparison
     cv::Mat markBig, extDftBig, extDct6Big;
     cv::resize(mark, markBig, cv::Size(160, 160), 0, 0, cv::INTER_NEAREST);
     cv::resize(dftExNoAtt, extDftBig, cv::Size(160, 160), 0, 0, cv::INTER_NEAREST);
@@ -819,11 +822,11 @@ int main(int argc, char** argv) {
         24);
     cv::imwrite("../out/algorithms/watermark_visible_compare.png", canvas1);
 
-    // 7b. DFT vs DCT 水印对比 (含原图、含水印图、差值放大、水印提取)
+    // 7b. DFT vs DCT watermark comparison (incl. source, watermarked, magnified diff, extracted watermark)
     cv::Mat dftDiff, dct6Diff;
     cv::absdiff(src, dftMarked, dftDiff);
     cv::absdiff(src, dctMarkedVec[1], dct6Diff);
-    // 差值放大 8 倍便于观察
+    // magnify the diff 8x for visibility
     dftDiff.convertTo(dftDiff, -1, 8.0, 0);
     dct6Diff.convertTo(dct6Diff, -1, 8.0, 0);
     cv::Mat canvas2 = hstackWithLabels(
@@ -834,7 +837,7 @@ int main(int argc, char** argv) {
         22);
     cv::imwrite("../out/algorithms/watermark_invisible_compare.png", canvas2);
 
-    // 7c. 代表性鲁棒性攻击后图
+    // 7c. representative robustness-attacked images
     if (!attackedShowImgs.empty()) {
         attackedShowImgs.insert(attackedShowImgs.begin(), dctMarkedRob);
         attackedShowLabels.insert(attackedShowLabels.begin(), "DCT_a6_original");
@@ -842,7 +845,7 @@ int main(int argc, char** argv) {
         cv::imwrite("../out/algorithms/watermark_robustness_attacks.png", canvas3);
     }
 
-    // 7d. DCT alpha 扫描对比
+    // 7d. DCT alpha sweep comparison
     std::vector<cv::Mat> alphaCanvImgs;
     std::vector<std::string> alphaCanvLabels;
     for (size_t i = 0; i < alphas.size(); ++i) {

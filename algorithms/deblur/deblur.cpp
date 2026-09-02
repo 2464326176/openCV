@@ -1,16 +1,18 @@
 // algorithms/deblur/main.cpp
-// 图像去模糊 (反卷积复原): 合成运动/散焦模糊 + 多种复原算法对比.
+// Image deblurring (deconvolution restoration): synthetic motion/defocus blur
+// + comparison of multiple restoration algorithms.
 //
-// 覆盖算法:
-//   逆滤波      Inverse filter        (仅理论演示, 噪声下严重放大)
-//   Wiener      Wiener 滤波           (频域, 带噪声正则)
-//   RL          Richardson-Lucy       (迭代贝叶斯, 保真度好)
-//   锐化基线    Unsharp Masking       (非盲锐化, 简单基线)
+// Algorithms covered:
+//   Inverse     Inverse filter        (theoretical demo only, severely amplifies noise)
+//   Wiener      Wiener filter         (frequency domain, with noise regularization)
+//   RL          Richardson-Lucy       (iterative Bayesian, good fidelity)
+//   Sharpen     Unsharp Masking       (non-blind sharpening, simple baseline)
 //
-// 流程: 用已知 PSF (运动线性核/高斯散焦核) 对干净图卷积合成模糊,
-//       再用各算法复原, 以 PSNR/SSIM 对干净参考做全参考评估.
-// 输出: out/algorithms/deblur_compare.png + 指标表.
-// 用法: deblur.exe [input_img] [mode=motion|defocus] [blur_len_or_sigma]
+// Pipeline: convolve a clean image with a known PSF (motion linear kernel / Gaussian defocus kernel)
+// to synthesize blur, then restore with each algorithm, evaluated full-reference against
+// the clean reference with PSNR/SSIM.
+// Output: out/algorithms/deblur_compare.png + metrics table.
+// Usage: deblur.exe [input_img] [mode=motion|defocus] [blur_len_or_sigma]
 #include "../common/algo_utils.hpp"
 
 #include <cmath>
@@ -20,8 +22,8 @@
 
 using namespace algo;
 
-// ---- PSF 构造 ------------------------------------------------------------
-// 运动模糊 PSF: 沿 angle 方向 length 像素的线段, L1 归一化.
+// ---- PSF construction ----------------------------------------------------
+// Motion blur PSF: a line segment of `length` pixels along `angle`, L1-normalized.
 static cv::Mat motionPSF(int length, double angleDeg) {
     cv::Mat psf = cv::Mat::zeros(length, length, CV_32F);
     double c = (length - 1) / 2.0, rad = angleDeg * CV_PI / 180.0;
@@ -36,7 +38,7 @@ static cv::Mat motionPSF(int length, double angleDeg) {
     return psf;
 }
 
-// 散焦模糊 PSF: 高斯近似 (径向对称), L1 归一化.
+// Defocus blur PSF: Gaussian approximation (radially symmetric), L1-normalized.
 static cv::Mat defocusPSF(int ksize, double sigma) {
     cv::Mat g = cv::getGaussianKernel(ksize, sigma, CV_32F);
     cv::Mat p = g * g.t();
@@ -44,7 +46,8 @@ static cv::Mat defocusPSF(int ksize, double sigma) {
     return p;
 }
 
-// 用 PSF 做循环卷积产生模糊观测 (BORDER_WRAP≈toroidal, 与频域反卷积模型一致).
+// Produce a blurred observation via circular convolution with the PSF
+// (BORDER_WRAP≈toroidal, consistent with the frequency-domain deconvolution model).
 static cv::Mat blurObserve(const cv::Mat& bgr8, const cv::Mat& psf) {
     cv::Mat blur;
     cv::filter2D(bgr8, blur, CV_32F, psf, cv::Point(-1, -1), 0, cv::BORDER_WRAP);
@@ -53,8 +56,8 @@ static cv::Mat blurObserve(const cv::Mat& bgr8, const cv::Mat& psf) {
     return out8;
 }
 
-// ---- 频域辅助 -------------------------------------------------------------
-// 把图像/PSF padding 到 DFT 最优尺寸并转到频域.
+// ---- frequency-domain helpers --------------------------------------------
+// Pad the image/PSF to the optimal DFT size and transform to the frequency domain.
 static void toDFT(const cv::Mat& f32, cv::Mat& fp, cv::Mat& Freq,
                   int& H, int& W) {
     H = cv::getOptimalDFTSize(f32.rows);
@@ -64,8 +67,8 @@ static void toDFT(const cv::Mat& f32, cv::Mat& fp, cv::Mat& Freq,
     cv::dft(fp, Freq, cv::DFT_COMPLEX_OUTPUT);
 }
 
-// Wiener 反卷积 (频域): O = conj(H)/( |H|^2 + K ) * G. K 为噪声正则.
-// 输入输出均为单通道 32F [0,1].
+// Wiener deconvolution (frequency domain): O = conj(H)/( |H|^2 + K ) * G. K is the noise regularization.
+// Input and output are both single-channel 32F [0,1].
 static cv::Mat wienerDeconv(const cv::Mat& g32, const cv::Mat& psf, double K) {
     int H, W;
     cv::Mat gp, G, hp, Hs;
@@ -76,7 +79,7 @@ static cv::Mat wienerDeconv(const cv::Mat& g32, const cv::Mat& psf, double K) {
 
     cv::Mat Gc[2], Hc[2];
     cv::split(G, Gc); cv::split(Hs, Hc);
-    // H^2 + K
+    // |H|^2 + K
     cv::Mat denom = Hc[0].mul(Hc[0]) + Hc[1].mul(Hc[1]) + cv::Scalar(K);
     // conj(H)*G
     cv::Mat re = (Hc[0].mul(Gc[0]) + Hc[1].mul(Gc[1])) / denom;
@@ -89,7 +92,7 @@ static cv::Mat wienerDeconv(const cv::Mat& g32, const cv::Mat& psf, double K) {
     return out;
 }
 
-// Richardson-Lucy 迭代反卷积.
+// Richardson-Lucy iterative deconvolution.
 static cv::Mat richardsonLucy(const cv::Mat& g32, const cv::Mat& psf,
                               int iters = 25) {
     cv::Mat Hf;
@@ -104,12 +107,12 @@ static cv::Mat richardsonLucy(const cv::Mat& g32, const cv::Mat& psf,
         double mx; cv::minMaxLoc(u, nullptr, &mx);
         if (mx > 1) u = u / mx;
         double mn; cv::minMaxLoc(u, &mn, nullptr);
-        if (mn < 0) u = u - mn; // 保正约束
+        if (mn < 0) u = u - mn; // positivity constraint
     }
     return u;
 }
 
-// Unsharp Masking 锐化 (非盲基线).
+// Unsharp Masking sharpening (non-blind baseline).
 static cv::Mat unsharpBg(const cv::Mat gray8, double amt = 1.2, int ksize = 7) {
     cv::Mat g96, blur;
     gray8.convertTo(g96, CV_32F);
@@ -120,7 +123,7 @@ static cv::Mat unsharpBg(const cv::Mat gray8, double amt = 1.2, int ksize = 7) {
     return out8;
 }
 
-// 把各通道去除模糊结果转回 8UC3.
+// Convert per-channel deblurred results back to 8UC3.
 static cv::Mat toColorBGR(const std::vector<cv::Mat>& chan) {
     std::vector<cv::Mat> r;
     for (auto& c : chan) {
@@ -148,7 +151,7 @@ int main(int argc, char** argv) {
 
     cv::Mat psf = (mode == "motion") ? motionPSF((int)p1, 30.0)
                                      : defocusPSF((std::max)(3, (int)std::lround(2 * p1 + 1)), p1);
-    cv::Mat blurred = blurObserve(src, psf);          // 8UC3 模糊观测
+    cv::Mat blurred = blurObserve(src, psf);          // 8UC3 blurred observation
     cv::Mat bGray, bg32;
     cv::cvtColor(blurred, bGray, cv::COLOR_BGR2GRAY);
     bGray.convertTo(bg32, CV_32F, 1.0 / 255.0);
@@ -156,17 +159,17 @@ int main(int argc, char** argv) {
     ensureDir("../out/algorithms");
     struct R { std::string tag; cv::Mat img8; double psnr, ssim; };
     std::vector<R> res;
-    // 由单通道浮点还原结果得到 8U 灰度(用于指标/展示).
+    // Convert a single-channel float restored result to 8U gray (for metrics/display).
     auto gray8 = [](const cv::Mat& f) { cv::Mat n; cv::normalize(f, n, 0, 255, cv::NORM_MINMAX, CV_8U); return n; };
-    // 参考用干净灰度图 (连续、无退化).
+    // Clean grayscale reference (continuous, no degradation).
     cv::Mat refGray = gray;
 
-    // 1) 逆滤波 (理论上无噪声可完全复原, 但会放大边界/数值误差)
+    // 1) Inverse filter (can fully restore without noise in theory, but amplifies boundary/numerical errors)
     {
         cv::Mat inv = gray8(wienerDeconv(bg32, psf, 1e-8));
         res.push_back({"Inverse(bare)", toColorBGR({inv, inv, inv}), psnr(refGray, inv), ssim(refGray, inv)});
     }
-    // 2) Wiener: 不同噪声正则
+    // 2) Wiener: different noise regularizations
     for (double K : {0.001, 0.01, 0.1}) {
         cv::Mat w = gray8(wienerDeconv(bg32, psf, K));
         res.push_back({"Wiener(K=" + std::to_string(K) + ")", toColorBGR({w, w, w}),
@@ -177,13 +180,13 @@ int main(int argc, char** argv) {
         cv::Mat rl = gray8(richardsonLucy(bg32, psf, 30));
         res.push_back({"RL(iter=30)", toColorBGR({rl, rl, rl}), psnr(refGray, rl), ssim(refGray, rl)});
     }
-    // 4) 锐化基线
+    // 4) sharpening baseline
     {
         cv::Mat us = unsharpBg(bGray);
         res.push_back({"Unsharp(1.2)", toColorBGR({us, us, us}), psnr(refGray, us), ssim(refGray, us)});
     }
 
-    std::printf("deblur mode=%s  PSF=%dx%d  (参考=干净图)\n", mode.c_str(), psf.rows, psf.cols);
+    std::printf("deblur mode=%s  PSF=%dx%d  (reference=clean image)\n", mode.c_str(), psf.rows, psf.cols);
     std::printf("%-22s %12s %8s\n", "method", "PSNR vs clean", "SSIM");
     std::vector<cv::Mat> panels; std::vector<std::string> labels;
     panels.push_back(src); labels.push_back("clean");

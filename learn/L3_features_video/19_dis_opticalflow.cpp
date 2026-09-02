@@ -1,6 +1,7 @@
-// LEARN: L3 DIS 绋犲瘑鍏夋祦
-// OFFICIAL: samples/cpp/dis_opticalflow.cpp锛堟牴锛?// THEORY: docs/ch04_video.md 搂鍏夋祦
-// TASK: DISOpticalFlow 姹?VCG1鈫扸CG2 鍏夋祦锛孒SV 缂栫爜鏄剧ず
+// LEARN: L3 DIS 稠密光流
+// OFFICIAL: samples/cpp/dis_opticalflow.cpp（参考官方示例）
+// THEORY: docs/ch04_video.md §光流
+// TASK: DISOpticalFlow compute VCG1→VCG2 optical flow, HSV encoded display
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -36,3 +37,4 @@ int main() {
     dbgShowMany({"L3_19 frame1", "L3_19 dis flow"}, {f1, bgr}, 0);
     return 0;
 }
+

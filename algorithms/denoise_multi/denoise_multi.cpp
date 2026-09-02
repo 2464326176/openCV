@@ -1,22 +1,22 @@
 // algorithms/denoise_multi/main.cpp
-// 多帧降噪演示: 配准 (Affine/Euclidean/Homography) + 多种聚合.
+// Multi-frame denoising demo: alignment (Affine/Euclidean/Homography) + multiple aggregation.
 //
-// 扩展能力:
-//   1. 配准模型: MOTION_EUCLIDEAN / MOTION_AFFINE / MOTION_HOMOGRAPHY
-//      三种配准模型, 同一场景下依次运行对比.
-//   2. 聚合策略:
-//        · 算术均值 (mean)
-//        · 中值 (median)
-//        · 方差加权均值 (variance-weighted): 对同一位置跨帧估计局部方差,
-//          方差越大的像素权重越低 (抗异常帧 / 振铃)
-//        · 截断均值 (trimmed-mean): 去掉最高最低 k% 再求平均
-//        · ROF TV-L1 型双加权 (双边权重 + 曝光)
-//        · Bureller & Buchs 自加权 (soft-min)
-//   3. 支持真正 NV21 连拍序列 + 手动 4 帧模拟两种模式.
-//   4. 自动运行 N=3/5/7/9 的 PSNR 曲线, 表格输出对比单帧.
-//   5. 马赛克大图: noisy#0 + 单帧算法 + 多帧各种聚合结果.
+// Extended capabilities:
+//   1. Alignment models: MOTION_EUCLIDEAN / MOTION_AFFINE / MOTION_HOMOGRAPHY,
+//      three alignment models run sequentially on the same scene for comparison.
+//   2. Aggregation strategies:
+//        · arithmetic mean
+//        · median
+//        · variance-weighted mean: estimate local variance across frames at the same position,
+//          pixels with higher variance get lower weight (robust to outlier frames / ringing)
+//        · trimmed mean: drop the top/bottom k% then average
+//        · ROF TV-L1 style double weighting (bilateral weight + exposure)
+//        · Buades & Buchs self-weighting (soft-min)
+//   3. Supports both real NV21 burst sequences + manual 4-frame simulation modes.
+//   4. Automatically runs PSNR curves for N=3/5/7/9, table output compared with single-frame.
+//   5. Mosaic: noisy#0 + single-frame algorithms + multi-frame aggregation results.
 //
-// 用法: denoise_multi.exe [input_path] [Nframes] [sigma]
+// Usage: denoise_multi.exe [input_path] [Nframes] [sigma]
 #include "../common/nv21_io.hpp"
 #include "../common/algo_utils.hpp"
 #include "../common/single_denoise.hpp"
@@ -45,7 +45,7 @@ static cv::Mat loadAny(const std::string& p) {
 }
 
 static cv::Mat perturb(const cv::Mat& in, unsigned seed, bool homographyMode) {
-    // 平移±3, 旋转±0.8°, 轻微缩放(0.995~1.005) + 透视扰动
+    // translation ±3, rotation ±0.8°, slight scale (0.995~1.005) + perspective perturbation
     cv::RNG rng(seed);
     double dx = rng.uniform(-3.0, 3.0);
     double dy = rng.uniform(-3.0, 3.0);
@@ -60,7 +60,7 @@ static cv::Mat perturb(const cv::Mat& in, unsigned seed, bool homographyMode) {
         cv::warpAffine(in, out, r, in.size(), cv::INTER_LINEAR,
                        cv::BORDER_REFLECT101);
     } else {
-        // 加轻微透视扰动
+        // add slight perspective perturbation
         std::vector<cv::Point2f> s = {
             {0, 0}, {(float)in.cols - 1, 0},
             {0, (float)in.rows - 1}, {(float)in.cols - 1, (float)in.rows - 1}
@@ -84,7 +84,7 @@ static cv::Mat perturb(const cv::Mat& in, unsigned seed, bool homographyMode) {
     return out;
 }
 
-// 尝试多种运动模型配准 (按模型粒度递进: Euclidean -> Affine -> Homography)
+// Try multiple motion models for alignment (progressively finer models: Euclidean -> Affine -> Homography)
 static cv::Mat alignAnyModel(const cv::Mat& ref, const cv::Mat& src, int model) {
     cv::Mat a = alignToRef(ref, src, model, 60, 1e-6);
     if (a.empty()) a = src;
@@ -100,7 +100,7 @@ static std::vector<cv::Mat> alignFrames(const std::vector<cv::Mat>& frames, int 
     return out;
 }
 
-// 均值
+// mean
 static cv::Mat fuseMean(const std::vector<cv::Mat>& aligned) {
     cv::Mat acc = cv::Mat::zeros(aligned[0].size(), CV_32FC(aligned[0].channels()));
     for (auto& a : aligned) {
@@ -112,7 +112,7 @@ static cv::Mat fuseMean(const std::vector<cv::Mat>& aligned) {
     return out;
 }
 
-// 中值 (逐通道)
+// median (per channel)
 static cv::Mat fuseMedian(const std::vector<cv::Mat>& aligned) {
     int H = aligned[0].rows, W = aligned[0].cols, C = aligned[0].channels();
     std::vector<cv::Mat> outs(C);
@@ -133,9 +133,10 @@ static cv::Mat fuseMedian(const std::vector<cv::Mat>& aligned) {
     return out;
 }
 
-// 方差加权均值:
+// variance-weighted mean:
 //   out(x) = Σ_k w_k(x)·I_k(x), w_k(x) ∝ exp( -(I_k - mean)^2 / (2σ²+ε) )
-//   其中 σ² 为同位置跨帧方差 (局部 3x3 平滑后), 近似"高方差像素权重低".
+//   where σ² is the cross-frame variance at the same position (after local 3x3 smoothing),
+//   approximating "high-variance pixels get low weight".
 static cv::Mat fuseVarianceWeighted(const std::vector<cv::Mat>& aligned) {
     CV_Assert(!aligned.empty());
     int N = (int)aligned.size(), H = aligned[0].rows, W = aligned[0].cols;
@@ -147,7 +148,7 @@ static cv::Mat fuseVarianceWeighted(const std::vector<cv::Mat>& aligned) {
         mean32 += f[i];
     }
     mean32 /= N;
-    // 计算每帧残差方差图 (按像素, 跨帧平均差平方)
+    // compute per-frame residual variance map (per pixel, cross-frame mean squared difference)
     cv::Mat varMat(H, W, CV_32F, 0.0f);
     for (int i = 0; i < N; ++i) {
         std::vector<cv::Mat> chs, mchs;
@@ -162,8 +163,8 @@ static cv::Mat fuseVarianceWeighted(const std::vector<cv::Mat>& aligned) {
     }
     varMat /= N;
     cv::boxFilter(varMat, varMat, CV_32F, cv::Size(3, 3));
-    cv::Mat denom = 2.0f * (varMat + 1.0f); // σ²+1 避免除 0
-    // 累积加权和 + 权重和
+    cv::Mat denom = 2.0f * (varMat + 1.0f); // σ²+1 avoids division by 0
+    // accumulate weighted sum + weight sum
     cv::Mat sumW(H, W, CV_32F, 0.0f);
     cv::Mat sumI = cv::Mat::zeros(H, W, CV_32FC(C));
     for (int i = 0; i < N; ++i) {
@@ -191,8 +192,8 @@ static cv::Mat fuseVarianceWeighted(const std::vector<cv::Mat>& aligned) {
     return out8u;
 }
 
-// 截断均值 (trimmed mean):
-//   对每像素, 先收集 N 个值, 去除 top/bottom 各 dropPct% 后再求均值.
+// trimmed mean:
+//   for each pixel, collect the N values, drop the top/bottom dropPct% each, then average.
 static cv::Mat fuseTrimmedMean(const std::vector<cv::Mat>& aligned, double dropPct = 0.2) {
     int N = (int)aligned.size(), H = aligned[0].rows, W = aligned[0].cols, C = aligned[0].channels();
     int trim = std::min(N / 2 - 1, std::max(1, (int)(dropPct * N)));
@@ -265,7 +266,7 @@ int main(int argc, char** argv) {
             "x" + std::to_string(base.rows));
     }
 
-    // 合成 N 帧: 噪声 + 运动扰动 (后半帧使用 Homography 扰动模式)
+    // synthesize N frames: noise + motion perturbation (later frames use the Homography perturbation mode)
     std::vector<cv::Mat> frames;
     for (int i = 0; i < nFrames; ++i) {
         cv::Mat f = addGaussianNoise(base, sigma, (unsigned)(0x1234 + i * 7));
@@ -286,7 +287,7 @@ int main(int argc, char** argv) {
     };
     std::vector<Run> runs;
 
-    // 单帧基线
+    // single-frame baseline
     cv::Mat noisy0 = frames[0];
     cv::Mat singleNlm = denoiseNLM(noisy0, 12, 7, 21);
     cv::Mat singleBi = denoiseAdaptiveBilateral(noisy0, 9, 80, 70, 7);
@@ -296,7 +297,7 @@ int main(int argc, char** argv) {
     runs.push_back({"single AdaptiveBi", singleBi, scoreOf(base, singleBi)});
     runs.push_back({"single Auto", singleAuto, scoreOf(base, singleAuto)});
 
-    // 每个运动模型 × 多种聚合
+    // each motion model x multiple aggregations
     for (int m : models) {
         auto aligned = alignFrames(frames, m);
         std::string mn = modelName(m);
@@ -314,7 +315,7 @@ int main(int argc, char** argv) {
                 nFrames, sigma);
     std::printf("%-30s %8s %8s %8s %8s %8s\n",
                 "method", "PSNR", "SSIM", "MS-SSIM", "MAE", "LOE");
-    // 排序 (PSNR desc)
+    // sort (PSNR desc)
     std::vector<size_t> idx(runs.size());
     std::iota(idx.begin(), idx.end(), 0);
     std::sort(idx.begin(), idx.end(), [&](size_t a, size_t b){
@@ -328,7 +329,7 @@ int main(int argc, char** argv) {
     }
     std::printf("=====================================================\n");
 
-    // 扫 N = 3/5/7/9 画 mean/varianceW 曲线 (只跑 Affine)
+    // sweep N = 3/5/7/9, plot mean/varianceW curves (Affine only)
     std::cout << "\n--- scan N vs PSNR (model=Affine, σ=" << sigma << ") ---\n";
     std::printf("%5s %10s %10s\n", "N", "mean", "varW");
     for (int N : {3, 5, 7, 9}) {
@@ -340,7 +341,7 @@ int main(int argc, char** argv) {
         std::printf("%5d %10.2f %10.2f\n", N, psnr(base, mm), psnr(base, vv));
     }
 
-    // 输出马赛克大图 (选 4 列)
+    // output mosaic (pick 4 columns)
     ensureDir("../out/algorithms");
     std::vector<cv::Mat> panels;
     std::vector<std::string> labels;
@@ -349,7 +350,7 @@ int main(int argc, char** argv) {
         panels.push_back(frames[k]);
         labels.push_back("noisy#" + std::to_string(k));
     }
-    // 选 Affine + Homography 的聚合结果展示
+    // show aggregation results of Affine + Homography
     std::vector<std::string> pick = {
         "Affine + mean", "Affine + median", "Affine + varianceW",
         "Affine + trimMean(0.2)",
@@ -360,7 +361,7 @@ int main(int argc, char** argv) {
             panels.push_back(r.img); labels.push_back(r.label); break;
         }
     }
-    // 单帧自动降噪
+    // single-frame auto denoise
     panels.push_back(singleAuto); labels.push_back("single Auto");
     cv::Mat canvas = gridWithLabels(panels, labels, 4, 32);
     cv::imwrite("../out/algorithms/denoise_multi.png", canvas);

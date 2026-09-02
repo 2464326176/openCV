@@ -1,7 +1,8 @@
-// LEARN: L1 ECC 鍥惧儚瀵归綈
+// LEARN: L1 ECC image alignment
 // OFFICIAL: samples/cpp/image_alignment.cpp
-// THEORY: docs/ch01_core.md 搂2.16 ECC
-// TASK: 鍚屼竴寮犲浘+浜哄伐浠垮皠鍙樻崲鍋氬榻愰獙璇侊紙findTransformECC + warpAffine锛?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch01_core.md §2.16 ECC
+// TASK: verify alignment on same image + synthetic affine transform (findTransformECC + warpAffine)
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
@@ -10,7 +11,8 @@ int main() {
     Mat src = imread(getImagePath("lena.jpg"), IMREAD_GRAYSCALE);
     if (src.empty()) { logInfo("imread failed"); return -1; }
 
-    // 1) 浜哄伐浠垮皠鍙樻崲鏋勯€犳祴璇曞浘锛堝钩绉?12,6 + 寰皬鏃嬭浆/鍓垏锛?    Point2f srcTri[3] = {
+    // 1) Synthetic affine transform to create test image (translate 12,6 + slight rotation/shear)
+    Point2f srcTri[3] = {
         Point2f(50.f, 50.f),
         Point2f(200.f, 50.f),
         Point2f(50.f, 200.f)
@@ -25,13 +27,15 @@ int main() {
     warpAffine(src, warped, A, src.size(), INTER_LINEAR);
     dbgMatInfo("A", A);
 
-    // 2) findTransformECC锛氫及璁℃妸 warped 瀵归綈鍒?src 鐨勪豢灏勭煩闃?    Mat est = Mat::eye(2, 3, CV_32F);
+    // 2) findTransformECC: estimate affine matrix to align warped to src
+    Mat est = Mat::eye(2, 3, CV_32F);
     TermCriteria tc(TermCriteria::COUNT + TermCriteria::EPS, 100, 1e-5);
     double cc = findTransformECC(src, warped, est, MOTION_AFFINE, tc);
     logInfo("ECC final correlation = %.6f", cc);
     dbgMatInfo("est", est);
 
-    // 3) 鐢ㄤ及璁＄殑鐭╅樀鍥?warp锛岀湅涓庡師鍥惧樊寮?    Mat recovered;
+    // 3) Warp back with estimated matrix, compare to original
+    Mat recovered;
     warpAffine(warped, recovered, est, src.size(), INTER_LINEAR);
     Mat diff;
     absdiff(src, recovered, diff);

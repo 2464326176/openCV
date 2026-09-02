@@ -1,19 +1,21 @@
-// LEARN: L4 瀵规瀬鍑犱綍鍩虹鐭╅樀
+// LEARN: L4 epipolar geometry fundamental matrix
 // OFFICIAL: samples/cpp/epipolar_lines.cpp
-// THEORY: docs/ch07_calib3d_stitching.md 搂5
-// TASK: 鐢ㄥ悎鎴?8 瀵圭偣浼拌 F (FM_8POINT + RANSAC)锛宑omputeCorrespondEpilines 鍦?img2 涓婄敾瀵规瀬绾?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch07_calib3d_stitching.md §5
+// TASK: estimate F from 8 synthetic point pairs (FM_8POINT + RANSAC), computeCorrespondEpilines to draw epilines on img2
+#include <opencv2/opencv.hpp>
 #include <opencv2/calib3d.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
 
 int main() {
-    // 涓ゅ紶鐩稿悓灏哄鐨勫浘锛圴CG1 澶嶅埗鎴愪袱浠斤紝浠呯敤浜庣粯鍒跺鏋佺嚎鑳屾櫙锛?    Mat img1 = imread(getImagePath("VCG1.jpg"));
+    // two images of the same size (VCG1 duplicated, used only as epiline background)
+    Mat img1 = imread(getImagePath("VCG1.jpg"));
     if (img1.empty()) { logInfo("imread failed: VCG1.jpg"); return -1; }
     Mat img2 = img1.clone();
     dbgMatInfo("img1", img1);
 
-    // 8 瀵瑰悎鎴愬搴旂偣锛坕mg1 -> img2 鐣ユ湁鍋忕Щ锛屾ā鎷熷尮閰嶏級
+    // 8 pairs of synthetic corresponding points (slight offset from img1 to img2 to simulate matching)
     std::vector<Point2f> pts1 = {
         {120, 100}, {180, 90}, {250, 120}, {300, 110},
         {150, 200}, {220, 210}, {280, 230}, {350, 200}};
@@ -24,14 +26,14 @@ int main() {
     logInfo("findFundamentalMat FM_8POINT done, F empty=%d", F.empty());
     if (F.empty()) { logInfo("F is empty"); return -1; }
 
-    // 鍦?img2 涓婄敾瀵瑰簲 pts1 鐨勫鏋佺嚎
+    // draw epilines corresponding to pts1 on img2
     std::vector<Vec3f> lines;
     computeCorrespondEpilines(pts1, 1, F, lines);
     for (size_t i = 0; i < lines.size(); ++i) {
         float a = lines[i][0], b = lines[i][1], c = lines[i][2];
         double denom = (a * a + b * b);
         if (denom < 1e-6) continue;
-        // 璁＄畻绾夸笌鍥惧儚涓婁笅杈圭殑浜ょ偣鐢荤嚎
+        // compute intersection of line with image top/bottom edges and draw
         Point2f p0(0, -c / b);
         Point2f p1((float)img2.cols, -(c + a * img2.cols) / b);
         line(img2, p0, p1, Scalar(0, 255, 0), 1);

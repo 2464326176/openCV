@@ -1,6 +1,8 @@
-// LEARN: L5 SVM 绾挎€у垎绫?+ 鍐崇瓥杈圭晫鍙鍖?// OFFICIAL: samples/cpp/tutorial_code/ml/introduction_to_svm/introduction_to_svm.cpp
-// THEORY: docs/ch05_ml.md 搂SVM
-// TASK: 鍚堟垚涓ょ被浜岀淮鐐癸紝璁粌绾挎€?SVM锛屽彲瑙嗗寲鏀寔鍚戦噺涓庡喅绛栬竟鐣?#include <opencv2/opencv.hpp>
+// LEARN: L5 SVM linear classification + decision boundary visualization
+// OFFICIAL: samples/cpp/tutorial_code/ml/introduction_to_svm/introduction_to_svm.cpp
+// THEORY: docs/ch05_ml.md §SVM
+// TASK: Generate two-class 2D points, train linear SVM, visualize support vectors and decision boundary
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 using namespace cv;
 using namespace cv::ml;

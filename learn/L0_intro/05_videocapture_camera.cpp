@@ -1,6 +1,7 @@
-// LEARN: L0 VideoCapture 鎽勫儚澶?// OFFICIAL: samples/cpp/videocapture_basic.cpp, videocapture_camera.cpp
-// THEORY: docs/ch08_gui_gapi_gpu.md 搂videoio
-// TASK: 鎵撳紑鎽勫儚澶达紱澶辫触鍥為€€鐢ㄩ潤鎬佸浘寰幆鏄剧ず
+// LEARN: L0 VideoCapture camera
+// OFFICIAL: samples/cpp/videocapture_basic.cpp, videocapture_camera.cpp
+// THEORY: docs/ch08_gui_gapi_gpu.md §videoio
+// TASK: open camera; fallback to static image loop on failure
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

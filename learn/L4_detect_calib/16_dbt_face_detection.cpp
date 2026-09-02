@@ -1,7 +1,7 @@
-// LEARN: L4 DetectionBasedTracker 浜鸿劯璺熻釜
+// LEARN: L4 DetectionBasedTracker face tracking
 // OFFICIAL: samples/cpp/dbt_face_detection.cpp
-// THEORY: docs/ch06_objdetect_photo.md 搂6.3
-// TASK: 鑷畾涔?IDetector 瀛愮被鎵胯浇 CascadeClassifier锛涙棤 haarcascade xml 鏃?detect 杩斿洖绌哄苟璇存槑
+// THEORY: docs/ch06_objdetect_photo.md §6.3
+// TASK: custom IDetector subclass wrapping CascadeClassifier; detect returns empty when no haarcascade xml
 #include <opencv2/opencv.hpp>
 #include <opencv2/objdetect.hpp>
 #include <opencv2/objdetect/detection_based_tracker.hpp>
@@ -9,11 +9,11 @@
 
 using namespace cv;
 
-// 缁ф壙 DetectionBasedTracker::IDetector锛涙棤 xml 鏃?detect 鐩存帴娓呯┖ objects
+// inherit DetectionBasedTracker::IDetector; detect clears objects when no xml
 class HaarIDetector : public DetectionBasedTracker::IDetector {
 public:
     HaarIDetector() {
-        // 灏濊瘯鍔犺浇 Haar 浜鸿劯绾ц仈锛涙壘涓嶅埌鏂囦欢鍒?cascade 涓虹┖锛宒etect 鏃惰繑鍥炵┖
+        // attempt to load Haar face cascade; cascade is empty if file not found, detect returns empty
         bool ok = cascade.load("../mingw-build/opencv_sources/data/haarcascades/haarcascade_frontalface_alt.xml");
         logInfo("Haar cascade load=%d", ok ? 1 : 0);
     }

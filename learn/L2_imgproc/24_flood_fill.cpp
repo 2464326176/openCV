@@ -1,7 +1,7 @@
-// LEARN: L2 婕按濉厖
+// LEARN: L2 Flood fill
 // OFFICIAL: samples/cpp/ffilldemo.cpp
-// THEORY: docs/ch02_imgproc.md 搂7
-// TASK: floodFill 鐢ㄦ粦鍔ㄦ潯璋冧笂涓嬬晫瀹瑰樊
+// THEORY: docs/ch02_imgproc.md §7
+// TASK: floodFill with trackbar-controlled lo/up difference tolerance
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

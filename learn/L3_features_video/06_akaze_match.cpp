@@ -1,6 +1,8 @@
-// LEARN: L3 AKAZE 妫€娴嬩笌鍖归厤
-// OFFICIAL: samples/cpp/tutorial_code/features2d/AKAZE_match.cpp銆乸lanar_tracking.cpp
-// THEORY: docs/ch03_features.md 搂鎻忚堪瀛?// TASK: AKAZE detectAndCompute锛孊FMatcher(NORM_HAMMING)+Lowe 姣斿€?#include <opencv2/opencv.hpp>
+// LEARN: L3 AKAZE 检测与匹配
+// OFFICIAL: samples/cpp/tutorial_code/features2d/AKAZE_match.cpp、planar_tracking.cpp
+// THEORY: docs/ch03_features.md §描述子
+// TASK: AKAZE detectAndCompute, BFMatcher(NORM_HAMMING)+Lowe ratio test
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
@@ -33,3 +35,4 @@ int main() {
     dbgShow("L3_06 akaze match", out, 0);
     return 0;
 }
+

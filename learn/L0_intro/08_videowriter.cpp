@@ -1,7 +1,7 @@
-// LEARN: L0 VideoWriter 鍐欏嚭涓庡洖璇?
+// LEARN: L0 VideoWriter write and read back
 // OFFICIAL: samples/cpp/videowriter_basic.cpp, tutorial_code/videoio/video-write/video-write.cpp
-// THEORY: docs/ch08_gui_gapi_gpu.md 搂videoio
-// TASK: 鐢ㄩ潤鎬佸浘搴忓垪鍐欏嚭 AVI锛屽啀 VideoCapture 鍥炶楠岃瘉甯ф暟
+// THEORY: docs/ch08_gui_gapi_gpu.md §videoio
+// TASK: write AVI from static image sequence, then read back with VideoCapture to verify frame count
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

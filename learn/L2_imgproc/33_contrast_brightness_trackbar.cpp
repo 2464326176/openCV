@@ -1,7 +1,7 @@
-// LEARN: L2 浜害/瀵规瘮搴︿氦浜掕皟鑺?
+// LEARN: L2 Brightness/contrast interactive adjustment
 // OFFICIAL: tutorial_code/ImgProc/changing_contrast_brightness_image/changing_contrast_brightness_image.cpp
-// THEORY: docs/ch02_imgproc.md 搂1
-// TASK: trackbar 璋?alpha(瀵规瘮搴?/beta(浜害)锛沘lpha>1 澧炲己瀵规瘮锛宐eta 鏁翠綋鍋忕Щ
+// THEORY: docs/ch02_imgproc.md §1
+// TASK: trackbar adjust alpha(contrast)/beta(brightness); alpha>1 enhances contrast, beta shifts overall
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

@@ -1,7 +1,7 @@
-// LEARN: L4 ArUco 鏍囪鐢熸垚
+// LEARN: L4 ArUco marker generation
 // OFFICIAL: tutorial_code/objectDetection/create_marker.cpp, create_board.cpp
-// THEORY: docs/ch06_objdetect_photo.md 搂6.11
-// TASK: 鐢ㄦ柊 API aruco::getPredefinedDictionary + aruco::generateImageMarker 鐢熸垚 4 涓?DICT_4X4_50 鏍囪鎷兼垚缃戞牸
+// THEORY: docs/ch06_objdetect_photo.md §6.11
+// TASK: generate 4 DICT_4X4_50 markers arranged in a grid using new API aruco::getPredefinedDictionary + aruco::generateImageMarker
 #include <opencv2/opencv.hpp>
 #include <opencv2/objdetect/aruco_detector.hpp>
 #include <opencv_utils.h>
@@ -13,8 +13,9 @@ int main() {
     Dictionary dict = getPredefinedDictionary(DICT_4X4_50);
     logInfo("dictionary loaded: DICT_4X4_50");
 
-    const int side = 200;          // 鍗曚釜 marker 鍍忕礌杈归暱
-    const int pad  = 20;           // 缃戞牸鍐呰竟璺?    const int grid = 420;          // 2x2 缃戞牸鐢诲竷杈归暱
+    const int side = 200;          // pixel side length of a single marker
+    const int pad  = 20;           // grid padding
+    const int grid = 420;          // 2x2 grid canvas side length
     Mat canvas(grid, grid, CV_8UC1, Scalar(255));
 
     int ids[] = {0, 1, 2, 3};

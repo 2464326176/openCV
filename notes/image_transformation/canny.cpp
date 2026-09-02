@@ -20,13 +20,13 @@ int main()
     cvtColor(image, edges, COLOR_BGR2GRAY);
     imshow("gray", edges);
         
-    blur(edges, edges, Size(3, 3));  //3x3 内核降噪
+    blur(edges, edges, Size(3, 3));  // 3x3 kernel for denoising
     /*
-     * canny
-     * 第三个参数 第一个滞后性阈值
-     * 第四个参数 第二个滞后性阈值
-     * 较小的用于边缘连接 较大的控制强边缘的初始段一般在（2:1~3:1）
-     * 第五个参数 Sobel算子的孔径大小
+     * Canny
+     * 3rd param: first (lower) hysteresis threshold
+     * 4th param: second (upper) hysteresis threshold
+     * the smaller one links edges; the larger controls strong-edge seeds; ratio usually 2:1~3:1
+     * 5th param: aperture size of the Sobel operator
      */
 
     Canny(edges, edges, 3, 9, 3);

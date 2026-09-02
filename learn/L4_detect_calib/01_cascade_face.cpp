@@ -1,6 +1,8 @@
-// LEARN: L4 绾ц仈浜鸿劯妫€娴?// OFFICIAL: samples/cpp/face_detect.cpp
-// THEORY: docs/ch06_objdetect_photo.md 搂6.1
-// TASK: 浼樺厛鐢?cv::FaceDetectorYN + yunet onnx 妫€娴嬩汉鑴哥敾妗嗭紱鏃?onnx/xml 鏃堕檷绾?CascadeClassifier 骞惰鏄?#include <opencv2/opencv.hpp>
+// LEARN: L4 cascade face detection
+// OFFICIAL: samples/cpp/face_detect.cpp
+// THEORY: docs/ch06_objdetect_photo.md §6.1
+// TASK: prefer cv::FaceDetectorYN + yunet onnx for face detection; fall back to CascadeClassifier when no onnx/xml
+#include <opencv2/opencv.hpp>
 #include <opencv2/objdetect.hpp>
 #include <opencv_utils.h>
 
@@ -29,11 +31,13 @@ int main() {
             int x = cvRound(f[0]), y = cvRound(f[1]);
             int w = cvRound(f[2]), h = cvRound(f[3]);
             rectangle(img, Rect(x, y, w, h), Scalar(0, 255, 0), 2);
-            // 5 涓叧閿偣锛氬乏鐪?鍙崇溂/榧诲皷/宸﹀槾瑙?鍙冲槾瑙?            for (int k = 0; k < 5; ++k) circle(img,
+            // 5 landmarks: left eye/right eye/nose tip/left mouth corner/right mouth corner
+            for (int k = 0; k < 5; ++k) circle(img,
                 Point(cvRound(f[4 + 2 * k]), cvRound(f[5 + 2 * k])), 2, Scalar(0, 0, 255), -1);
         }
     } else {
-        // 2) 闄嶇骇 CascadeClassifier锛堟棤 haarcascade xml 鍒欎粎鎵撳嵃璇存槑锛?        logInfo("YuNet onnx not loaded (%s), fall back to CascadeClassifier", yunetPath.c_str());
+        // 2) fallback CascadeClassifier (print info if no haarcascade xml)
+        logInfo("YuNet onnx not loaded (%s), fall back to CascadeClassifier", yunetPath.c_str());
         CascadeClassifier cascade;
         std::string cascadePath = getModelPath("haarcascade_frontalface_alt.xml");
         bool ok = cascade.load(cascadePath);

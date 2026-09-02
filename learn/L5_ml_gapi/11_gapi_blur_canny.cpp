@@ -1,7 +1,8 @@
-// LEARN: L5 G-API 澹版槑寮忓浘璁＄畻 blur+Canny
+// LEARN: L5 G-API declarative graph computation blur+Canny
 // OFFICIAL: samples/cpp/tutorial_code/gapi/doc_snippets/api_ref_snippets.cpp
-// THEORY: docs/ch08_gui_gapi_gpu.md 搂G-API
-// TASK: 鐢?G-API 鏋勫缓 blur+Canny 璁＄畻鍥撅紝瀵规瘮鍛戒护寮忓啓娉?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch08_gui_gapi_gpu.md §G-API
+// TASK: Build blur+Canny computation graph with G-API, compare with imperative approach
+#include <opencv2/opencv.hpp>
 #include <opencv2/gapi.hpp>
 #include <opencv2/gapi/core.hpp>
 #include <opencv2/gapi/imgproc.hpp>

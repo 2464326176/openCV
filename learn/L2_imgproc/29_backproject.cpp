@@ -1,6 +1,7 @@
-// LEARN: L2 鐩存柟鍥惧弽鍚戞姇褰?// OFFICIAL: samples/cpp/tutorial_code/Histograms_Matching/calcBackProject_Demo1.cpp銆乧alcBackProject_Demo2.cpp
-// THEORY: docs/ch02_imgproc.md 搂8
-// TASK: 鐢ㄧ洰鏍?ROI 鐨?HSV 鐩存柟鍥?calcBackProject 瀹氫綅鐩镐技鍖哄煙
+// LEARN: L2 Histogram backprojection
+// OFFICIAL: samples/cpp/tutorial_code/Histograms_Matching/calcBackProject_Demo1.cpp、calcBackProject_Demo2.cpp
+// THEORY: docs/ch02_imgproc.md §8
+// TASK: calcBackProject with target ROI HSV histogram to locate similar regions
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

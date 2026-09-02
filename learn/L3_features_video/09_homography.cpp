@@ -1,7 +1,7 @@
-// LEARN: L3 鍗曞簲鐭╅樀 RANSAC 瀵归綈
-// OFFICIAL: samples/cpp/tutorial_code/features2d/feature_homography/SURF_FLANN_matching_homography_Demo.cpp銆乸erspective_correction.cpp
-// THEORY: docs/ch03_features.md 搂鍗曞簲
-// TASK: ORB 鍖归厤 鈫?findHomography(RANSAC) 鈫?warpPerspective 鎶?img2 瀵归綈鍥?img1
+// LEARN: L3 Homography Matrix RANSAC Alignment
+// OFFICIAL: samples/cpp/tutorial_code/features2d/feature_homography/SURF_FLANN_matching_homography_Demo.cpp、perspective_correction.cpp
+// THEORY: docs/ch03_features.md §单应
+// TASK: ORB matching, findHomography(RANSAC) compute homography; warpPerspective align img2 to img1
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -11,7 +11,7 @@ int main() {
     Mat img1 = imread(getImagePath("lena.jpg"), IMREAD_GRAYSCALE);
     if (img1.empty()) { logInfo("imread failed"); return -1; }
 
-    // 閫忚鎵板姩浣滀负 img2
+    // perspective perturbation as img2
     std::vector<Point2f> srcPts = {
         {0, 0}, {(float)img1.cols, 0},
         {(float)img1.cols, (float)img1.rows}, {0, (float)img1.rows}};
@@ -51,3 +51,4 @@ int main() {
                 {img1, img2, aligned}, 0);
     return 0;
 }
+

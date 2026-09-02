@@ -1,5 +1,8 @@
-// LEARN: L5 SVM 闈炵嚎鎬?RBF 鏍?// OFFICIAL: samples/cpp/tutorial_code/ml/non_linear_svms/non_linear_svms.cpp
-// THEORY: docs/ch05_ml.md 搂SVM 鏍告妧宸?// TASK: 鍚堟垚鍦嗙幆+涓績涓ょ被鐐癸紝RBF 鏍?SVM 鐢婚潪绾挎€у喅绛栬竟鐣?#include <opencv2/opencv.hpp>
+// LEARN: L5 SVM nonlinear RBF kernel
+// OFFICIAL: samples/cpp/tutorial_code/ml/non_linear_svms/non_linear_svms.cpp
+// THEORY: docs/ch05_ml.md §SVM kernel trick
+// TASK: Generate ring+center two-class points, RBF kernel SVM draws nonlinear decision boundary
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 using namespace cv;
 using namespace cv::ml;

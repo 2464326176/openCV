@@ -1,7 +1,8 @@
-// LEARN: L1 FileStorage 璇诲啓
-// OFFICIAL: samples/cpp/tutorial_code/core/file_input_output/file_input_output.cpp銆乮magelist_reader.cpp
-// THEORY: docs/ch01_core.md 搂2.6 FileStorage
-// TASK: 鍐欏叆 int/瀛楃涓?Mat 鍒?yml锛涜鍥為獙璇侊紱鍐欏浘鍍忚矾寰勫垪琛?#include <opencv2/opencv.hpp>
+// LEARN: L1 FileStorage read/write
+// OFFICIAL: samples/cpp/tutorial_code/core/file_input_output/file_input_output.cpp、imagelist_reader.cpp
+// THEORY: docs/ch01_core.md §2.6 FileStorage
+// TASK: write int/string/Mat to yml; read back to verify; write image path list
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
@@ -13,7 +14,7 @@ int main() {
     if (src.empty()) { logInfo("imread failed"); return -1; }
     Mat roi = src(Rect(0, 0, 64, 64)).clone();
 
-    // 1) 鍐欏叆锛氭爣閲?+ 鐭╅樀 + 鍒楄〃
+    // 1) Write: scalar + matrix + list
     FileStorage fw(YML_FILE, FileStorage::WRITE);
     if (!fw.isOpened()) { logInfo("open write failed"); return -1; }
     fw << "frameIdx" << 42;
@@ -24,10 +25,12 @@ int main() {
     fw.release();
     logInfo("write done -> %s", YML_FILE);
 
-    // 2) 璇诲洖楠岃瘉
+    // 2) Read back verification
     FileStorage fr(YML_FILE, FileStorage::READ);
     if (!fr.isOpened()) { logInfo("open read failed"); return -1; }
-    int frameIdx = -1; std::string name; Mat roi2;
+    int frameIdx = -1;
+    std::string name;
+    Mat roi2;
     fr["frameIdx"] >> frameIdx;
     fr["name"]    >> name;
     fr["roi"]     >> roi2;
@@ -42,7 +45,8 @@ int main() {
             frameIdx, name.c_str(), list.size());
     dbgMatInfo("roi2", roi2);
 
-    // 3) 鏍￠獙 ROI 鏄惁涓€鑷?    Mat diff;
+    // 3) Verify ROI consistency
+    Mat diff;
     absdiff(roi, roi2, diff);
     logInfo("roi round-trip diff = %d", countNonZero(diff));
 

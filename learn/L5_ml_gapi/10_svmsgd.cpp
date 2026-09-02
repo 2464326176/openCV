@@ -1,7 +1,7 @@
 // LEARN: L5 SVMSGD
 // OFFICIAL: samples/cpp/train_svmsgd.cpp
-// THEORY: docs/ch05_ml.md 搂SVMSGD
-// TASK: 鍚堟垚涓ょ被鐐癸紝SVMSGD 璁粌骞跺彲瑙嗗寲鍐崇瓥杈圭晫
+// THEORY: docs/ch05_ml.md §SVMSGD
+// TASK: Generate two-class points, train SVMSGD and visualize decision boundary
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 using namespace cv;

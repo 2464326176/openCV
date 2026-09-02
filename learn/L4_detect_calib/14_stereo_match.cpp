@@ -1,7 +1,8 @@
-// LEARN: L4 鍙岀洰绔嬩綋鍖归厤 StereoSGBM
+// LEARN: L4 binocular stereo matching StereoSGBM
 // OFFICIAL: samples/cpp/stereo_match.cpp, stereo_calib.cpp
-// THEORY: docs/ch07_calib3d_stitching.md 搂4
-// TASK: 鎶?VCG1+VCG2 缂╂斁鍒板悓灏哄鐏板害鍥撅紝StereoSGBM 璁＄畻瑙嗗樊骞朵笂鑹叉樉绀?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch07_calib3d_stitching.md §4
+// TASK: resize VCG1+VCG2 to same-size grayscale, compute disparity with StereoSGBM and display with colormap
+#include <opencv2/opencv.hpp>
 #include <opencv2/calib3d.hpp>
 #include <opencv_utils.h>
 
@@ -13,7 +14,7 @@ int main() {
     if (l.empty() || r.empty()) { logInfo("imread failed"); return -1; }
     dbgMatInfo("L", l); dbgMatInfo("R", r);
 
-    // 1) 鍙岀洰鍥鹃€氬父闇€鍚屽昂瀵革紱杩欓噷寮哄埗 resize 鍒?min(W,H) x min(W,H)
+    // 1) stereo images usually need same size; force resize to min(W,H) x min(W,H)
     int w = std::min(l.cols, r.cols);
     int h = std::min(l.rows, r.rows);
     resize(l, l, Size(w, h));

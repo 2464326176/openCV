@@ -1,6 +1,7 @@
-// LEARN: L3 LK 绋€鐤忓厜娴?// OFFICIAL: samples/cpp/lkdemo.cpp
-// THEORY: docs/ch04_video.md 搂鍏夋祦
-// TASK: VCG1 鈫?VCG2锛実oodFeatures 鍙栫偣锛宑alcOpticalFlowPyrLK 璺熻釜锛岀敾绠ご
+// LEARN: L3 LK 稀疏光流
+// OFFICIAL: samples/cpp/lkdemo.cpp
+// THEORY: docs/ch04_video.md §光流
+// TASK: VCG1 to VCG2, goodFeatures get points, calcOpticalFlowPyrLK track, draw arrows
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -32,3 +33,4 @@ int main() {
     dbgShow("L3_17 LK optical flow", show, 0);
     return 0;
 }
+

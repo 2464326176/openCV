@@ -1,7 +1,7 @@
-// LEARN: L4 Charuco 鏉挎娴嬪璇?
+// LEARN: L4 Charuco board detection
 // OFFICIAL: tutorial_code/objectDetection/calibrate_camera_charuco.cpp, detect_board_charuco.cpp
-// THEORY: docs/ch06_objdetect_photo.md 搂6.4
-// TASK: 鍚堟垚 Charuco 鏉垮苟 detectBoard锛涙棤鐪熷疄鏍囧畾搴忓垪鏃舵紨绀烘娴嬩笌瑙掔偣 refine
+// THEORY: docs/ch06_objdetect_photo.md §6.4
+// TASK: synthesize Charuco board and detectBoard; demonstrate detection and corner refinement without real calibration sequence
 #include <opencv2/opencv.hpp>
 #include <opencv2/objdetect/aruco_board.hpp>
 #include <opencv2/objdetect/aruco_detector.hpp>
@@ -30,7 +30,7 @@ int main() {
         drawDetectedCornersCharuco(vis, charucoCorners, charucoIds, Scalar(0, 255, 0));
     }
     logInfo("charuco corners=%d", charucoIds.rows);
-    logInfo("鐪熷疄鏍囧畾闇€澶氬Э鎬?Charuco 搴忓垪 + calibrateCameraCharuco");
+    logInfo("real calibration needs multi-pose Charuco sequence + calibrateCameraCharuco");
     dbgShow("L4_21 charuco detect", vis, 0);
     return 0;
 }

@@ -1,12 +1,12 @@
 // algorithms/template_matching/main.cpp
-// 模板匹配: 遍历 OpenCV 各 matchTemplate 方法 + 多尺度定位.
+// Template matching: iterate over OpenCV matchTemplate methods + multi-scale localization.
 //
-// 覆盖:
+// Covers:
 //   SQDIFF / SQDIFF_NORMED / CCORR / CCORR_NORMED / CCOEFF / CCOEFF_NORMED
-//   多尺度 (scale 金字塔) 自选最优尺度返回匹配框
-//   TM_ 方法间相似度分数对比
-// 输入: data/lena.jpg (场景) + data/lena_tmpl.jpg (模板, 应为其子区域).
-// 输出: out/algorithms/template_matching_compare.png + 分数表.
+//   multi-scale (scale pyramid) selects the best scale and returns the match box
+//   similarity score comparison across TM_ methods
+// Input: data/lena.jpg (scene) + data/lena_tmpl.jpg (template, should be a sub-region).
+// Output: out/algorithms/template_matching_compare.png + score table.
 #include "../common/algo_utils.hpp"
 
 #include <cstdio>
@@ -15,7 +15,7 @@
 
 using namespace algo;
 
-// 单尺度匹配, 返回 (score, bestLoc). 对 SQDIFF 系列取最小, 其余取最大.
+// Single-scale matching, returns (score, bestLoc). Uses min for the SQDIFF family, max for others.
 static std::pair<double, cv::Point> matchAt(const cv::Mat& src, const cv::Mat& tpl,
                                             int method) {
     cv::Mat res;
@@ -28,7 +28,7 @@ static std::pair<double, cv::Point> matchAt(const cv::Mat& src, const cv::Mat& t
     return {score, loc};
 }
 
-// 归一化分数到 [0,1] 用于可视化 (SQDIFF 越小越好 → 取反).
+// Normalize the score to [0,1] for visualization (SQDIFF lower is better -> invert).
 static double normScore(double s, bool sqdiff) {
     return sqdiff ? 1.0 - s : s;
 }
@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
     std::vector<cv::Mat> panels; std::vector<std::string> labels;
     cv::Mat sceneMarked; scene.copyTo(sceneMarked);
 
-    // ---- 1. 单尺度各 TM_ 方法与分数 ----
+    // ---- 1. single-scale TM_ methods and scores ----
     struct Tm { const char* name; int method; double score; cv::Point loc; };
     std::vector<Tm> tms;
     std::printf("%-16s %8s\n", "method", "score");
@@ -73,14 +73,14 @@ int main(int argc, char** argv) {
         tms.back().name = nm;
         std::printf("%-16s %8.4f @ (%d,%d)\n", nm, normScore(r.first, sq),
                     r.second.x, r.second.y);
-        // 在独立画布上画匹配框
+        // draw the match box on its own canvas
         cv::Mat c; scene.copyTo(c);
         cv::rectangle(c, cv::Rect(r.second.x, r.second.y, tpl.cols, tpl.rows),
                       cv::Scalar(0, 0, 255), 2);
         panels.push_back(c); labels.push_back(nm);
     }
 
-    // ---- 2. 多尺度: 在尺度和方向上都扫描, 选最优 ----
+    // ---- 2. multi-scale: scan over scales and methods, pick the best ----
     struct Best { double score=-1; cv::Rect rect; std::string view= "N/A"; };
     Best best;
     for (double s = 0.5; s <= 2.01; s *= 1.3) {
@@ -109,7 +109,7 @@ int main(int argc, char** argv) {
                 best.rect.width, best.rect.height);
     panels.push_back(sceneMarked); labels.push_back("multi-scale best");
 
-    // 顶部放"模板"面板
+    // put the "template" panel at the top
     std::vector<cv::Mat> all; std::vector<std::string> allLab;
     all.push_back(tpl); allLab.push_back("template");
     for (size_t i = 0; i < panels.size(); ++i) { all.push_back(panels[i]); allLab.push_back(labels[i]); }

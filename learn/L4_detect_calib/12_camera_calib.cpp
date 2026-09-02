@@ -1,7 +1,7 @@
-// LEARN: L4 鐩告満鏍囧畾锛堝悎鎴愭鐩橈級
+// LEARN: L4 camera calibration (synthetic chessboard)
 // OFFICIAL: tutorial_code/calib3d/camera_calibration/camera_calibration.cpp
-// THEORY: docs/ch07_calib3d_stitching.md 搂10
-// TASK: 鐢熸垚妫嬬洏鍥?-> findChessboardCorners -> calibrateCamera 寰楀埌 K/dist
+// THEORY: docs/ch07_calib3d_stitching.md §10
+// TASK: generate chessboard -> findChessboardCorners -> calibrateCamera to get K/dist
 #include <opencv2/opencv.hpp>
 #include <opencv2/calib3d.hpp>
 #include <opencv_utils.h>

@@ -14,12 +14,12 @@ using namespace std;
 void loadExposureSeq(String, vector<Mat>&, vector<float>&);
 
 
-// NV21转BGR工具函数
+// Utility: NV21 to BGR conversion
 Mat convertNV21toBGR(const Mat& nv21, int width, int height) {
-    // 创建目标Mat
+    // create the target Mat
     Mat bgr(height, width, CV_8UC3);
     
-    // 使用OpenCV颜色转换
+    // use OpenCV color conversion
     cvtColor(nv21, bgr, COLOR_YUV2BGR_NV21);
     
     return bgr;
@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 {
     CommandLineParser parser(argc, argv, "{@input | | Input directory that contains NV21 images and exposure times. }");
     
-    // 获取输入路径
+    // get the input path
     String path = parser.get<String>("@input");
     if (path.empty()) {
         std::cerr << "Please specify input directory" << std::endl;
@@ -39,7 +39,7 @@ int main(int argc, char** argv)
     //! [Load images and exposure times]
     vector<Mat> images;
     vector<float> times;
-    // 修改调用以支持NV21
+    // modify the call to support NV21
     loadExposureSeq(path, images, times);
     //! [Load images and exposure times]
 
@@ -91,17 +91,17 @@ void loadExposureSeq(String path, vector<Mat>& images, vector<float>& times)
 
     string name;
     float val;
-    int width, height;  // 新增宽高参数
+    int width, height;  // new width/height parameters
     
     while (list_file >> name >> val >> width >> height) {
-        // 读取NV21二进制文件
+        // read NV21 binary file
         std::ifstream file(path + name, std::ios::binary | std::ios::ate);
         if (!file) {
             std::cerr << "Error opening: " << name << std::endl;
             continue;
         }
         
-        // 计算文件大小并读取
+        // compute file size and read
         std::streamsize size = file.tellg();
         file.seekg(0, std::ios::beg);
         std::vector<char> buffer(size);
@@ -110,10 +110,10 @@ void loadExposureSeq(String path, vector<Mat>& images, vector<float>& times)
             continue;
         }
         
-        // 创建NV21格式的Mat (单通道)
+        // create the NV21-format Mat (single channel)
         Mat nv21Mat(height + height/2, width, CV_8UC1, buffer.data());
         
-        // 转换为BGR
+        // convert to BGR
         Mat bgrMat = convertNV21toBGR(nv21Mat, width, height);
         
         if (bgrMat.empty()) {
@@ -121,7 +121,7 @@ void loadExposureSeq(String path, vector<Mat>& images, vector<float>& times)
             continue;
         }
         
-        images.push_back(bgrMat.clone());  // 克隆数据确保安全
+        images.push_back(bgrMat.clone());  // clone the data to ensure safety
         times.push_back(1 / val);
         std::cout << "Loaded: " << name << " size: " << width << "x" << height << std::endl;
     }

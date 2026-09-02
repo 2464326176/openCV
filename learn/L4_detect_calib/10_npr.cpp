@@ -1,7 +1,8 @@
-// LEARN: L4 闈炵湡瀹炴劅娓叉煋 NPR
+// LEARN: L4 non-photorealistic rendering NPR
 // OFFICIAL: tutorial_code/photo/non_photorealistic_rendering/npr_demo.cpp, npr_demo.cpp
-// THEORY: docs/ch06_objdetect_photo.md 搂6.24
-// TASK: edgePreservingFilter / detailEnhance / stylization 涓夌 NPR 婊ら暅鍦?VCG1 涓婂姣?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch06_objdetect_photo.md §6.24
+// TASK: compare three NPR filters on VCG1: edgePreservingFilter / detailEnhance / stylization
+#include <opencv2/opencv.hpp>
 #include <opencv2/photo.hpp>
 #include <opencv_utils.h>
 
@@ -12,7 +13,7 @@ int main() {
     if (img.empty()) { logInfo("imread failed: VCG1.jpg"); return -1; }
     dbgMatInfo("img", img);
 
-    // 缂╁埌鍚堢悊澶у皬渚夸簬鏄剧ず
+    // resize to reasonable size for display
     Mat small;
     resize(img, small, Size(), 480.0 / std::max(img.cols, img.rows), 480.0 / std::max(img.cols, img.rows), INTER_AREA);
 

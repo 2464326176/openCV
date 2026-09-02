@@ -1,7 +1,7 @@
-// LEARN: L2 warpPerspective 閫忚鍙樻崲
+// LEARN: L2 warpPerspective perspective transform
 // OFFICIAL: samples/cpp/warpPerspective_demo.cpp
-// THEORY: docs/ch02_imgproc.md 搂6
-// TASK: getPerspectiveTransform 鍥涚偣 鈫?warpPerspective 鎷夋
+// THEORY: docs/ch02_imgproc.md §6
+// TASK: getPerspectiveTransform four points → warpPerspective rectify
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

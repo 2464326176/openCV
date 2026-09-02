@@ -1,7 +1,7 @@
-// LEARN: L2 骞虫粦婊ゆ尝浜斿悎涓€瀵规瘮
+// LEARN: L2 Smoothing — five-in-one comparison
 // OFFICIAL: samples/cpp/tutorial_code/ImgProc/Smoothing/Smoothing.cpp
-// THEORY: docs/ch02_imgproc.md 搂1
-// TASK: blur/GaussianBlur/medianBlur/bilateralFilter 鍚岀獥鍙?hconcat 瀵规瘮
+// THEORY: docs/ch02_imgproc.md §1
+// TASK: blur/GaussianBlur/medianBlur/bilateralFilter hconcat comparison in one window
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
@@ -11,7 +11,7 @@ static Mat src;
 static int kSize = 5;
 
 static void onTrack(int, void*) {
-    int k = kSize | 1;              // 淇濊瘉濂囨暟
+    int k = kSize | 1;              // ensure odd
     if (k < 3) k = 3;
     Mat b, g, m, bi;
     blur(src, b, Size(k, k));

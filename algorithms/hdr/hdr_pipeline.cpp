@@ -12,8 +12,9 @@
 
 namespace algo {
 
-// 注: parseExposureTimeFromName / parseEvValueFromName / parseIsoFromName
-//     已在 common/nv21_io.cpp 中实现, 此处不再重复定义, 避免链接期多重定义错误.
+// Note: parseExposureTimeFromName / parseEvValueFromName / parseIsoFromName
+//       are implemented in common/nv21_io.cpp; not redefined here to avoid
+//       multiple-definition link errors.
 
 // ------------------------------------------------------------------ Tonemap helper
 
@@ -53,7 +54,7 @@ cv::Mat tonemapGamma(const cv::Mat& hdrF, float gamma, float whitePointPct) {
     cv::Mat yc;
     if (hdrF.channels() == 3) cv::cvtColor(hdrF, yc, cv::COLOR_BGR2GRAY);
     else yc = hdrF;
-    // 将白点设为 luminance top (100% - whitePointPct) 百分位
+    // Set the white point to the luminance top (100% - whitePointPct) percentile
     std::vector<float> ys;
     ys.reserve(yc.rows * yc.cols);
     for (int y = 0; y < yc.rows; ++y) {
@@ -78,10 +79,10 @@ cv::Mat tonemapGamma(const cv::Mat& hdrF, float gamma, float whitePointPct) {
     return out8u;
 }
 
-// Durand tonemap 的非 photo 依赖实现:
-// 1) 取 log10(Y); 2) 对 logY 做 bilateral = 基础层 base, 高频 = logY - base;
-// 3) 压缩基础层: base' = contrast * (base - maxBase) + maxBase;
-// 4) Y' = 10^(base' + 高频); 5) 按比例恢复 RGB.
+// Durand tonemap implementation without the photo dependency:
+// 1) take log10(Y); 2) bilateral on logY => base layer, high freq = logY - base;
+// 3) compress the base layer: base' = contrast * (base - maxBase) + maxBase;
+// 4) Y' = 10^(base' + high freq); 5) restore RGB proportionally.
 static cv::Mat tonemapDurandImpl(const cv::Mat& hdrF,
                                   const TonemapParams& p) {
     if (hdrF.empty() || hdrF.channels() != 3) return tonemapLinear(hdrF, p.gamma);
@@ -101,11 +102,11 @@ static cv::Mat tonemapDurandImpl(const cv::Mat& hdrF,
     cv::Mat base;
     int d = (int)(2 * p.spatialKernel + 1);
     double sSpace = p.spatialKernel;
-    double sRange = p.rangeKernel; // range 单位是 log10(Y), 一般 0.3~0.6
+    double sRange = p.rangeKernel; // range unit is log10(Y), typically 0.3~0.6
     cv::bilateralFilter(logY, base, d, sRange, sSpace);
     double maxBase;
     cv::minMaxLoc(base, nullptr, &maxBase);
-    // 压缩: 基础层缩放到 [-maxBase·contrast, 0], 即压缩倍率 = contrast
+    // compress: scale the base layer to [-maxBase·contrast, 0], i.e. compression ratio = contrast
     cv::Mat compressed = p.contrast * (base - maxBase) + maxBase;
     cv::Mat detail = logY - base;
     cv::Mat newLogY = compressed + detail;
@@ -194,7 +195,7 @@ std::vector<float> computeHdrLogLuminanceHistogram(const cv::Mat& hdrF,
     if (hdrF.channels() == 3) cv::cvtColor(hdrF, gray, cv::COLOR_BGR2GRAY);
     else gray = hdrF;
     if (gray.depth() != CV_32F) gray.convertTo(gray, CV_32F);
-    const float lo = -6.0f, hi = 2.0f; // log10 亮度范围
+    const float lo = -6.0f, hi = 2.0f; // log10 luminance range
     double total = 0;
     for (int y = 0; y < gray.rows; ++y) {
         const float* r = gray.ptr<float>(y);
@@ -212,7 +213,7 @@ std::vector<float> computeHdrLogLuminanceHistogram(const cv::Mat& hdrF,
     return hist;
 }
 
-// 自定义 Mertens 曝光融合 (简化实现, 与 OpenCV 结果近似但更可控)
+// Custom Mertens exposure fusion (simplified implementation, close to OpenCV but more controllable)
 cv::Mat mertensFusion(const std::vector<cv::Mat>& images8u,
                        float wContrast,
                        float wSaturation,
@@ -227,7 +228,7 @@ cv::Mat mertensFusion(const std::vector<cv::Mat>& images8u,
     std::vector<cv::Mat> weights(fImgs.size());
     for (size_t i = 0; i < fImgs.size(); ++i) {
         const auto& im = fImgs[i];
-        // 1) 对比度: Laplacian 绝对值
+        // 1) contrast: absolute Laplacian
         cv::Mat gray; cv::cvtColor(im, gray, cv::COLOR_BGR2GRAY);
         cv::Mat lap;
         cv::Mat k = (cv::Mat_<float>(3, 3) << 0, 1, 0, 1, -4, 1, 0, 1, 0);
@@ -235,7 +236,7 @@ cv::Mat mertensFusion(const std::vector<cv::Mat>& images8u,
         cv::Mat C = cv::abs(lap);
         cv::pow(C, wContrast, C);
 
-        // 2) 饱和度: 各通道标准差
+        // 2) saturation: per-channel standard deviation
         std::vector<cv::Mat> chs; cv::split(im, chs);
         cv::Mat mu = (chs[0] + chs[1] + chs[2]) / 3.0f;
         cv::Mat S = (chs[0] - mu).mul(chs[0] - mu)
@@ -244,7 +245,7 @@ cv::Mat mertensFusion(const std::vector<cv::Mat>& images8u,
         cv::sqrt(S / 3.0f, S);
         cv::pow(S, wSaturation, S);
 
-        // 3) 曝光良好程度: exp(-Σ (x_i - 0.5)^2 / (2·σ^2))
+        // 3) well-exposedness: exp(-Σ (x_i - 0.5)^2 / (2·σ^2))
         auto expo = [](const cv::Mat& x) -> cv::Mat {
             cv::Mat d = x - 0.5f; d = d.mul(d) / (2 * 0.2f * 0.2f);
             cv::Mat e; cv::exp(-d, e);
@@ -255,12 +256,12 @@ cv::Mat mertensFusion(const std::vector<cv::Mat>& images8u,
 
         weights[i] = C.mul(S).mul(E) + 1e-9f;
     }
-    // 归一化到和为 1
+    // normalize to sum 1
     cv::Mat sumW = cv::Mat::zeros(H, W, CV_32F);
     for (auto& w : weights) sumW += w;
     for (auto& w : weights) w = w / sumW;
 
-    // 多分辨率融合 (Mertens 的 5 层高斯/拉普拉斯金字塔)
+    // multi-resolution blending (Mertens 5-level Gaussian/Laplacian pyramid)
     const int levels = 5;
     auto buildGauss = [&](const cv::Mat& src) {
         std::vector<cv::Mat> gs; gs.push_back(src);
@@ -285,7 +286,7 @@ cv::Mat mertensFusion(const std::vector<cv::Mat>& images8u,
         imgLaps.push_back(buildLap(fImgs[i]));
         wGauss.push_back(buildGauss(weights[i]));
     }
-    // 合成每层
+    // blend each level
     std::vector<cv::Mat> blended(levels);
     for (int l = 0; l < levels; ++l) {
         blended[l] = cv::Mat::zeros(imgLaps[0][l].size(), CV_32FC3);
@@ -306,7 +307,7 @@ cv::Mat mertensFusion(const std::vector<cv::Mat>& images8u,
     return out8u;
 }
 
-// ------------------------------------------------------------------ 主流水线
+// ------------------------------------------------------------------ main pipeline
 
 static std::string crfMethodName(CrfMethod m) {
     return (m == CrfMethod::Debevec) ? "Debevec" : "Robertson";
@@ -372,7 +373,7 @@ HdrResult hdrPipeline(const std::vector<cv::Mat>& images8u,
         }
 
         if (!r.hdrF.empty()) {
-            // 默认 Drago
+            // default Drago
             try {
                 auto tm = cv::createTonemapDrago(tmParams.gamma, 1.0f, 0.85f);
                 cv::Mat ldrF;
@@ -382,7 +383,7 @@ HdrResult hdrPipeline(const std::vector<cv::Mat>& images8u,
                 log("hdr", std::string("default tonemap failed: ") + e.what());
                 r.ldr = tonemapLinear(r.hdrF, tmParams.gamma);
             }
-            // 多种 tonemap 对比
+            // multiple tonemap comparison
             if (!tonemaps.empty())
                 r.tonemapPack = runMultipleTonemaps(r.hdrF, tonemaps, tmParams);
             else
@@ -392,7 +393,7 @@ HdrResult hdrPipeline(const std::vector<cv::Mat>& images8u,
         }
     }
 
-    // Mertens (两种版本: 原生 OpenCV + 自定义多分辨)
+    // Mertens (two versions: native OpenCV + custom multi-resolution)
     try {
         cv::Ptr<cv::MergeMertens> mm = cv::createMergeMertens();
         cv::Mat fusionF;

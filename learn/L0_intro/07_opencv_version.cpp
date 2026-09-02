@@ -1,7 +1,7 @@
-// LEARN: L0 OpenCV 鐗堟湰涓庢瀯寤轰俊鎭?
+// LEARN: L0 OpenCV version and build info
 // OFFICIAL: samples/cpp/opencv_version.cpp
-// THEORY: docs/ch01_core.md 搂1.0
-// TASK: 鎵撳嵃 OpenCV 鐗堟湰銆佹瀯寤轰俊鎭紱璇存槑褰撳墠鐜鏄惁婊¤冻鍚庣画缁冧範
+// THEORY: docs/ch01_core.md §1.0
+// TASK: print OpenCV version and build info; verify environment for subsequent exercises
 #include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 

@@ -9,7 +9,7 @@
 
 namespace algo {
 
-// ------------------------------------------------------------------ 基础
+// ------------------------------------------------------------------ basics
 
 cv::Mat denoiseGaussian(const cv::Mat& src, int ksize, double sigma) {
     CV_Assert(!src.empty());
@@ -90,7 +90,7 @@ cv::Mat denoiseNLMGray(const cv::Mat& srcGray, float h) {
     return out;
 }
 
-// ------------------------------------------------------------------ 进阶
+// ------------------------------------------------------------------ advanced
 
 cv::Mat denoiseAdaptiveBilateral(const cv::Mat& src, int d,
                                   double baseSigmaColor, double sigmaSpace,
@@ -105,7 +105,7 @@ cv::Mat denoiseAdaptiveBilateral(const cv::Mat& src, int d,
     cv::Mat stdMat; cv::sqrt(localVar, stdMat);
 
     // σ_color(p) = baseSigma * exp( -std(p)^2 / 40^2 )
-    // 在平坦区(std≈0) σ_color≈base (强平滑), 细节区(std大)→ σ↓ 保边.
+    // In flat regions (std≈0) σ_color≈base (strong smoothing); in detail regions (large std) σ↓ to preserve edges.
     double denom = 40.0 * 40.0;
     std::vector<cv::Mat> chs; cv::split(src, chs);
     std::vector<cv::Mat> outChs;
@@ -116,7 +116,7 @@ cv::Mat denoiseAdaptiveBilateral(const cv::Mat& src, int d,
         cv::bilateralFilter(c, smooth_weak, d, std::max(5.0, baseSigmaColor * 0.3), sigmaSpace);
         cv::Mat w;
         cv::exp(-localVar / denom, w);
-        // w ∈ [0,1]: w=1 → 强平滑 (平坦), w=0 → 弱平滑 (保边)
+        // w ∈ [0,1]: w=1 => strong smoothing (flat), w=0 => weak smoothing (edge-preserving)
         smooth_base.convertTo(smooth_base, CV_32F);
         smooth_weak.convertTo(smooth_weak, CV_32F);
         cv::Mat outF = w.mul(smooth_base) + (1.0f - w).mul(smooth_weak);
@@ -151,7 +151,7 @@ cv::Mat denoiseWiener(const cv::Mat& src, int ksize, double noiseVar) {
     return out;
 }
 
-// Perona-Malik 各向异性扩散 (显式 Euler) 单通道
+// Perona-Malik anisotropic diffusion (explicit Euler), single channel
 static cv::Mat pmStep(const cv::Mat& src, double K, double dt) {
     CV_Assert(src.depth() == CV_32F);
     int H = src.rows, W = src.cols;
@@ -181,7 +181,7 @@ cv::Mat denoiseAnisotropicDiffusion(const cv::Mat& src, int niters,
                                      double K, double dt) {
     CV_Assert(!src.empty());
     if (src.channels() == 3) {
-        // 在 YCrCb 的 Y 通道做扩散, 保持色彩
+        // Diffuse on the Y channel of YCrCb to preserve color
         cv::Mat yc; cv::cvtColor(src, yc, cv::COLOR_BGR2YCrCb);
         std::vector<cv::Mat> chs; cv::split(yc, chs);
         cv::Mat f; chs[0].convertTo(f, CV_32F);
@@ -201,14 +201,14 @@ cv::Mat denoiseAnisotropicDiffusion(const cv::Mat& src, int niters,
 cv::Mat denoiseLaplacianSoftThreshold(const cv::Mat& src, int levels,
                                        double noiseStd, double thScale) {
     CV_Assert(!src.empty() && levels >= 1);
-    // 只在 Y 通道做, Cr/Cb 保色
+    // Only process the Y channel, keep Cr/Cb for color
     cv::Mat yc;
     if (src.channels() == 3) cv::cvtColor(src, yc, cv::COLOR_BGR2YCrCb);
     else yc = src.clone();
     std::vector<cv::Mat> chs; cv::split(yc, chs);
     cv::Mat Y; chs[0].convertTo(Y, CV_32F, 1.0 / 255.0);
 
-    // 构建 Gaussian + Laplacian 金字塔
+    // Build Gaussian + Laplacian pyramid
     std::vector<cv::Mat> gp; gp.push_back(Y);
     for (int l = 1; l < levels; ++l) {
         cv::Mat d; cv::pyrDown(gp.back(), d);
@@ -219,9 +219,9 @@ cv::Mat denoiseLaplacianSoftThreshold(const cv::Mat& src, int levels,
         cv::Mat up; cv::pyrUp(gp[l + 1], up, gp[l].size());
         laplacians.push_back(gp[l] - up);
     }
-    laplacians.push_back(gp.back()); // 最粗层保留
+    laplacians.push_back(gp.back()); // keep the coarsest layer
 
-    // 估计噪声 σ (只看最细层)
+    // Estimate noise σ (only the finest layer)
     if (noiseStd <= 0) {
         cv::Mat L0 = laplacians[0];
         int H = L0.rows, W = L0.cols;
@@ -236,10 +236,10 @@ cv::Mat denoiseLaplacianSoftThreshold(const cv::Mat& src, int levels,
     }
     double th = noiseStd * thScale;
 
-    // Soft threshold on Laplacian layers (最粗层不阈值, 保亮度 DC)
+    // Soft threshold on Laplacian layers (coarsest layer not thresholded, to preserve brightness DC)
     for (int l = 0; l < (int)laplacians.size() - 1; ++l) {
         auto& L = laplacians[l];
-        // sign(x)·max(0,|x|−th)
+        // sign(x)*max(0,|x|-th)
         cv::Mat a = cv::abs(L) - th;
         a = cv::max(a, 0.0);
         cv::Mat sign;
@@ -265,7 +265,7 @@ cv::Mat denoiseLaplacianSoftThreshold(const cv::Mat& src, int levels,
     return chs[0];
 }
 
-// ------------------------------------------------------------------ 噪声合成
+// ------------------------------------------------------------------ noise synthesis
 
 cv::Mat addGaussianNoise(const cv::Mat& src, double sigma, unsigned seed) {
     cv::Mat n(src.size(), src.type());
@@ -300,7 +300,7 @@ cv::Mat addSaltPepperNoise(const cv::Mat& src, double p, unsigned seed) {
 }
 
 cv::Mat addSpeckleNoise(const cv::Mat& src, double scale, unsigned seed) {
-    // 瑞利分布的 CDF 采样: s = scale·sqrt(-2·ln(U))
+    // Rayleigh CDF sampling: s = scale·sqrt(-2·ln(U))
     std::mt19937_64 gen(seed);
     std::uniform_real_distribution<double> uni(1e-5, 1.0 - 1e-5);
     cv::Mat out; src.convertTo(out, CV_64F);
@@ -326,7 +326,7 @@ cv::Mat addSpeckleNoise(const cv::Mat& src, double scale, unsigned seed) {
 }
 
 cv::Mat addPoissonNoise(const cv::Mat& src, double alpha, unsigned seed) {
-    // 对于每像素 I, 生成 Poisson(α·I) 样本然后 /α
+    // For each pixel I, draw a Poisson(α·I) sample then divide by α
     std::mt19937_64 gen(seed);
     cv::Mat out = src.clone();
     int H = src.rows, W = src.cols, C = src.channels();
@@ -353,15 +353,15 @@ cv::Mat addPoissonNoise(const cv::Mat& src, double alpha, unsigned seed) {
     return out;
 }
 
-// ------------------------------------------------------------------ 估计噪声
+// ------------------------------------------------------------------ noise estimation
 
 double estimateNoiseSigma(const cv::Mat& gray) {
     CV_Assert(!gray.empty() && gray.depth() == CV_8U);
-    // Laplacian 卷积核 = [[1 -2 1], [-2 4 -2], [1 -2 1]]
+    // Laplacian kernel = [[1 -2 1], [-2 4 -2], [1 -2 1]]
     cv::Mat lap;
     cv::Mat ker = (cv::Mat_<float>(3, 3) << 1, -2, 1, -2, 4, -2, 1, -2, 1);
     cv::filter2D(gray, lap, CV_32F, ker);
-    lap = cv::abs(lap) / 6.0; // 缩放以匹配高频残差尺度
+    lap = cv::abs(lap) / 6.0; // scale to match the high-frequency residual magnitude
     std::vector<float> vals;
     vals.reserve(lap.total());
     for (int y = 0; y < lap.rows; ++y) {
@@ -397,7 +397,7 @@ cv::Mat denoiseAuto(const cv::Mat& src, std::string* outMethodName) {
         out = denoiseGuided(n, src, 5, 0.02);
     }
     if (outMethodName) *outMethodName = method;
-    (void)algo::log; // keep unused happy; no logging side effect
+    (void)algo::log; // keep unused symbol referenced; no logging side effect
     return out;
 }
 

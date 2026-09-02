@@ -1,7 +1,8 @@
-// LEARN: L3 杞粨鏌ユ壘 findContours
-// OFFICIAL: samples/cpp/tutorial_code/ShapeDescriptors/findContours_demo.cpp銆乧ontours2.cpp
-// THEORY: docs/ch03_features.md 搂杞粨
-// TASK: Canny 鍙栬竟缂?鈫?findContours(RETR_EXTERNAL) 鈫?drawContours 闅忔満鑹?#include <opencv2/opencv.hpp>
+// LEARN: L3 Contour Detection findContours
+// OFFICIAL: samples/cpp/tutorial_code/ShapeDescriptors/findContours_demo.cpp、contours2.cpp
+// THEORY: docs/ch03_features.md §轮廓
+// TASK: Canny edge detection; findContours(RETR_EXTERNAL) get contours; drawContours random coloring
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
@@ -33,3 +34,4 @@ int main() {
     waitKey(0);
     return 0;
 }
+

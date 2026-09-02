@@ -1,13 +1,14 @@
-// LEARN: L2 HSV inRange 棰滆壊鍒嗗壊
+// LEARN: L2 HSV inRange color segmentation
 // OFFICIAL: samples/cpp/tutorial_code/ImgProc/Threshold_inRange.cpp
-// THEORY: docs/ch02_imgproc.md 搂3
-// TASK: cvtColor(BGR2HSV) 鍚?inRange 鍙栨煇鑹茶寖鍥?#include <opencv2/opencv.hpp>
+// THEORY: docs/ch02_imgproc.md §3
+// TASK: cvtColor(BGR2HSV) then inRange to extract a color range
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
 
 static Mat src, hsv;
-static int hLow = 35, hHigh = 85;   // 缁胯壊鍖洪棿
+static int hLow = 35, hHigh = 85;   // green range
 static int sLow = 50,  sHigh = 255;
 static int vLow = 50,  vHigh = 255;
 

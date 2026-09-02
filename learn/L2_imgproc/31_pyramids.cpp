@@ -1,5 +1,8 @@
-// LEARN: L2 鍥惧儚閲戝瓧濉?// OFFICIAL: samples/cpp/tutorial_code/ImgProc/Pyramids/Pyramids.cpp
-// THEORY: docs/ch02_imgproc.md 搂閲戝瓧濉?// TASK: pyrDown/pyrUp 澶氬眰涓嬮噰鏍蜂笌涓婇噰鏍?#include <opencv2/opencv.hpp>
+// LEARN: L2 Image pyramids
+// OFFICIAL: samples/cpp/tutorial_code/ImgProc/Pyramids/Pyramids.cpp
+// THEORY: docs/ch02_imgproc.md §9
+// TASK: pyrDown/pyrUp multi-level downsampling and upsampling
+#include <opencv2/opencv.hpp>
 #include <opencv_utils.h>
 
 using namespace cv;
