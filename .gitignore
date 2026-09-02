@@ -1,0 +1,111 @@
+# ============================================================================
+# openCV 学习 / 实战仓库 — .gitignore
+#
+# 三条硬约束（见 README.md §10 维护约定）：
+#   1. data/        只读依赖（真机 NV21 + 通用测试图），永不修改
+#   2. mingw-build/ 只读依赖（OpenCV 编译产物 + 官方 sample），永不修改
+#   3. out/         算法输出目录，只保留 README.md，产物随构建重新生成
+#
+# 命名规范：本仓库所有目录/文件使用 snake_case，详见 README.md §10.2
+# ============================================================================
+
+# ---- 项目硬约束: 这两个目录永不修改 (体积大 + 只读依赖) ----
+mingw-build/
+data/
+
+# ---- 构建目录 ----
+# 约定：构建目录统一用 build / build_<子项目> 前缀，不要设成 out/
+#       （out/ 是算法输出目录，clean.ps1 out 会清空它）
+build/
+build_*/
+cmake-build-debug/
+cmake-build-release/
+cmake-build-*/
+
+# ---- CMake 生成物 ----
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+Testing/
+Makefile
+makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+CMakeLists.txt.user
+CMakeUserPresets.json
+CMakePresets.json
+
+# ---- 编译产物 ----
+# 预编译头
+*.gch
+*.pch
+# 目标文件
+*.d
+*.slo
+*.lo
+*.o
+*.obj
+# 静态库 / 动态库
+*.a
+*.lai
+*.la
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+# 可执行文件
+*.exe
+*.out
+*.app
+# 调试信息
+*.pdb
+*.ilk
+*.dwo
+# Fortran 模块（OpenCV 依赖里可能带）
+*.mod
+*.smod
+
+# ---- 算法输出: out/ 只保留 README.md，其余产物重新生成 ----
+# 注意：out/* 只匹配 out 的直接子项，out/algorithms/*.png 需要单独忽略，
+#       否则 22 张 PNG（约 56 MB）会被误提交进仓库。
+out/*
+!out/README.md
+!out/algorithms/
+!out/algorithms/README.md
+out/algorithms/*.png
+out/algorithms/*.jpg
+out/algorithms/*.bmp
+
+# ---- IDE / 编辑器 ----
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+!*.code-workspace
+*.vsix
+.idea/
+*.iml
+
+# ---- 本地 AI 辅助工具 ----
+.workbuddy/
+.trae/
+.cursor/
+.codebuddy/
+.cache/
+
+# ---- 临时 / 系统文件 ----
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+*.swp
+*.swo
+*.tmp
+*.bak
+*~
