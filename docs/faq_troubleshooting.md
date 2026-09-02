@@ -57,7 +57,7 @@
 **根因**：HighGUI 没有事件循环。
 **解决**：GUI 代码末尾必须 `waitKey(>0)`，且 `cv::Mat` 窗口对象别先析构。
 
-### B2. `algo_*.exe` 运行找不到 data 图片
+### B2. `*.exe` 运行找不到 data 图片
 **现象**：`imread` 返回空，demo 用合成图兜底。
 **根因**：CWD 不是 exe 所在目录，相对路径 `../../data` 解析错。
 **解决**：`cd` 到 exe 目录再启动；或直接用 `common/opencv_utils.h` 的 `getImagePath()`
@@ -76,7 +76,7 @@
 ### B5. exe 体积巨大（每个 22 MB+）
 **根因**：静态链接 + 没开 strip。
 **解决**：Debug 才这么大；Release 用 `cv::buildInformation` 检查，发布前 `strip *.exe`。
-项目自带的 exe 是调试遗留，建议 `clean.ps1 build` 后重新 Release 构建。
+项目自带的 exe 是调试遗留，建议 `build.ps1 -Action clean` 后重新 Release 构建。
 
 ### B6. 中文路径 / 中文文件名读不出
 **现象**：`imread("测试图.jpg")` 返回空。
@@ -86,7 +86,7 @@
 ### B7. `out/` 被 CMake 缓存污染导致清理误删
 **现象**：`out/` 里混入 `CMakeCache.txt` / `Makefile`。
 **根因**：曾用 `cmake -B out` 把构建目录设成 `out/`。**`out/` 是算法输出目录，绝不该作构建目录。**
-**解决**：构建目录用 `build_algo_ALL` 这类独立名；`clean.ps1 out` 会清掉 PNG 以外的缓存。
+**解决**：构建目录用 `build/algorithms` 这类独立名；`build.ps1 -Action clean -Mode out` 会清掉 PNG 以外的缓存。
 （本项目已清理过一次，见提交记录。）
 
 ---

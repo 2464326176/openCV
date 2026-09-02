@@ -21,10 +21,10 @@
 ## 3. 运行
 
 ```powershell
-cd build_algo_ALL\algorithms
+cd build\algorithms
 
-.\algo_inpaint.exe                                    # 默认 data/images/lena.jpg
-.\algo_inpaint.exe ..\..\data\images\VCG5.jpg
+.\inpaint.exe                                    # 默认 data/images/lena.jpg
+.\inpaint.exe ..\..\data\images\VCG5.jpg
 ```
 
 构建：

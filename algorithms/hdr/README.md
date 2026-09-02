@@ -80,9 +80,9 @@ L_disp = (L_hdr / (1 + L_hdr))^(1/γ)
 
 ```powershell
 cd out\algorithms
-.\algo_hdr.exe
+.\hdr.exe
 # 指定自定义目录与 ground truth:
-.\algo_hdr.exe D:\...\data\nv21\ev D:\...\data\nv21\hdr_...\output_..._merge_3.NV21
+.\hdr.exe D:\...\data\nv21\ev D:\...\data\nv21\hdr_...\output_..._merge_3.NV21
 ```
 
 输出 `out/algorithms/hdr_compare.png`，含：Input#0、Input#1、Debevec+Drago、

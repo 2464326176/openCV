@@ -16,7 +16,7 @@ OpenCV 的 `objdetect`（目标检测）和 `photo`（计算摄影）两个模�
 - **二维条码与二维码识别**：`barcode::BarcodeDetector`、`QRCodeDetector` / `QRCodeDetectorAruco`。示例：`barcode.cpp`、`qrcode.cpp`。
 - **基准标记（fiducial marker）检测与标定**：以 ArUco / ChArUco / Diamond 为代表。这是 `tutorial_code/objectDetection/` 子目录的**真实内容**——它**不是**滑动窗口目标检测器，而是一套用于**相机标定、位姿估计（pose estimation）、增强现实（AR）**的基准标记系统。务必注意归类，不要将其误当作“通用目标检测器”。
 
-> ⚠️ **重要归类说明**：`tutorial_code/objectDetection/` 下的 `detect_markers.cpp`、`detect_board.cpp`、`detect_board_charuco.cpp`、`detect_diamonds.cpp`、`calibrate_camera*.cpp` 以及 `create_*` 系列，本质上都是 **ArUco/ChArUco 基准标记的检测、生成与相机标定**。它与 `facedetect.cpp` 那种“滑动窗口 + 级联分类器”检测器在原理上完全不同：ArUco 依赖**二进制字典 + 汉明距离匹配 + 角点几何**，而非机器学习分类器。
+>  **重要归类说明**：`tutorial_code/objectDetection/` 下的 `detect_markers.cpp`、`detect_board.cpp`、`detect_board_charuco.cpp`、`detect_diamonds.cpp`、`calibrate_camera*.cpp` 以及 `create_*` 系列，本质上都是 **ArUco/ChArUco 基准标记的检测、生成与相机标定**。它与 `facedetect.cpp` 那种“滑动窗口 + 级联分类器”检测器在原理上完全不同：ArUco 依赖**二进制字典 + 汉明距离匹配 + 角点几何**，而非机器学习分类器。
 
 ### 6.0.2 `photo` 模块的视角
 

@@ -64,7 +64,7 @@ cv::Ptr<cv::FaceRecognizerSF> recognizer = cv::FaceRecognizerSF::create(sfacePat
 在本目录下新增 `.onnx` / `.caffemodel` / `.pb` 前，务必：
 
 1. [ ] 在上方表格新增一行：文件名 / 任务 / 输入尺寸 / 来源 / 参考文档 / 使用者
-2. [ ] 在根 `OUTLINE.md` §1 目录速查表同步说明
+2. [ ] 在 [根 README §2.1 目录角色与入口](../README.md#21-目录角色与入口) 同步说明
 3. [ ] 若是大文件（> 50MB），优先用 Git LFS 或写 `_placeholder.url`，避免仓库膨胀
 4. [ ] 在 `common/opencv_utils.h` 的 `getModelPath` 相关逻辑里（如需要）补充路径别名
 5. [ ] 确认训练集来源与 license 合规

@@ -30,16 +30,10 @@
 
 ```powershell
 # 从 algorithms 的构建输出目录运行（保证 ../out/algorithms 相对路径正确）
-cd build_algo_ALL\algorithms
+cd build\algorithms
 
-.\algo_edge_detection.exe                                        # 默认 data/images/lena.jpg
-.\algo_edge_detection.exe ..\..\data\images\VCG5.jpg             # 指定图片
-```
-
-构建该模块：
-
-```powershell
-.\build.ps1 -Target algorithms -Module edge_detection
+.\edge_detection.exe                                        # 默认 data/images/lena.jpg
+.\edge_detection.exe ..\..\data\images\VCG5.jpg             # 指定图片
 ```
 
 ## 4. 输入 / 输出

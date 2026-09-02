@@ -39,10 +39,10 @@
 ## 3. 运行
 
 ```powershell
-cd build_algo_ALL\algorithms
+cd build\algorithms
 
-.\algo_hough_transform.exe                                                     # 默认 sudoku + smarties
-.\algo_hough_transform.exe ..\..\data\sudoku.png ..\..\data\smarties.png       # 显式指定
+.\hough_transform.exe                                                     # 默认 sudoku + smarties
+.\hough_transform.exe ..\..\data\sudoku.png ..\..\data\smarties.png       # 显式指定
 ```
 
 构建：

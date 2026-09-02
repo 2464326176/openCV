@@ -41,11 +41,11 @@ findHomography(RANSAC, 3.0)        ← 剔除几何不一致的离群点
 ## 3. 运行
 
 ```powershell
-cd build_algo_ALL\algorithms
+cd build\algorithms
 
-.\algo_feature_detection.exe                                                   # 默认 graf1 / graf3
-.\algo_feature_detection.exe ..\..\data\graf1.png ..\..\data\graf3.png         # 显式指定图对
-.\algo_feature_detection.exe ..\..\data\box.png ..\..\data\box_in_scene.png    # 换一组
+.\feature_detection.exe                                                   # 默认 graf1 / graf3
+.\feature_detection.exe ..\..\data\graf1.png ..\..\data\graf3.png         # 显式指定图对
+.\feature_detection.exe ..\..\data\box.png ..\..\data\box_in_scene.png    # 换一组
 ```
 
 构建：

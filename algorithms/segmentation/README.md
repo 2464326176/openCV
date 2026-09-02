@@ -24,10 +24,10 @@
 ## 3. 运行
 
 ```powershell
-cd build_algo_ALL\algorithms
+cd build\algorithms
 
-.\algo_segmentation.exe                            # 默认 data/images/lena.jpg
-.\algo_segmentation.exe ..\..\data\images\fruits.jpg
+.\segmentation.exe                            # 默认 data/images/lena.jpg
+.\segmentation.exe ..\..\data\images\fruits.jpg
 ```
 
 构建：

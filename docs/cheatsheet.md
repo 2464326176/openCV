@@ -33,7 +33,7 @@ Mat yuv = imread("b.png", IMREAD_UNCHANGED);  // 含 alpha 时要用 UNCHANGED
 | `bilateralFilter` | `(src, dst, 9, 75, 75)` | 保边去噪（值域+空间双核），美颜磨皮基础；`d`/`σ_color`/`σ_space` 三个越大越平滑越慢 |
 | `blur` | `(src, dst, Size(3,3))` | 均值滤波，简单糊边缘 |
 
-> ⚠️ 滤波前如果是 `CV_8U`，结果也是 `CV_8U`；要防溢出先 `convertTo` 到 `CV_32F`。
+>  滤波前如果是 `CV_8U`，结果也是 `CV_8U`；要防溢出先 `convertTo` 到 `CV_32F`。
 
 ---
 
@@ -91,7 +91,7 @@ morphologyEx(bin, dst, MORPH_CLOSE, k);                // 闭=先胀后蚀：填
 
 ```cpp
 int histSize = 256; float range[] = {0, 256}; const float* ranges = range;
-calcHist(&g, 1, 0, Mat(), hist, 1, &histSize, &ranges);   // ⚠️ ranges 上界是 256 是 exclusive
+calcHist(&g, 1, 0, Mat(), hist, 1, &histSize, &ranges);   //  ranges 上界是 256 是 exclusive
 normalize(hist, hist, 0, 255, NORM_MINMAX);
 equalizeHist(g, g);          // 全局均衡，天空/人脸易过曝
 CLAHE c; c = createCLAHE(2.0, Size(8,8)); c.apply(g, dst);  // 自适应，基本吊打原版
@@ -142,7 +142,7 @@ calcOpticalFlowFarneback(pG, nG, flow, 0.5, 3, 15, 3, 5, 1.2, 0);         // Far
 
 ---
 
-## 11. 评估指标（项目 `algo_common` 提供）
+## 11. 评估指标（项目 `demo_algorithms_common` 提供）
 
 | 指标 | 含义 | 越高越好？ |
 |------|------|:---------:|
@@ -165,6 +165,6 @@ calcOpticalFlowFarneback(pG, nG, flow, 0.5, 3, 15, 3, 5, 1.2, 0);         // Far
 7. `cornerHarris` 看不见 → R 值极小，需 `normalize` + `threshold`
 8. SURF/SIFT 编译失败 → 没编 `opencv_contrib`
 9. Debevec HDR 崩断言 → 用 **Mertens 曝光融合**绕开
-10. `algo_*.exe` 找不到 data → `cd` 到 exe 目录，或用 `getImagePath()`
+10. `*.exe` 找不到 data → `cd` 到 exe 目录，或用 `getImagePath()`
 
 > 更完整的 25+ 条排障清单见 [faq_troubleshooting.md](faq_troubleshooting.md)。

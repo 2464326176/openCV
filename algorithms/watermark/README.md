@@ -57,8 +57,8 @@ out = (1鈭捨?路src + 伪路overlay    # 伪=0.35
 
 ```powershell
 cd out\algorithms
-.\algo_watermark.exe                                      # lena
-.\algo_watermark.exe ..\..\data\images\VCG2.jpg
+.\watermark.exe                                      # lena
+.\watermark.exe ..\..\data\images\VCG2.jpg
 ```
 
 杈撳嚭 4 寮犲浘鍒?`out/algorithms/`锛?- `watermark_visible_text.png` (鍙鏂囧瓧)

@@ -35,11 +35,11 @@
 ## 3. 运行
 
 ```powershell
-cd build_algo_ALL\algorithms
+cd build\algorithms
 
-.\algo_optical_flow.exe                                          # 默认 data/vtest.avi 第 5 / 15 帧
-.\algo_optical_flow.exe ..\..\data\vtest.avi 5 15                # 显式指定帧号
-.\algo_optical_flow.exe ..\..\data\vtest.avi 100 101             # 相邻帧（位移小，LK 更准）
+.\optical_flow.exe                                          # 默认 data/vtest.avi 第 5 / 15 帧
+.\optical_flow.exe ..\..\data\vtest.avi 5 15                # 显式指定帧号
+.\optical_flow.exe ..\..\data\vtest.avi 100 101             # 相邻帧（位移小，LK 更准）
 ```
 
 构建：

@@ -1,6 +1,6 @@
 # algorithms — 常用图像算法 Demo 集
 
-> **17 个独立模块 + 1 个公共静态库**。每个模块是一个独立可执行 `algo_<module>.exe`，
+> **17 个独立模块 + 1 个公共静态库**。每个模块是一个独立可执行 `<module>.exe`，
 > 输出带标签的 PNG 对比图到 `out/algorithms/`，并把量化指标打到 stdout。
 >
 > 本子项目面向**算法开发实战**：吃项目里的真机数据（`data/nv21/`、`data/images/`），
@@ -13,7 +13,7 @@
 | 组织方式 | 按 OpenCV 教程章节，"知识点逐个击破" | 按**相机 ISP / 视觉算法**组织端到端 demo |
 | 单文件规模 | 40~80 行，每题一个知识点 | 100~900 行，一次跑完一个算法族 |
 | 目标 | 学会 API | 选对算法、调对参数 |
-| 共享 | 都用 `common/opencv_utils.h` | 额外共享 `algo_common` 静态库 |
+| 共享 | 都用 `common/opencv_utils.h` | 额外共享 `demo_algorithms_common` 静态库 |
 
 ---
 
@@ -48,13 +48,13 @@
 
 ```
 algorithms/
-├── common/                      公共库 (静态库 algo_common)
+├── common/                      公共库 (静态库 demo_algorithms_common)
 │   ├── nv21_io.{hpp,cpp}        NV21/NV12/I420 原始流读写、批量加载、元数据解析
 │   │                            (WWWWxHHHH / et / iso / ev / base)
 │   ├── algo_utils.{hpp,cpp}     PSNR/SSIM/MAE/MSE/MS-SSIM/LOE/NIQE + 色彩统计/增强/ECC配准/可视化
 │   └── single_denoise.{hpp,cpp} 11 种单帧降噪算法 + 4 种噪声合成
 ├── hdr/                         ├─ hdr_pipeline.{hpp,cpp}  CRF 估计 → Merge → 7 种 Tonemap + Mertens
-│                                └─ main.cpp                多帧曝光序列 + 4 种配准 + 参数扫描
+│                                └─ hdr.cpp                 多帧曝光序列 + 4 种配准 + 参数扫描
 ├── denoise_single/              单帧降噪 11 算法 × 4 类噪声 + 参数扫描
 ├── denoise_multi/               多帧降噪: ECC/仿射/单应性配准 + 4 种聚合 + 对齐残差热图
 ├── night_scene/                 夜景增强 10+ 算法 + 无参考 IQA (亮度/熵/LOE/边缘保留)
@@ -71,13 +71,12 @@ algorithms/
 ├── hough_transform/             霍夫变换: HoughLinesP 直线 + HoughCircles 圆
 ├── frequency_domain/            频域: DFT 谱 + 低通/高通/陷波去周期噪声
 ├── optical_flow/                光流: LK 稀疏 + Farneback 稠密 (HSV 速度场)
-├── CMakeLists.txt               子项目构建脚本 (ALGO_MODULE 选择器)
-└── README.md                    本文件
+└── README.md                    本文件（构建统一由根 CMakeLists.txt 自动发现，无需子 CMakeLists）
 ```
 
 ---
 
-## 3. 公共库接口总览（`algo_common`）
+## 3. 公共库接口总览（`demo_algorithms_common`）
 
 ### 3.1 评估指标（自动处理 BGR8UC3 / GRAY8UC1）
 
@@ -177,36 +176,8 @@ void   imshowFit(const std::string& win, const cv::Mat& img,
 
 ---
 
-## 4. 各模块详细说明
-
-### 4.1 ~ 4.6 ISP 主流水线模块
-
-| 模块 | 要点 | 详细文档 |
-|------|------|---------|
-| **1. HDR** `algo_hdr` | 4 种配准 → 2 种 CRF（Debevec/Robertson）→ 2 种 Merge → **7 种 Tonemap**（Drago/Reinhard02/Reinhard05/Durand/Mantiuk06/Mantiuk08/Lischinski）→ Mertens 曝光融合 + PSNR 参数扫描曲线 | [README](hdr/README.md) |
-| **2. 单帧降噪** `algo_denoise_single` | 4 类噪声合成（高斯/椒盐/泊松/斑点）× 11 种算法逐参数扫描 + 最佳参数表 | [README](denoise_single/README.md) |
-| **3. 多帧降噪** `algo_denoise_multi` | ECC/仿射/单应性配准 × 4 种融合（mean/median/trimmedMean/varianceWeighted）+ 对齐误差热图 | [README](denoise_multi/README.md) |
-| **4. 夜景增强** `algo_night_scene` | Gamma / CLAHE / SSR / MSR / MSRCR / 暗通道去雾 / ACE / **LIME** / **RetinexTV** + NR-IQA 排序 | [README](night_scene/README.md) |
-| **5. 美颜** `algo_beauty` | RGB+YCrCb+HSV 三融合皮肤 mask → 频率分离磨皮 → 五官保留 → USM 锐化 → Lab 色彩增强 | [README](beauty/README.md) |
-| **6. 水印** `algo_watermark` | 可见 3 类 + DFT 非盲（Cox 类中频环）+ **DCT QIM 盲提取** + **12 类 30+ 项鲁棒性攻击** | [README](watermark/README.md) |
-
-### 4.7 ~ 4.17 通用视觉算法模块
-
-| 模块 | 要点 | 详细文档 |
-|------|------|---------|
-| **7. 边缘检测** `algo_edge_detection` | Sobel / Scharr / Prewitt / Laplacian / LoG / DoG / Canny / Canny-Otsu，指标为边缘密度 + 平均连通域规模 | [README](edge_detection/README.md) |
-| **8. 形态学** `algo_morphology` | 腐蚀 / 膨胀 / 开 / 闭 / 梯度 / 顶帽 / 黑帽 / hit-or-miss + 3 种 SE 形状 + 核大小对比 | [README](morphology/README.md) |
-| **9. 图像分割** `algo_segmentation` | Otsu / 自适应阈值 ×2 / KMeans k=3,5,8 / MeanShift / GrabCut / Watershed / CC 伪彩 | [README](segmentation/README.md) |
-| **10. 特征检测与匹配** `algo_feature_detection` | Harris / Shi-Tomasi / FAST / ORB / BRISK / AKAZE + Lowe 比例测试 + RANSAC 内点率 | [README](feature_detection/README.md) |
-| **11. 立体匹配** `algo_stereo` | StereoBM（bs=5/11/21）+ SGBM（bs=3/11）+ JET 伪彩 + 有效占比/视差/平滑度 | [README](stereo/README.md) |
-| **12. 去模糊** `algo_deblur` | 合成 motion/defocus PSF → 逆滤波 / Wiener(K=0.001/0.01/0.1) / RL(30 iter) / USM 基线 | [README](deblur/README.md) |
-| **13. 模板匹配** `algo_template_matching` | 6 种 `TM_*` 方法（SQDIFF 系列取最小，其余取最大）+ 尺度 0.5~2.0 几何级数扫描 | [README](template_matching/README.md) |
-| **14. 图像修复** `algo_inpaint` | 合成划痕 + 文本遮挡 → Telea / NS × r=3,8，评估整图 PSNR + **mask 区 MAE** | [README](inpaint/README.md) |
-| **15. 霍夫变换** `algo_hough_transform` | Canny → `HoughLinesP`（线段端点）；高斯预模糊 → `HoughCircles`（梯度投票降维） | [README](hough_transform/README.md) |
-| **16. 频域** `algo_frequency_domain` | DFT 中心化谱 + 高斯低通/高通 + **陷波带阻去周期噪声**（12+ dB 提升） | [README](frequency_domain/README.md) |
-| **17. 光流** `algo_optical_flow` | Shi-Tomasi + `calcOpticalFlowPyrLK`（金字塔）+ `calcOpticalFlowFarneback`（HSV 速度场） | [README](optical_flow/README.md) |
-
----
+> 各模块算法细节、参数表、典型结果见 §1 链接的模块 README；根目录
+> [README.md §4 路径 C](../README.md#路径-c实战派--algorithms) 给出同样的 ISP / 通用两套分组速查。
 
 ## 5. 数据约定
 
@@ -253,58 +224,25 @@ void   imshowFit(const std::string& win, const cv::Mat& img,
 
 ### 6.2 等价的原生 CMake
 
-> ⚠️ **不要把构建目录设成 `out/`**。`out/` 是**算法输出目录**，且 `clean.ps1 out` 会清它。
-> 用 `build_algo_ALL` 这类独立目录名。
+>  **不要把构建目录设成 `out/`**。`out/` 是**算法输出目录**，且 `build.ps1 -Action clean -Mode out` 会清它。
+> 用 `build/algorithms` 这类独立目录名。
 
 ```powershell
-cmake -B build_algo_ALL -G "MinGW Makefiles" `
+cmake -B build/algorithms -G "MinGW Makefiles" `
       -DBUILD_ALGORITHMS=ON `
       -DALGO_MODULE=ALL `
       -DBUILD_MAIN=OFF `
       -DBUILD_LEARN=OFF `
       -DCMAKE_BUILD_TYPE=Release
-cmake --build build_algo_ALL -j
+cmake --build build/algorithms -j
 ```
 
 `ALGO_MODULE` 取值：`ALL`，或分号分隔的模块名（见 `CMakeLists.txt` 顶部注释）。
 
 ### 6.3 运行全部 17 个
 
-可执行都落在 `<build>/algorithms/`。**运行时 CWD 必须切到该目录**——
-代码里的默认输入路径写作 `../../data/...`，输出写作 `../out/algorithms/`，
-都是以它为基准的。
-
-```powershell
-cd build_algo_ALL\algorithms
-
-.\algo_denoise_single.exe
-.\algo_denoise_multi.exe
-.\algo_hdr.exe
-.\algo_night_scene.exe
-.\algo_beauty.exe
-.\algo_watermark.exe
-.\algo_edge_detection.exe
-.\algo_morphology.exe
-.\algo_segmentation.exe
-.\algo_feature_detection.exe
-.\algo_stereo.exe
-.\algo_deblur.exe
-.\algo_template_matching.exe
-.\algo_inpaint.exe
-.\algo_hough_transform.exe
-.\algo_frequency_domain.exe
-.\algo_optical_flow.exe
-```
-
-**一键全跑（PowerShell）**
-
-```powershell
-cd build_algo_ALL\algorithms
-Get-ChildItem .\algo_*.exe | ForEach-Object {
-    Write-Host "=== $($_.Name) ===" -ForegroundColor Cyan
-    & $_.FullName
-}
-```
+可执行都落在 `build/algorithms/`，CWD 必须切到该目录（输入路径 `../../data/...`、输出 `../out/algorithms/` 相对它解析）。
+完整清单与一键全跑脚本见 [根 README §3.1](../README.md#31-最快上手)。
 
 ### 6.4 常见运行问题
 
@@ -312,7 +250,7 @@ Get-ChildItem .\algo_*.exe | ForEach-Object {
 |------|------|------|
 | 找不到 `data` 图片 | CWD 不是 exe 所在目录 | `cd` 到 exe 目录再运行 |
 | 输出目录报错 | `../out/algorithms` 不存在 | 代码里有 `ensureDir()`，正常会自动建；若失败手动 `mkdir` |
-| `algo_hdr.exe` 断言崩溃 | OpenCV 4.13 的 `CalibrateCRF` BGR reshape 已知 bug | 改用 **Mertens 曝光融合**路径（不需要 CRF） |
+| `hdr.exe` 断言崩溃 | OpenCV 4.13 的 `CalibrateCRF` BGR reshape 已知 bug | 改用 **Mertens 曝光融合**路径（不需要 CRF） |
 | 视频类模块无输出 | `data/vtest.avi` 打不开 | 会走合成运动兜底分支，看 stdout 的 log 提示 |
 
 ---

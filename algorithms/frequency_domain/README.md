@@ -50,10 +50,10 @@ OpenCV 的 `dft` 输出**未中心化**：`F(0,0)`（直流/低频）在**左上
 ## 3. 运行
 
 ```powershell
-cd build_algo_ALL\algorithms
+cd build\algorithms
 
-.\algo_frequency_domain.exe                              # 默认 data/images/lena.jpg
-.\algo_frequency_domain.exe ..\..\data\images\baboon.png
+.\frequency_domain.exe                              # 默认 data/images/lena.jpg
+.\frequency_domain.exe ..\..\data\images\baboon.png
 ```
 
 构建：

@@ -38,11 +38,11 @@ g = h ⊛ f + n
 ## 3. 运行
 
 ```powershell
-cd build_algo_ALL\algorithms
+cd build\algorithms
 
-.\algo_deblur.exe                                                    # lena + motion, len=9
-.\algo_deblur.exe ..\..\data\images\lena.jpg defocus 7.0             # 散焦模糊 sigma=7
-.\algo_deblur.exe ..\..\data\images\VCG5.jpg motion 15               # 更长的运动模糊
+.\deblur.exe                                                    # lena + motion, len=9
+.\deblur.exe ..\..\data\images\lena.jpg defocus 7.0             # 散焦模糊 sigma=7
+.\deblur.exe ..\..\data\images\VCG5.jpg motion 15               # 更长的运动模糊
 ```
 
 构建：

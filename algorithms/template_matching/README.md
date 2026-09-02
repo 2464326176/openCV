@@ -26,10 +26,10 @@
 ## 3. 运行
 
 ```powershell
-cd build_algo_ALL\algorithms
+cd build\algorithms
 
-.\algo_template_matching.exe                                                  # 默认 lena + lena_tmpl
-.\algo_template_matching.exe ..\..\data\images\lena.jpg ..\..\data\lena_tmpl.jpg
+.\template_matching.exe                                                  # 默认 lena + lena_tmpl
+.\template_matching.exe ..\..\data\images\lena.jpg ..\..\data\lena_tmpl.jpg
 ```
 
 构建：

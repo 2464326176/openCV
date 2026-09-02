@@ -25,8 +25,8 @@ MSR 鐢?3 涓笉鍚?蟽锛堝皬/涓?澶у昂搴︼紝渚嬪 15 / 80 / 250
 
 ```powershell
 cd out\algorithms
-.\algo_night_scene.exe                                       # 榛樿 ev_-8
-.\algo_night_scene.exe ..\..\data\images\VCG2.jpg            # 浠绘剰鍥?```
+.\night_scene.exe                                       # 榛樿 ev_-8
+.\night_scene.exe ..\..\data\images\VCG2.jpg            # 浠绘剰鍥?```
 
 杈撳嚭 `out/algorithms/night_scene.png`锛? 寮犲苟鎺掞細dark input / gamma / CLAHE /
 SSR / MSR / dehaze(DCP)銆?

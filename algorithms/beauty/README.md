@@ -57,8 +57,8 @@ input BGR
 
 ```powershell
 cd out\algorithms
-.\algo_beauty.exe                                          # lena 默认
-.\algo_beauty.exe ..\..\data\images\VCG5.jpg 70           # 自定义图与磨皮强度
+.\beauty.exe                                          # lena 默认
+.\beauty.exe ..\..\data\images\VCG5.jpg 70           # 自定义图与磨皮强度
 ```
 
 输出 `out/algorithms/beauty.png`，6 张并排，从 input 一步步到 final sharp。

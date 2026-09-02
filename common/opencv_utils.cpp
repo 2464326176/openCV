@@ -140,6 +140,8 @@ std::string getProjectRoot() {
         LEARN_PROJECT_ROOT,
         "../",
         "../../",
+        "../../../",
+        "../../../../",
         "."
     });
 }
@@ -150,6 +152,8 @@ std::string getDataRoot() {
         getProjectRoot() + "data",
         "../data",
         "../../data",
+        "../../../data",
+        "../../../../data",
         "data"
     });
 }
@@ -160,6 +164,8 @@ std::string getModelsRoot() {
         getProjectRoot() + "models",
         "../models",
         "../../models",
+        "../../../models",
+        "../../../../models",
         "models"
     });
 }
@@ -172,14 +178,18 @@ std::string getImagePath(const std::string& imageName) {
         candidates = {
             dataRoot + "/" + imageName,
             std::string(IMG_PATH) + "/" + imageName,
-            "../data/" + imageName
+            "../data/" + imageName,
+            "../../data/" + imageName,
+            "../../../data/" + imageName
         };
     } else {
         candidates = {
             dataRoot + "/images/" + imageName,
             dataRoot + "/" + imageName,
             std::string(IMG_PATH) + "/images/" + imageName,
-            "../data/images/" + imageName
+            "../data/images/" + imageName,
+            "../../data/images/" + imageName,
+            "../../../data/images/" + imageName
         };
     }
     return resolveExistingPath(candidates);
@@ -190,6 +200,8 @@ std::string getModelPath(const std::string& modelName) {
     return resolveExistingPath({
         modelsRoot + "/" + modelName,
         "../models/" + modelName,
+        "../../models/" + modelName,
+        "../../../models/" + modelName,
         getProjectRoot() + "models/" + modelName
     });
 }

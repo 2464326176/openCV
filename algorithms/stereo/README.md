@@ -21,10 +21,10 @@
 ## 3. 运行
 
 ```powershell
-cd build_algo_ALL\algorithms
+cd build\algorithms
 
-.\algo_stereo.exe                                              # 默认 aloeL / aloeR
-.\algo_stereo.exe ..\..\data\aloeL.jpg ..\..\data\aloeR.jpg     # 显式指定
+.\stereo.exe                                              # 默认 aloeL / aloeR
+.\stereo.exe ..\..\data\aloeL.jpg ..\..\data\aloeR.jpg     # 显式指定
 ```
 
 构建：

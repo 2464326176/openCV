@@ -27,10 +27,10 @@
 ## 3. 运行
 
 ```powershell
-cd build_algo_ALL\algorithms
+cd build\algorithms
 
-.\algo_morphology.exe                                    # 默认 lena.jpg + Otsu 自动阈值
-.\algo_morphology.exe ..\..\data\images\VCG5.jpg 128     # 手动指定二值化阈值
+.\morphology.exe                                    # 默认 lena.jpg + Otsu 自动阈值
+.\morphology.exe ..\..\data\images\VCG5.jpg 128     # 手动指定二值化阈值
 ```
 
 构建：

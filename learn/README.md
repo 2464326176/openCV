@@ -34,16 +34,14 @@
 
 ## 编译方法
 
+完整命令见 [根 README §3.3](../README.md#33-等价原生-cmake)。等价最简：
+
 ```bash
-mkdir build_learn && cd build_learn
-cmake -G "MinGW Makefiles" -DBUILD_LEARN=ON -DLEARN_LAYER=L0 ..
-cmake --build . -j
-# 可执行文件在 build_learn/learn/
-./learn/learn_01_hello_imread.exe
+cmake -B build/learn -G "MinGW Makefiles" -DBUILD_LEARN=ON -DLEARN_LAYER=L0 ..
+cmake --build build/learn -j
 ```
 
-`LEARN_LAYER`：`ALL`（默认）或 `L0`…`L5` 单层编译。
-CMake 会把 `LEARN_PROJECT_ROOT` / `LEARN_DATA_ROOT` / `LEARN_MODELS_ROOT` 注入 `opencvUnits`，减少 CWD 依赖。
+`LEARN_LAYER`：`ALL`（默认）或 `L0`…`L5` 单层。`CMake` 注入 `LEARN_PROJECT_ROOT` / `LEARN_DATA_ROOT` / `LEARN_MODELS_ROOT`，减少 CWD 依赖。
 
 ## 与 docs / 官方 sample 的关系
 
