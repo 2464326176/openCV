@@ -34,169 +34,76 @@ message(STATUS "    libraries: ${OpenCV_LIBS}")
 message(STATUS "    include path: ${OpenCV_INCLUDE_DIRS}")
 
 # ===========================================================================
-#  Unified build convention (this file is the single source of truth; all
-#  sub-directories follow it and no longer maintain their own GLOB logic)
+#  Resource relative paths
 #
-#  1) Auto-discovery: the root CMake scans every *.cpp in the repo and groups
-#     them by top-level directory. Any new top-level demo dir (with *.cpp +
-#     int main) is compiled automatically without editing this file.
-#  2) Artifact naming: each *.cpp containing int main -> one executable whose
-#     on-disk name equals the .cpp basename (OUTPUT_NAME = stem). The CMake
-#     target name is <group>_<stem> to stay globally unique.
-#  3) Output dir: build/<group>/  (the root main target goes to build/main/).
-#  4) Duplicate handling: two .cpp files with the same stem inside one group
-#     are auto-disambiguated by appending the parent directory name (and a
-#     numeric suffix if still colliding), so all sources build without manual
-#     renaming. Same stem across different groups is also allowed, disambiguated
-#     at the target level by the <group>_ prefix.
-#  5) Resource paths: at runtime the exe lives in build/<group>/, which is
-#     always ../../ relative to the source root, so LEARN_*/ALGO_* macros are
-#     defined as relative paths (no hardcoded absolute paths / drive letters).
-#  6) Shared sources: *.cpp without main in a group are auto-aggregated into
-#     that group's static lib demo_<group>_common; the common/ dir becomes the
-#     global shared lib opencv_demo_common (linked by every executable).
+#  Every build/<group>/ is ../../ relative to the source root (build lives
+#  inside the source tree), so LEARN_*/ALGO_* macros are defined as relative
+#  paths (no hardcoded absolute paths / drive letters).
 # ===========================================================================
+file(RELATIVE_PATH RES_REL "${CMAKE_BINARY_DIR}/learn" "${CMAKE_SOURCE_DIR}")
+set(PROJ_ROOT   "${RES_REL}/")
+set(DATA_ROOT  "${RES_REL}/data")
+set(MODELS_ROOT "${RES_REL}/models")
 
-# Resource relative path: every build/<group>/ is ../../ relative to the source root (build lives inside the source tree)
-file(RELATIVE_PATH _RES_REL "${CMAKE_BINARY_DIR}/learn" "${CMAKE_SOURCE_DIR}")
-set(_PROJ_ROOT   "${_RES_REL}/")
-set(_DATA_ROOT  "${_RES_REL}/data")
-set(_MODELS_ROOT "${_RES_REL}/models")
-
-# ---- Global shared lib: common/opencv_utils.cpp (provides getProjectRoot/getImagePath, etc.) ----
+# ===========================================================================
+#  Global shared lib: common/opencv_utils.cpp
+#  Provides getProjectRoot / getImagePath / dbg* utilities for all targets.
+# ===========================================================================
 add_library(opencv_demo_common STATIC ${CMAKE_SOURCE_DIR}/common/opencv_utils.cpp)
 target_include_directories(opencv_demo_common PUBLIC
     ${CMAKE_SOURCE_DIR}/common ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(opencv_demo_common PUBLIC ${OpenCV_LIBS})
 target_compile_definitions(opencv_demo_common PUBLIC
-    LEARN_PROJECT_ROOT="${_PROJ_ROOT}"
-    LEARN_DATA_ROOT="${_DATA_ROOT}"
-    LEARN_MODELS_ROOT="${_MODELS_ROOT}")
+    LEARN_PROJECT_ROOT="${PROJ_ROOT}"
+    LEARN_DATA_ROOT="${DATA_ROOT}"
+    LEARN_MODELS_ROOT="${MODELS_ROOT}")
 
-# Collect all sub-directories (incl. nested) of a dir for target_include_directories
-function(demo_collect_incs OUT_VAR BASE_DIR)
-    file(GLOB_RECURSE _entries LIST_DIRECTORIES true "${BASE_DIR}/*")
-    set(_incs "${CMAKE_SOURCE_DIR}/common")
-    list(APPEND _incs ${OpenCV_INCLUDE_DIRS})
-    foreach(_e ${_entries})
-        if(IS_DIRECTORY "${_e}")
-            list(APPEND _incs "${_e}")
-        endif()
-    endforeach()
-    set(${OUT_VAR} "${_incs}" PARENT_SCOPE)
+# ===========================================================================
+#  Helper: create a single executable from a .cpp with common settings
+#
+#  Usage in sub-CMakeLists.txt:
+#    add_demo_exe(my_target path/to/src.cpp CXX_STD OUTPUT_DIR [EXTRA_DEFS ...])
+#
+#  The target name uses the full qualified name (e.g. learn_01_hello_imread)
+#  while OUTPUT_NAME is set to just the stem. RUNTIME_OUTPUT_DIRECTORY goes
+#  to build/<OUTPUT_DIR>/.
+# ===========================================================================
+function(add_demo_exe TARGET_NAME SOURCE_FILE CXX_STD OUTPUT_DIR)
+    add_executable(${TARGET_NAME} "${SOURCE_FILE}")
+    set_target_properties(${TARGET_NAME} PROPERTIES
+        CXX_STANDARD ${CXX_STD} CXX_STANDARD_REQUIRED ON
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${OUTPUT_DIR}"
+        RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/${OUTPUT_DIR}"
+        RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/${OUTPUT_DIR}"
+        DEBUG_POSTFIX "")
+    target_include_directories(${TARGET_NAME} PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_SOURCE_DIR}/common
+        ${OpenCV_INCLUDE_DIRS})
+    target_link_libraries(${TARGET_NAME} PRIVATE opencv_demo_common ${OpenCV_LIBS})
+    target_compile_definitions(${TARGET_NAME} PRIVATE
+        LEARN_PROJECT_ROOT="${PROJ_ROOT}"
+        LEARN_DATA_ROOT="${DATA_ROOT}"
+        LEARN_MODELS_ROOT="${MODELS_ROOT}"
+        ${ARGN})
+    if(NOT MSVC)
+        target_compile_options(${TARGET_NAME} PRIVATE -Wall -Wextra -Wno-unused-parameter)
+    endif()
+    message(STATUS "[${OUTPUT_DIR}] + exe ${TARGET_NAME} <- ${SOURCE_FILE}")
 endfunction()
 
-# Generic: process one group (recursively scans the whole group by default;
-# SUBDIRS can restrict the scan to specific sub-ranges)
-#   demo_process_group(<group_dir> <group_name> <cxx_std> [SUBDIRS dir1 dir2 ...])
-function(demo_process_group GROUP_DIR GROUP_NAME STD)
-    set(options "")
-    set(oneValueArgs "")
-    set(multiValueArgs SUBDIRS)
-    cmake_parse_arguments(DPG "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
-
-    set(_cpps "")
-    if(DPG_SUBDIRS)
-        foreach(_sd ${DPG_SUBDIRS})
-            file(GLOB_RECURSE _found "${GROUP_DIR}/${_sd}/*.cpp")
-            list(APPEND _cpps ${_found})
-        endforeach()
-    else()
-        file(GLOB_RECURSE _cpps "${GROUP_DIR}/*.cpp")
-    endif()
-
-    # Classify: *.cpp with int main -> executable; otherwise -> shared source
-    set(_exes "")
-    set(_shared "")
-    foreach(_f ${_cpps})
-        file(READ "${_f}" _c)
-        if(_c MATCHES "int[ \t\r\n]+main[ \t\r\n]*\\(")
-            list(APPEND _exes "${_f}")
-        else()
-            list(APPEND _shared "${_f}")
-        endif()
-    endforeach()
-
-    # Group shared lib (sources without main)
-    set(_grp_lib "")
-    if(_shared)
-        add_library(demo_${GROUP_NAME}_common STATIC ${_shared})
-        target_include_directories(demo_${GROUP_NAME}_common PUBLIC
-            ${GROUP_DIR} ${CMAKE_SOURCE_DIR}/common ${OpenCV_INCLUDE_DIRS})
-        target_link_libraries(demo_${GROUP_NAME}_common PUBLIC ${OpenCV_LIBS} opencv_demo_common)
-        target_compile_definitions(demo_${GROUP_NAME}_common PUBLIC
-            LEARN_PROJECT_ROOT="${_PROJ_ROOT}"
-            LEARN_DATA_ROOT="${_DATA_ROOT}"
-            LEARN_MODELS_ROOT="${_MODELS_ROOT}")
-        set_target_properties(demo_${GROUP_NAME}_common PROPERTIES
-            CXX_STANDARD ${STD} CXX_STANDARD_REQUIRED ON)
-        set(_grp_lib demo_${GROUP_NAME}_common)
-    endif()
-
-    demo_collect_incs(_incs "${GROUP_DIR}")
-
-    set(_used "")
-    foreach(_f ${_exes})
-        get_filename_component(_stem "${_f}" NAME_WE)
-        if(_stem IN_LIST _used)
-            # Auto-disambiguate duplicate stems within one group (e.g. two
-            # equalize_hist.cpp living in different subdirs) by appending the
-            # immediate parent directory name, then a numeric index if still
-            # colliding. This keeps "build everything" working without having
-            # to rename source files.
-            get_filename_component(_pardir "${_f}" DIRECTORY)
-            get_filename_component(_pardir "${_pardir}" NAME)
-            set(_stem "${_stem}_${_pardir}")
-            set(_k 2)
-            while(_stem IN_LIST _used)
-                set(_stem "${_stem}_${_k}")
-                math(EXPR _k "${_k} + 1")
-            endwhile()
-            message(STATUS "[${GROUP_NAME}] duplicate stem disambiguated -> ${_stem} (${_f})")
-        endif()
-        list(APPEND _used "${_stem}")
-
-        set(_tgt "${GROUP_NAME}_${_stem}")
-        add_executable(${_tgt} "${_f}")
-        set_target_properties(${_tgt} PROPERTIES
-            CXX_STANDARD ${STD} CXX_STANDARD_REQUIRED ON
-            OUTPUT_NAME "${_stem}"
-            RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${GROUP_NAME}"
-            RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/${GROUP_NAME}"
-            RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/${GROUP_NAME}"
-            DEBUG_POSTFIX "")
-        target_include_directories(${_tgt} PRIVATE ${_incs})
-        target_link_libraries(${_tgt} PRIVATE ${_grp_lib} opencv_demo_common ${OpenCV_LIBS})
-        target_compile_definitions(${_tgt} PRIVATE
-            LEARN_PROJECT_ROOT="${_PROJ_ROOT}"
-            LEARN_DATA_ROOT="${_DATA_ROOT}"
-            LEARN_MODELS_ROOT="${_MODELS_ROOT}"
-            ALGO_PROJECT_ROOT="${_PROJ_ROOT}"
-            ALGO_DATA_ROOT="${_DATA_ROOT}"
-            ALGO_MODELS_ROOT="${_MODELS_ROOT}")
-        if(MSVC)
-            target_compile_options(${_tgt} PRIVATE /W3 /permissive-)
-        else()
-            target_compile_options(${_tgt} PRIVATE -Wall -Wextra -Wno-unused-parameter)
-        endif()
-        message(STATUS "[${GROUP_NAME}] + exe ${_stem} <- ${_f}")
-    endforeach()
-    message(STATUS "[${GROUP_NAME}] built exes (${GROUP_NAME}): ${_exes}")
-endfunction()
-
-# ---- Build switches (BUILD_*) ----
-# Known groups keep explicit switches; any future new dir auto-generates a
-# BUILD_<GROUP> switch (default OFF).
-# Default build everything. Turn any group OFF with -DBUILD_<GROUP>=OFF.
+# ===========================================================================
+#  Build switches
+# ===========================================================================
 option(BUILD_MAIN "Build root openCv main executable" ON)
 option(BUILD_LEARN "Build learn layered exercises" ON)
 option(BUILD_ALGORITHMS "Build algorithms demo set" ON)
 option(BUILD_NOTES "Build notes/image_process exercises" ON)
 
-# Fine-grained switches for learn / algorithms (originally in sub-CMakeLists,
-# promoted to the root so auto-discovery can use them)
+# Fine-grained switches
 set(LEARN_LAYER "ALL" CACHE STRING "Which layer to build: L0,L1,L2,L3,L4,L5 or ALL")
 set_property(CACHE LEARN_LAYER PROPERTY STRINGS ALL L0 L1 L2 L3 L4 L5)
+
 set(ALGO_MODULE "hdr;denoise_single" CACHE STRING
     "Algorithms modules to build (ALL or semicolon-separated list)")
 set_property(CACHE ALGO_MODULE PROPERTY STRINGS
@@ -204,7 +111,9 @@ set_property(CACHE ALGO_MODULE PROPERTY STRINGS
     edge_detection morphology segmentation feature_detection stereo
     deblur template_matching inpaint hough_transform frequency_domain optical_flow)
 
-# ---- Root main target: openCv.cpp (formerly main.cpp) ----
+# ===========================================================================
+#  Root main target: openCv.cpp
+# ===========================================================================
 if(BUILD_MAIN)
     set(_root_src "${CMAKE_SOURCE_DIR}/openCv.cpp")
     if(EXISTS "${_root_src}")
@@ -215,12 +124,13 @@ if(BUILD_MAIN)
             RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/main"
             RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/main"
             DEBUG_POSTFIX "")
-        target_include_directories(openCv PRIVATE ${CMAKE_SOURCE_DIR}/common ${OpenCV_INCLUDE_DIRS})
+        target_include_directories(openCv PRIVATE
+            ${CMAKE_SOURCE_DIR}/common ${OpenCV_INCLUDE_DIRS})
         target_link_libraries(openCv PRIVATE opencv_demo_common ${OpenCV_LIBS})
         target_compile_definitions(openCv PRIVATE
-            LEARN_PROJECT_ROOT="${_PROJ_ROOT}"
-            LEARN_DATA_ROOT="${_DATA_ROOT}"
-            LEARN_MODELS_ROOT="${_MODELS_ROOT}")
+            LEARN_PROJECT_ROOT="${PROJ_ROOT}"
+            LEARN_DATA_ROOT="${DATA_ROOT}"
+            LEARN_MODELS_ROOT="${MODELS_ROOT}")
         if(NOT MSVC)
             target_compile_options(openCv PRIVATE -Wall -Wextra -Wno-unused-parameter)
         endif()
@@ -230,119 +140,17 @@ if(BUILD_MAIN)
     endif()
 endif()
 
-# ---- learn: layer filtering (LEARN_LAYER) ----
+# ===========================================================================
+#  Sub-projects: each group has its own CMakeLists.txt with explicit sources
+# ===========================================================================
 if(BUILD_LEARN)
-    set(_all_layers L0_intro L1_core L2_imgproc L3_features_video L4_detect_calib L5_ml_gapi)
-    if(LEARN_LAYER STREQUAL "ALL")
-        set(_active ${_all_layers})
-    else()
-        set(_map_L0 L0_intro)
-        set(_map_L1 L1_core)
-        set(_map_L2 L2_imgproc)
-        set(_map_L3 L3_features_video)
-        set(_map_L4 L4_detect_calib)
-        set(_map_L5 L5_ml_gapi)
-        set(_active ${_map_${LEARN_LAYER}})
-    endif()
-    message(STATUS "learn: LEARN_LAYER=${LEARN_LAYER} active=${_active}")
-    demo_process_group(${CMAKE_SOURCE_DIR}/learn learn 11 SUBDIRS ${_active})
+    add_subdirectory(learn)
 endif()
 
-# ---- algorithms: module filtering (ALGO_MODULE) + fixed shared lib ----
 if(BUILD_ALGORITHMS)
-    set(_all_modules denoise_single denoise_multi hdr night_scene beauty watermark
-        edge_detection morphology segmentation feature_detection stereo
-        deblur template_matching inpaint hough_transform frequency_domain optical_flow)
-    if(ALGO_MODULE STREQUAL "ALL")
-        set(_active ${_all_modules})
-    else()
-        set(_active ${ALGO_MODULE})
-    endif()
-    message(STATUS "[algorithms] ALGO_MODULE=${ALGO_MODULE} active=${_active}")
-
-    # Fixed shared lib: common/* + hdr/hdr_pipeline.cpp (C++17)
-    set(_algo_shared
-        ${CMAKE_SOURCE_DIR}/algorithms/common/nv21_io.cpp
-        ${CMAKE_SOURCE_DIR}/algorithms/common/algo_utils.cpp
-        ${CMAKE_SOURCE_DIR}/algorithms/common/single_denoise.cpp
-        ${CMAKE_SOURCE_DIR}/algorithms/hdr/hdr_pipeline.cpp)
-    add_library(demo_algorithms_common STATIC ${_algo_shared})
-    target_include_directories(demo_algorithms_common PUBLIC
-        ${CMAKE_SOURCE_DIR}/algorithms/common
-        ${CMAKE_SOURCE_DIR}/algorithms/hdr
-        ${CMAKE_SOURCE_DIR}/common ${OpenCV_INCLUDE_DIRS})
-    target_link_libraries(demo_algorithms_common PUBLIC ${OpenCV_LIBS} opencv_demo_common)
-    target_compile_definitions(demo_algorithms_common PUBLIC
-        LEARN_PROJECT_ROOT="${_PROJ_ROOT}" LEARN_DATA_ROOT="${_DATA_ROOT}" LEARN_MODELS_ROOT="${_MODELS_ROOT}"
-        ALGO_PROJECT_ROOT="${_PROJ_ROOT}" ALGO_DATA_ROOT="${_DATA_ROOT}" ALGO_MODELS_ROOT="${_MODELS_ROOT}")
-    set_target_properties(demo_algorithms_common PROPERTIES
-        CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
-
-    demo_collect_incs(_algo_incs "${CMAKE_SOURCE_DIR}/algorithms")
-    set(_used "")
-    foreach(_m ${_active})
-        set(_src "${CMAKE_SOURCE_DIR}/algorithms/${_m}/${_m}.cpp")
-        if(NOT EXISTS "${_src}")
-            message(WARNING "[algorithms] module ${_m} has no ${_m}.cpp, skip")
-            continue()
-        endif()
-        set(_stem "${_m}")
-        if(_stem IN_LIST _used)
-            message(FATAL_ERROR "Duplicate algorithm module '${_stem}'")
-        endif()
-        list(APPEND _used "${_stem}")
-        set(_tgt "algorithms_${_stem}")
-        add_executable(${_tgt} "${_src}")
-        set_target_properties(${_tgt} PROPERTIES
-            CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON
-            OUTPUT_NAME "${_stem}"
-            RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/algorithms"
-            RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/algorithms"
-            RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/algorithms"
-            DEBUG_POSTFIX "")
-        target_include_directories(${_tgt} PRIVATE ${_algo_incs})
-        target_link_libraries(${_tgt} PRIVATE demo_algorithms_common opencv_demo_common ${OpenCV_LIBS})
-        target_compile_definitions(${_tgt} PRIVATE
-            LEARN_PROJECT_ROOT="${_PROJ_ROOT}" LEARN_DATA_ROOT="${_DATA_ROOT}" LEARN_MODELS_ROOT="${_MODELS_ROOT}"
-            ALGO_PROJECT_ROOT="${_PROJ_ROOT}" ALGO_DATA_ROOT="${_DATA_ROOT}" ALGO_MODELS_ROOT="${_MODELS_ROOT}")
-        if(MSVC)
-            target_compile_options(${_tgt} PRIVATE /W3 /permissive-)
-        else()
-            target_compile_options(${_tgt} PRIVATE -Wall -Wextra -Wno-unused-parameter)
-        endif()
-        message(STATUS "[algorithms] + exe ${_stem} <- ${_src}")
-    endforeach()
+    add_subdirectory(algorithms)
 endif()
 
-# ---- notes: generic whole-group auto-discovery (C++14) ----
 if(BUILD_NOTES)
-    demo_process_group(${CMAKE_SOURCE_DIR}/notes notes 14)
+    add_subdirectory(notes)
 endif()
-
-# ---- Future new dirs: auto-discovery, zero CMake edits ----
-# Any top-level dir not handled explicitly above is treated as a group and
-# compiled automatically as long as it contains *.cpp.
-# The switch defaults to OFF; enable with -DBUILD_<GROUP>=ON.
-set(_EXCLUDE_DIRS build .git docs images models mingw-build)
-file(GLOB _top LIST_DIRECTORIES true ${CMAKE_SOURCE_DIR}/*)
-foreach(_e ${_top})
-    if(NOT IS_DIRECTORY "${_e}")
-        continue()
-    endif()
-    get_filename_component(_grp "${_e}" NAME)
-    if(_grp IN_LIST _EXCLUDE_DIRS)
-        continue()
-    endif()
-    if(_grp STREQUAL "common" OR _grp STREQUAL "learn"
-       OR _grp STREQUAL "algorithms" OR _grp STREQUAL "notes")
-        continue()
-    endif()
-    string(TOUPPER "${_grp}" _grp_up)
-    option(BUILD_${_grp_up} "Build ${_grp} group" ON)
-    if(BUILD_${_grp_up})
-        message(STATUS "[auto] discovered group '${_grp}' (BUILD_${_grp_up}=ON)")
-        demo_process_group("${_e}" "${_grp}" 11)
-    else()
-        message(STATUS "[auto] group '${_grp}' found but BUILD_${_grp_up}=OFF (skip; enable with -DBUILD_${_grp_up}=ON)")
-    endif()
-endforeach()
