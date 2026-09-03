@@ -17,6 +17,7 @@
 
 #include <algorithm>
 #include <chrono>
+#include <cstdlib>
 #include <cmath>
 #include <cstdio>
 #include <cstring>
@@ -549,8 +550,19 @@ cv::Mat attachHeatmapBelow(const cv::Mat& top, const cv::Mat& grayMap,
     return canvas;
 }
 
+namespace {
+// CI-friendly: set ALGO_HEADLESS=1 to skip all imshow/waitKey windows.
+bool headlessEnabled() {
+    static const int v = [] {
+        const char* e = std::getenv("ALGO_HEADLESS");
+        return (e && *e && *e != '0') ? 1 : 0;
+    }();
+    return v == 1;
+}
+} // namespace
+
 void imshowFit(const std::string& win, const cv::Mat& img, int maxEdge, int delay) {
-    if (img.empty()) return;
+    if (img.empty() || headlessEnabled()) return;
     int maxDim = std::max(img.rows, img.cols);
     double s = maxDim > maxEdge ? (double)maxEdge / maxDim : 1.0;
     cv::Mat out;

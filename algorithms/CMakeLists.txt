@@ -4,13 +4,18 @@
 #  Module filtering via ALGO_MODULE cache variable (set in root):
 #    ALL                               - build all modules
 #    "hdr;denoise_single"              - selected modules only (default)
+#
+#  All exe boilerplate (includes/links/defines/warnings/output dir) is
+#  applied by the root add_demo_exe() helper; the aggregate custom target
+#  "algorithms" (created in the root) builds every module at once.
 # ============================================================================
 
 # ---- Module filtering ----
 set(_all_modules
     denoise_single denoise_multi hdr night_scene beauty watermark
     edge_detection morphology segmentation feature_detection stereo
-    deblur template_matching inpaint hough_transform frequency_domain optical_flow)
+    deblur template_matching inpaint hough_transform frequency_domain
+    optical_flow sharpen demosaic color_transfer)
 
 if(ALGO_MODULE STREQUAL "ALL")
     set(_active ${_all_modules})
@@ -18,9 +23,12 @@ else()
     set(_active ${ALGO_MODULE})
 endif()
 
-message(STATUS "[algorithms] ALGO_MODULE=${ALGO_MODULE} active=${_active}")
+list(LENGTH _active _n)
+message(STATUS "[algorithms] ALGO_MODULE=${ALGO_MODULE} active=${_active} (${_n} modules)")
 
 # ---- Shared library: common utilities + hdr_pipeline ----
+# Its PUBLIC compile definitions (LEARN_*/ALGO_* roots) propagate to every
+# algorithm executable linked against it, so no per-target DEFS are needed.
 add_library(demo_algorithms_common STATIC
     ${CMAKE_SOURCE_DIR}/algorithms/common/nv21_io.cpp
     ${CMAKE_SOURCE_DIR}/algorithms/common/algo_utils.cpp
@@ -39,41 +47,22 @@ target_compile_definitions(demo_algorithms_common PUBLIC
 set_target_properties(demo_algorithms_common PROPERTIES
     CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
 
-# ---- Collect include directories for algorithm targets ----
-file(GLOB_RECURSE _algo_entries LIST_DIRECTORIES true "${CMAKE_CURRENT_SOURCE_DIR}/*")
-set(_algo_incs "${CMAKE_SOURCE_DIR}/common" ${OpenCV_INCLUDE_DIRS})
-foreach(_e ${_algo_entries})
+# ---- Module include dirs (one level: algorithms/<module>/) ----
+file(GLOB _algo_dirs LIST_DIRECTORIES true "${CMAKE_CURRENT_SOURCE_DIR}/*")
+set(_algo_incs)
+foreach(_e ${_algo_dirs})
     if(IS_DIRECTORY "${_e}")
         list(APPEND _algo_incs "${_e}")
     endif()
 endforeach()
 
 # ---- Module executables ----
-set(_algo_defs
-    LEARN_PROJECT_ROOT="${PROJ_ROOT}" LEARN_DATA_ROOT="${DATA_ROOT}" LEARN_MODELS_ROOT="${MODELS_ROOT}"
-    ALGO_PROJECT_ROOT="${PROJ_ROOT}" ALGO_DATA_ROOT="${DATA_ROOT}" ALGO_MODELS_ROOT="${MODELS_ROOT}")
-
 foreach(_m ${_active})
-    set(_src "${CMAKE_CURRENT_SOURCE_DIR}/${_m}/${_m}.cpp")
-    if(NOT EXISTS "${_src}")
+    if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${_m}/${_m}.cpp")
         message(WARNING "[algorithms] module ${_m} has no ${_m}.cpp, skip")
         continue()
     endif()
-
-    add_executable(algorithms_${_m} "${_src}")
-    set_target_properties(algorithms_${_m} PROPERTIES
-        CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON
-        OUTPUT_NAME "${_m}"
-        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/algorithms"
-        RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/algorithms"
-        RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/algorithms"
-        DEBUG_POSTFIX "")
-    target_include_directories(algorithms_${_m} PRIVATE ${_algo_incs})
-    target_link_libraries(algorithms_${_m} PRIVATE
-        demo_algorithms_common opencv_demo_common ${OpenCV_LIBS})
-    target_compile_definitions(algorithms_${_m} PRIVATE ${_algo_defs})
-    if(NOT MSVC)
-        target_compile_options(algorithms_${_m} PRIVATE -Wall -Wextra -Wno-unused-parameter)
-    endif()
-    message(STATUS "[algorithms] + exe ${_m} <- ${_src}")
+    add_demo_exe(algorithms_${_m} "${_m}/${_m}.cpp" 17 algorithms
+        LIBS demo_algorithms_common
+        INCS ${_algo_incs})
 endforeach()

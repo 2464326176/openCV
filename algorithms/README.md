@@ -1,6 +1,6 @@
 # algorithms — 常用图像算法 Demo 集
 
-> **17 个独立模块 + 1 个公共静态库**。每个模块是一个独立可执行 `<module>.exe`，
+> **20 个独立模块 + 1 个公共静态库**。每个模块是一个独立可执行 `<module>.exe`，
 > 输出带标签的 PNG 对比图到 `out/algorithms/`，并把量化指标打到 stdout。
 >
 > 本子项目面向**算法开发实战**：吃项目里的真机数据（`data/nv21/`、`data/images/`），
@@ -17,7 +17,7 @@
 
 ---
 
-## 1. 模块速览总表（17 个）
+## 1. 模块速览总表（20 个）
 
 | # | 模块 | 算法数 | 主要输入 | 输出 PNG | 有无 GT 参考 |
 |:-:|------|:------:|---------|---------|:-----------:|
@@ -38,6 +38,9 @@
 | 15 | [`hough_transform`](hough_transform/README.md) | 直线 + 圆检测 | `data/sudoku.png`、`smarties.png` | 2 张（线 + 圆） | ❌ 无参考 |
 | 16 | [`frequency_domain`](frequency_domain/README.md) | 谱分析 / 低通 / 高通 / 陷波 | `data/images/`（自叠周期噪声） | `frequency_domain_compare.png` | ✅ 干净原图 |
 | 17 | [`optical_flow`](optical_flow/README.md) | LK 稀疏 + Farneback 稠密 | `data/vtest.avi` | `optical_flow_compare.png` | ✅ 合成运动时 |
+| 18 | [`sharpen`](sharpen/README.md) | 5 类锐化（USM/引导/掩码抑制）× 9 变体 | `data/images/`（自合成退化） | `sharpen_compare.png` | ✅ 清晰原图 |
+| 19 | [`demosaic`](demosaic/README.md) | Bilinear/Malvar/VNG/EA | `data/images/`（自合成 CFA） | 2 张（全图 + 细节） | ✅ 原图 |
+| 20 | [`color_transfer`](color_transfer/README.md) | LAB 均值方差 / RGB / 直方图 / 仅亮度 | `data/images/` 图对 | `color_transfer_compare.png` | ❌ 风格指标 |
 
 > **有 GT 的模块**（✅）能给出 PSNR/SSIM 这类硬指标；**无 GT 的模块**用边缘密度、
 > 内点率、平滑度等**无参考统计量**来横向比较。判读方法见各模块 README 的"结果怎么读"。
@@ -71,6 +74,9 @@ algorithms/
 ├── hough_transform/             霍夫变换: HoughLinesP 直线 + HoughCircles 圆
 ├── frequency_domain/            频域: DFT 谱 + 低通/高通/陷波去周期噪声
 ├── optical_flow/                光流: LK 稀疏 + Farneback 稠密 (HSV 速度场)
+├── sharpen/                     锐化: USM/引导滤波/光晕抑制 + Tenengrad + 参数扫描
+├── demosaic/                    去马赛克: 合成 RGGB CFA + Bilinear/Malvar/VNG/EA
+├── color_transfer/              色彩迁移: Reinhard LAB/直方图匹配/仅亮度迁移
 └── README.md                    本文件（构建统一由根 CMakeLists.txt 自动发现，无需子 CMakeLists）
 ```
 
@@ -185,7 +191,7 @@ void   imshowFit(const std::string& win, const cv::Mat& img,
 
 | 数据 | 用途 | 被哪些模块读 |
 |------|------|------------|
-| `data/images/` | 通用 jpg/png 测试图（lena 等） | 1, 5, 6, 7, 8, 9, 12, 13, 14, 16, 17(兜底) |
+| `data/images/` | 通用 jpg/png 测试图（lena 等） | 1, 5, 6, 7, 8, 9, 12, 13, 14, 16, 17(兜底), 18, 19, 20 |
 | `data/nv21/ev/` | 3 帧 ev=-8/-4/0 NV21 (4032×3000) | 3, 4 |
 | `data/nv21/hdr_*/` | 3 帧 ev 输入 + GT `merge_3.NV21` | 3 |
 | `data/nv21/nr/` | YNRCNR 单帧降噪 in/out 对 (3264×2448) | 2 |
@@ -212,7 +218,7 @@ void   imshowFit(const std::string& win, const cv::Mat& img,
 ### 6.1 推荐：用根目录的 build.ps1
 
 ```powershell
-# 全量构建 17 个模块
+# 全量构建 20 个模块
 .\build.ps1 -Target algorithms -Module ALL
 
 # 只编 3 个
@@ -239,7 +245,7 @@ cmake --build build/algorithms -j
 
 `ALGO_MODULE` 取值：`ALL`，或分号分隔的模块名（见 `CMakeLists.txt` 顶部注释）。
 
-### 6.3 运行全部 17 个
+### 6.3 运行全部 20 个
 
 可执行都落在 `build/algorithms/`，CWD 必须切到该目录（输入路径 `../../data/...`、输出 `../out/algorithms/` 相对它解析）。
 完整清单与一键全跑脚本见 [根 README §3.1](../README.md#31-最快上手)。
@@ -263,7 +269,7 @@ cmake --build build/algorithms -j
 - [ ] `deblur`：加噪声注入 + 盲去模糊（模糊核估计）
 - [ ] `stereo`：加 WLS 滤波与左右一致性检查（contrib ximgproc）
 - [ ] `segmentation`：加 SLIC 超像素与 IoU 定量评估
-- [ ] `common`：加 `--headless` 环境变量跳过 `imshow`（CI 友好）
+- [x] `common`：加 `ALGO_HEADLESS=1` 环境变量跳过 `imshow`（CI 友好）
 
 **中期（向 DNN 迁移）**
 

@@ -6,11 +6,16 @@ project(openCv VERSION 0.1.0 LANGUAGES C CXX)
 #
 #    build.bat              # Build ALL targets in parallel (recommended)
 #    build.bat --target xxx # Build a single target
+#    build.bat --target learn / algorithms / notes / main   # Build a group
 #    build.bat --configure  # Reconfigure cmake
 #
 #  Or manually:
 #    cmake --build build -j                # Parallel build (use all cores)
 #    cmake --build build -j --target xxx   # Single target
+#
+#  Build types: Release (default) / Debug via
+#    cmake --preset openCv     # Debug   -> build/
+#    cmake --preset release    # Release -> build-release/
 #
 #  To build only specific layers:
 #    cmake -S . -B build -DLEARN_LAYER=L2 -DALGO_MODULE="hdr;denoise_single"
@@ -18,6 +23,27 @@ project(openCv VERSION 0.1.0 LANGUAGES C CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# ---------------------------------------------------------------------------
+#  Default build type: a plain `cmake -S . -B build` used to leave
+#  CMAKE_BUILD_TYPE empty => no -O flags at all. Default to Release.
+#  Override with -DCMAKE_BUILD_TYPE=Debug (or use the CMake presets).
+# ---------------------------------------------------------------------------
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING
+        "Build type (Debug / Release / RelWithDebInfo)" FORCE)
+endif()
+
+# ---------------------------------------------------------------------------
+#  Optional compiler cache (ccache / sccache). No-op when not installed;
+#  if present, rebuilds after branch switches / small edits are much faster.
+# ---------------------------------------------------------------------------
+find_program(CCACHE_PROGRAM ccache sccache)
+if(CCACHE_PROGRAM)
+    set(CMAKE_C_COMPILER_LAUNCHER   "${CCACHE_PROGRAM}")
+    set(CMAKE_CXX_COMPILER_LAUNCHER "${CCACHE_PROGRAM}")
+    message(STATUS "Compiler cache enabled: ${CCACHE_PROGRAM}")
+endif()
 
 # This repo is built against a MinGW-built OpenCV. The only MinGW build
 # available here installed the static libs (x64/mingw/staticlib) and NOT the
@@ -39,6 +65,16 @@ if(NOT DEFINED OpenCV_DIR AND EXISTS "${_LOCAL_OPENCV}")
 endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_COLOR_DIAGNOSTICS ON)
+
+# Pipe compiler temp files instead of writing them to disk (GCC/Clang only):
+# noticeably faster compiles on Windows, zero risk.
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(-pipe)
+endif()
+
+# Shared warning flags used by every demo target (see add_demo_exe).
+set(DEMO_WARN_FLAGS -Wall -Wextra -Wno-unused-parameter)
 
 # Find OpenCV (you may set OpenCV_DIR to the dir containing OpenCVConfig.cmake)
 find_package(OpenCV REQUIRED)
@@ -77,16 +113,23 @@ target_compile_definitions(opencv_demo_common PUBLIC
 #  Helper: create a single executable from a .cpp with common settings
 #
 #  Usage in sub-CMakeLists.txt:
-#    add_demo_exe(my_target path/to/src.cpp CXX_STD OUTPUT_DIR [EXTRA_DEFS ...])
+#    add_demo_exe(my_target path/to/src.cpp CXX_STD OUTPUT_DIR
+#                 [LIBS extra_lib ...] [INCS extra_dir ...] [DEFS def ...])
 #
-#  The target name uses the full qualified name (e.g. learn_01_hello_imread)
-#  while OUTPUT_NAME is set to just the stem. RUNTIME_OUTPUT_DIRECTORY goes
-#  to build/<OUTPUT_DIR>/.
+#  - TARGET name is the fully qualified name (e.g. learn_01_hello_imread);
+#    OUTPUT_NAME is auto-set to the source file stem.
+#  - Every created target is registered in the GLOBAL property
+#    DEMO_TARGETS_<OUTPUT_DIR> so the root can attach a convenience
+#    aggregate target per group (e.g. `cmake --build build --target learn`).
 # ===========================================================================
 function(add_demo_exe TARGET_NAME SOURCE_FILE CXX_STD OUTPUT_DIR)
+    cmake_parse_arguments(PARSE_ARGV 4 DEMO "" "" "LIBS;INCS;DEFS")
+    get_filename_component(_stem "${SOURCE_FILE}" NAME_WE)
+
     add_executable(${TARGET_NAME} "${SOURCE_FILE}")
     set_target_properties(${TARGET_NAME} PROPERTIES
         CXX_STANDARD ${CXX_STD} CXX_STANDARD_REQUIRED ON
+        OUTPUT_NAME "${_stem}"
         RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${OUTPUT_DIR}"
         RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/${OUTPUT_DIR}"
         RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/${OUTPUT_DIR}"
@@ -94,16 +137,19 @@ function(add_demo_exe TARGET_NAME SOURCE_FILE CXX_STD OUTPUT_DIR)
     target_include_directories(${TARGET_NAME} PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${CMAKE_SOURCE_DIR}/common
-        ${OpenCV_INCLUDE_DIRS})
-    target_link_libraries(${TARGET_NAME} PRIVATE opencv_demo_common ${OpenCV_LIBS})
+        ${OpenCV_INCLUDE_DIRS}
+        ${DEMO_INCS})
+    target_link_libraries(${TARGET_NAME} PRIVATE
+        opencv_demo_common ${DEMO_LIBS} ${OpenCV_LIBS})
     target_compile_definitions(${TARGET_NAME} PRIVATE
         LEARN_PROJECT_ROOT="${PROJ_ROOT}"
         LEARN_DATA_ROOT="${DATA_ROOT}"
         LEARN_MODELS_ROOT="${MODELS_ROOT}"
-        ${ARGN})
+        ${DEMO_DEFS})
     if(NOT MSVC)
-        target_compile_options(${TARGET_NAME} PRIVATE -Wall -Wextra -Wno-unused-parameter)
+        target_compile_options(${TARGET_NAME} PRIVATE ${DEMO_WARN_FLAGS})
     endif()
+    set_property(GLOBAL APPEND PROPERTY "DEMO_TARGETS_${OUTPUT_DIR}" "${TARGET_NAME}")
     message(STATUS "[${OUTPUT_DIR}] + exe ${TARGET_NAME} <- ${SOURCE_FILE}")
 endfunction()
 
@@ -124,7 +170,8 @@ set(ALGO_MODULE "hdr;denoise_single" CACHE STRING
 set_property(CACHE ALGO_MODULE PROPERTY STRINGS
     ALL denoise_single denoise_multi hdr night_scene beauty watermark
     edge_detection morphology segmentation feature_detection stereo
-    deblur template_matching inpaint hough_transform frequency_domain optical_flow)
+    deblur template_matching inpaint hough_transform frequency_domain
+    optical_flow sharpen demosaic color_transfer)
 
 # ===========================================================================
 #  Root main target: openCv.cpp
@@ -147,8 +194,9 @@ if(BUILD_MAIN)
             LEARN_DATA_ROOT="${DATA_ROOT}"
             LEARN_MODELS_ROOT="${MODELS_ROOT}")
         if(NOT MSVC)
-            target_compile_options(openCv PRIVATE -Wall -Wextra -Wno-unused-parameter)
+            target_compile_options(openCv PRIVATE ${DEMO_WARN_FLAGS})
         endif()
+        set_property(GLOBAL APPEND PROPERTY "DEMO_TARGETS_main" "openCv")
         message(STATUS "[main] + exe openCv <- ${_root_src}")
     else()
         message(WARNING "BUILD_MAIN=ON but openCv.cpp not found")
@@ -169,3 +217,24 @@ endif()
 if(BUILD_NOTES)
     add_subdirectory(notes)
 endif()
+
+# ===========================================================================
+#  Group aggregate targets: build an entire group with one make invocation
+#
+#    cmake --build build --target learn        # all learn demos
+#    cmake --build build --target algorithms   # all algorithm demos
+#    cmake --build build --target notes        # all notes demos
+#    cmake --build build --target main         # the root executable
+# ===========================================================================
+foreach(_grp main learn algorithms notes)
+    get_property(_grp_targets GLOBAL PROPERTY "DEMO_TARGETS_${_grp}")
+    if(_grp_targets)
+        list(LENGTH _grp_targets _grp_count)
+        add_custom_target(${_grp}
+            COMMENT "Building all '${_grp}' targets (${_grp_count} demos)")
+        add_dependencies(${_grp} ${_grp_targets})
+        message(STATUS "[group] aggregate target '${_grp}' -> ${_grp_count} demos")
+    endif()
+    unset(_grp_targets)
+    unset(_grp_count)
+endforeach()

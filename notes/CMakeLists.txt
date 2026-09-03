@@ -58,8 +58,10 @@ function(add_notes_exe STEM SOURCE_PATH)
     target_compile_definitions(notes_${_stem} PRIVATE
         LEARN_PROJECT_ROOT="${PROJ_ROOT}" LEARN_DATA_ROOT="${DATA_ROOT}" LEARN_MODELS_ROOT="${MODELS_ROOT}")
     if(NOT MSVC)
-        target_compile_options(notes_${_stem} PRIVATE -Wall -Wextra -Wno-unused-parameter)
+        target_compile_options(notes_${_stem} PRIVATE ${DEMO_WARN_FLAGS})
     endif()
+    # Register into the group aggregate target "notes" (created in the root)
+    set_property(GLOBAL APPEND PROPERTY "DEMO_TARGETS_notes" "notes_${_stem}")
     message(STATUS "[notes] + exe ${_stem} <- ${SOURCE_PATH}")
 endfunction()
 
